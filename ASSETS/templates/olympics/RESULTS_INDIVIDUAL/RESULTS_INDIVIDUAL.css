@@ -1,0 +1,163 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Radio-Canada', sans-serif;
+}
+
+#wrapper {
+    height: 160px;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: flex-start;
+    color: white;
+}
+
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    height: 160px;
+    overflow: hidden;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(100%);
+}
+
+.v-align {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 50px;
+    margin: 0;
+}
+
+h2 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.title-page, .medal-page {
+    position: relative;
+    margin-left: 25px;
+}
+
+.title-page {
+    animation: fadeInRight 1.75s forwards;
+    display: flex;
+}
+
+/* Keyframe animations */
+@keyframes fadeInRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOutLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeInRight 1.75s forwards;
+}
+
+.fade-out {
+    animation: fadeOutLeft 1.75s forwards;
+}
+
+/* Medal Page */
+.medal-page {
+    max-height: 160px;
+}
+
+.page-row {
+    display: flex;
+    height: 160px;
+}
+
+.event-container {
+    display: flex;
+    flex-direction: column;
+    height: 160px;
+    justify-content: center;
+    margin-right: 50px;
+    margin-left: 10px;
+}
+
+.event {
+    display: flex;
+}
+
+.sub-event {
+    display: flex;
+    font-style: italic;
+}
+
+.country {
+    display: flex;
+    padding: 7.5px 15px;
+    margin-right: 25px;
+}
+
+.rank {
+    margin-right: 10px;
+}
+
+.flag {
+    height: 145px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;}
+
+.flag-img {
+    height: 80px;
+}
+
+.name {
+    margin-left: 10px;
+}
+
+.athlete {
+    display: flex;
+}
+
+.full-name {
+    display: flex;
+}
+
+.first-name, .last-name {
+    margin-right: 10px;
+}
+
+.result h1 {
+    font-weight: 400;
+}

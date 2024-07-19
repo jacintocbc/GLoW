@@ -1,0 +1,307 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9040</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9040/9040.css">
+    <script>
+        function runTemplateUpdate() {
+            // Title / Subtitle / Header
+            e('f0_gfx').innerText = htmlDecode(e('f0').innerText);
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerText);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerText);
+            e('f3_gfx').innerText = htmlDecode(e('f3').innerText);
+            e('f4_gfx').innerText = htmlDecode(e('f4').innerText);
+            processElement('f0_gfx');
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            processElement('f3_gfx');
+            processElement('f4_gfx');
+            // Time / Line 2
+            const line2 = document.getElementById('f1_gfx');
+            const time = document.getElementById('f2_gfx');
+            const showTime = document.getElementById('f71').innerText;
+            if (showTime == "Show Line 2") {
+                line2.style.display = "initial";
+                time.style.display = "none";
+            } else {
+                line2.style.display = "none";
+                time.style.display = "inherit";
+            }
+            // Header / No Header
+            const upperTab = document.querySelector('.top-box-container');
+            let tabStatus = document.getElementById('f70').innerText;
+            if (tabStatus == "No Header") {
+                upperTab.style.display = "none";
+            } else {
+                upperTab.style.display = "initial";
+            }
+            // Bottom / Left Property 
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+            // Image Properties
+            const leftImage = document.querySelector('.left-image');
+            leftImage.style.width = `${htmlDecode(e('f94').innerText)}%`;
+            const horizontal = `${htmlDecode(e('f95').innerText)}px`;
+            const vertical = `${htmlDecode(e('f96').innerText)}px`;
+            leftImage.style.objectPosition = `${horizontal} ${vertical}`;
+            // Font Size
+            const textElements = document.querySelectorAll('.resize');
+            const top = document.querySelector('.top');
+            const bottoms = document.querySelectorAll('.bottom');
+            let newFontSize = htmlDecode(e('f90').innerText);
+            newFontSize = Math.max(20, Math.min(newFontSize, 200));
+            const ratio = newFontSize / 100;
+            const originalFontSize = 38;
+            const newSize = originalFontSize * ratio;
+            textElements.forEach(element => {
+                element.style.fontSize = `${originalFontSize * ratio}px`;
+            });
+            // Margin Top based on Font Size
+            let difference; 
+            if (newSize < originalFontSize) {
+                difference = originalFontSize - newSize;
+                difference = Math.min(difference, 10); 
+                let baseTopValueTop = 10; 
+                let baseTopValueBottom = 15;
+                baseTopValueTop += difference;
+                top.style.top = `${baseTopValueTop}px`;
+
+                bottoms.forEach((bottom) => {
+                    baseTopValueBottom += difference;
+                    bottom.style.top = `${baseTopValueBottom}px`;
+                });
+            }
+            // Image Dropdown
+            const image = htmlDecode(e('f81').innerText);
+            if (image) leftImage.src = image;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+            const bottomBox = document.querySelector('.bottom-box');
+            const topBox = document.querySelector('.top-box');
+            const leftBox = document.querySelector('.left-box');
+
+            goldBar.style.animation = "slideInGold .5s ease-in-out forwards .1s";
+            blackBar.style.animation = "slideIn .5s ease-in-out forwards .2s";
+            bottomBox.style.animation = "slideDownBottom .5s ease-in forwards .2s";
+            topBox.style.animation = "slideUpTop .5s ease-in forwards .2s";
+            leftBox.style.animation = "slideImageIn .5s ease forwards .3s";
+        }
+
+        function runAnimationOUT() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+            const bottomBox = document.querySelector('.bottom-box');
+            const topBox = document.querySelector('.top-box');
+            const leftBox = document.querySelector('.left-box');
+
+            goldBar.style.clipPath = "none";
+            goldBar.style.opacity = "1";
+            blackBar.style.clipPath = "none";
+            leftBox.style.left = "47px";
+
+            blackBar.style.animation = "slideOutGold .4s ease-in-out forwards .2s";
+            goldBar.style.animation = "slideOut .4s ease-in-out forwards .3s";
+            bottomBox.style.animation = "slideUpBottom .3s ease-in forwards";
+            topBox.style.animation = "slideDownTop .3s ease-in forwards";
+            leftBox.style.animation = "slideImageOut .5s ease forwards .3s";
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9040",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "5",
+            "DataFields": [
+                {
+                    "field": "f70",
+                    "ftype": "dropdown",
+                    "title": "Header Toggle",
+                    "value": "Header",
+                    "items": [
+                        {
+                            "text": "No Header",
+                            "value": "No Header"
+                        },
+                        {
+                            "text": "Header",
+                            "value": "Header"
+                        }
+                    ]
+                },
+                {
+                    "field": "f4",
+                    "ftype": "textfield",
+                    "title": "Header",
+                    "value": "EVENT GOES HERE"
+                },
+                {
+                    "field": "f0",
+                    "ftype": "textfield",
+                    "title": "Main Text Line 1",
+                    "value": "TOMORROW"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Main Text Line 2",
+                    "value": "IS THE MAIN EVENT"
+                },
+                {
+                    "field": "f71",
+                    "ftype": "dropdown",
+                    "title": "Time / Line 2",
+                    "value": "Show Time",
+                    "items": [
+                        {
+                            "text": "Line 2",
+                            "value": "Show Line 2"
+                        },
+                        {
+                            "text": "Time",
+                            "value": "Show Time"
+                        }
+                    ]
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Time",
+                    "value": "2:30 PM ET / 11:30 AM PT"
+                },
+                {
+                    "field": "f90",
+                    "ftype": "number",
+                    "title": "Main Text Size",
+                    "value": "100"
+                },
+                {
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Subtitle",
+                    "value": "LIVE STREAMING ON cbcsports.ca"
+                },
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "ftype" : "divider"
+                },
+                {
+                    "field": "f94",
+                    "ftype": "number",
+                    "title": "Zoom",
+                    "value": "100"
+                },
+                {
+                    "field": "f95",
+                    "ftype": "number",
+                    "title": "IMG X-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f96",
+                    "ftype": "number",
+                    "title": "IMG Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f81",
+                    "ftype": "filelist",
+                    "title": "Images",
+                    "assetfolder" : "./images",
+                    "extension" : "jpg",
+                    "value": "./images/canada-swimmer.jpg"
+                }, 
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="font-bg">
+
+            <div class="container">
+                <div id="custom-container">
+                    <div class="left-box" style="left:-200px">
+                        <img src="./images/canada-swimmer.jpg" alt="image placeholder" class="left-image">
+                    </div>
+
+                    <div class="gold-bar" id="gold-bar"></div>
+                    <div class="bar-container">
+                        <div class="black-bar" id="black-bar">
+                            <span class="text-layer-9040 resize top" id="f0_gfx">
+                                TOMORROW
+                            </span>
+                            <span class="text-layer-9040 resize bottom" id="f1_gfx" style="display:none">
+                                IS THE MAIN EVENT
+                            </span>
+                            <span class="text-layer-9040 resize bottom time" id="f2_gfx">
+                                2:30 PM ET / 11:30 AM PT
+                            </span>
+                        </div>
+                        <div class="bottom-box">
+                            <span id="f3_gfx" class="subtitle-text">
+                                LIVE STREAMING ON cbcsports.ca
+                            </span>
+                        </div>
+                        <div class="top-box-container">
+                            <div class="top-box">
+                                <span id="f4_gfx" class="courtesy-text">
+                                    EVENT GOES HERE
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div style="display:none;"  id="f0"></div>
+                    <div style="display:none;"  id="f1"></div>
+                    <div style="display:none;"  id="f2"></div>
+                    <div style="display:none;"  id="f3"></div>
+                    <div style="display:none;"  id="f4"></div>
+                    <div style="opacity:0;"  id="f70"></div>
+                    <div style="opacity:0;"  id="f71"></div>
+                    <div style="opacity:0;"  id="f81"></div>
+                    <div style="opacity:0;"  id="f90"></div>
+                    <div style="opacity:0;"  id="f94"></div>
+                    <div style="opacity:0;"  id="f95"></div>
+                    <div style="opacity:0;"  id="f96"></div>
+                    <div style="opacity:0;"  id="f97"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

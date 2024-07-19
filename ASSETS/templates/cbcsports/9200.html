@@ -1,0 +1,511 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9200</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9200/9200.css">
+    <script src="./9000/flagpath.js"></script>
+    <script>
+        function runTemplateUpdate() {
+            // Text Replacements
+            e('f0_gfx').innerHTML = htmlDecode(e('f0').innerText);
+            e('f1_gfx').innerHTML = htmlDecode(e('f1').innerText);
+            e('f2_gfx').innerHTML = htmlDecode(e('f2').innerText);
+            e('f3_gfx').innerHTML = htmlDecode(e('f3').innerText);
+            e('f4_gfx').innerHTML = htmlDecode(e('f4').innerText);
+            e('f5_gfx').innerHTML = htmlDecode(e('f5').innerText);
+            e('f6_gfx').innerHTML = htmlDecode(e('f6').innerText);
+            e('f7_gfx').innerHTML = htmlDecode(e('f7').innerText);
+            e('f8_gfx').innerHTML = htmlDecode(e('f8').innerText);
+            e('f9_gfx').innerHTML = htmlDecode(e('f9').innerText);
+            e('f10_gfx').innerHTML = htmlDecode(e('f10').innerText);
+            e('f11_gfx').innerHTML = htmlDecode(e('f11').innerText);
+            e('f12_gfx').innerHTML = htmlDecode(e('f12').innerText);
+            e('f13_gfx').innerHTML = htmlDecode(e('f13').innerText);
+            processElement('f0_gfx');
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            processElement('f3_gfx');
+            processElement('f4_gfx');
+            processElement('f5_gfx');
+            processElement('f6_gfx');
+            processElement('f7_gfx');
+            processElement('f8_gfx');
+            processElement('f9_gfx');
+            processElement('f10_gfx');
+            processElement('f11_gfx');
+            processElement('f12_gfx');
+            processElement('f13_gfx');
+            for (let i = 0; i <= 13; i++) {
+                let text = htmlDecode(e('f' + i).innerHTML);
+                text = text.replace(/\|/g, '<br />');
+                e('f' + i + '_gfx').innerHTML = text;
+            }
+            // Divider Toggle
+            const divider = document.querySelector('.divider');
+            let dividerStatus = document.getElementById('f87').innerText;
+            if (dividerStatus !== "Divider") {
+                divider.style.display = "none";
+            } else {
+                divider.style.display = "initial";
+            }
+            // Image Settings
+            const backgroundImg = document.querySelector('.background-img');
+            const backgroundImgSrc = htmlDecode(e('f81').innerText);
+            backgroundImg.src = backgroundImgSrc;
+            backgroundImg.style.width = `${htmlDecode(e('f94').innerText)}%`;
+            const horizontal = `${htmlDecode(e('f95').innerText)}px`;
+            const vertical = `${htmlDecode(e('f96').innerText)}px`;
+            backgroundImg.style.objectPosition = `${horizontal} ${vertical}`;
+            // Background / No Background
+            let backgroundStatus = document.getElementById('f70').innerText;
+            if (backgroundStatus == "No Background") {
+                backgroundImg.style.display = "none";
+            } else {
+                backgroundImg.style.display = "initial";
+            }
+            // Card / No Card
+            const cardBg = document.getElementById('font-bg');
+            let cardStatus = document.getElementById('f71').innerText;
+            if (cardStatus == "No Card") {
+                cardBg.style.opacity = "0";
+            } else {
+                cardBg.style.opacity = "1";
+            }
+            // Flag Selection
+            const flag = document.querySelector('.flag');
+            const flagNameText = document.getElementById('f20').innerText;
+            const fileList = flagList;
+            const selectedFlagFile = fileList.find(flagItem => flagItem.slice(13, 16) == flagNameText);
+            if (selectedFlagFile) {
+                flag.src = selectedFlagFile; 
+            } else {
+                flag.src = "./9200/CBC.png";
+            }
+            // Note Container -----------
+            const noteElements = document.querySelectorAll('.note');
+            const subNoteElements = document.querySelectorAll('.sub-note');
+            const noteContainer = document.querySelector('.note-box-container');
+            const nameContainer = document.querySelector('.name-container');
+            // Y-Axis
+            noteContainer.style.bottom = `${htmlDecode(e('f91').innerText)}px`;
+            // Font Size
+            let noteFontSize = htmlDecode(e('f92').innerText);
+            noteFontSize = Math.max(20, Math.min(noteFontSize, 200));
+            const noteRatio = noteFontSize / 100;
+            let subNoteFontSize = htmlDecode(e('f89').innerText);
+            subNoteFontSize = Math.max(20, Math.min(subNoteFontSize, 200));
+            const subNoteRatio = subNoteFontSize / 100;
+            let nameFontSize = htmlDecode(e('f88').innerText);
+            nameFontSize = Math.max(20, Math.min(nameFontSize, 200));
+            const nameRatio = nameFontSize / 100;
+            const originalNoteSize = 33;
+            const originalSubNoteSize = 25;
+            const originalNameSize = 55;
+            nameContainer.style.fontSize = `${originalNameSize * nameRatio}px`;
+            noteElements.forEach(element => {
+                element.style.fontSize = `${originalNoteSize * noteRatio}px`;
+            });
+            subNoteElements.forEach(element => {
+                element.style.fontSize = `${originalSubNoteSize * subNoteRatio}px`;
+            });
+            // Line Height
+            let noteLineHeight = htmlDecode(e('f93').innerText);
+            noteLineHeight = Math.max(20, Math.min(noteLineHeight, 200));
+            let subNoteLineHeight = htmlDecode(e('f90').innerText);
+            subNoteLineHeight = Math.max(20, Math.min(subNoteLineHeight, 200));
+            noteElements.forEach(element => {
+                element.style.lineHeight = `${noteLineHeight}%`;
+            });
+            subNoteElements.forEach(element => {
+                element.style.lineHeight = `${subNoteLineHeight}%`;
+            });
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const backgroundBox = document.querySelector('.background-box');
+            const fontBackground = document.getElementById('font-bg');
+            const container = document.getElementById('container');
+            const flag = document.getElementById('flag');
+
+            backgroundBox.style.animation = "animateBGIn .75s ease forwards .2s";
+            fontBackground.style.animation = "animateMainIn .75s ease-out forwards";
+            container.style.animation = "animateMainIn .75s ease-out forwards";
+            flag.style.animation = "animateFlagIn .75s ease-out forwards";
+        }
+
+        function runAnimationOUT() {
+            const backgroundBox = document.querySelector('.background-box');
+            const fontBackground = document.getElementById('font-bg');
+            const container = document.getElementById('container');
+            const flag = document.getElementById('flag');
+
+            backgroundBox.style.right = "0";
+            backgroundBox.style.animation = "animateBGOut .5s ease forwards";
+            fontBackground.style.animation = "animateMainOut .75s ease forwards";
+            container.style.animation = "animateMainOut .75s ease forwards";
+            flag.style.animation = "animateFlagOut .75s ease forwards";
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9200",
+            "playserver": "OVERLAY",
+            "playchannel": "2",
+            "playlayer": "10",
+            "webplayout": "11",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "7",
+            "DataFields": [
+                {
+                    "field": "f0",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FIRSTNAME"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LASTNAME"
+                },
+                {
+                    "field": "f88",
+                    "ftype": "number",
+                    "title": "Name Size",
+                    "value": "100"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Age",
+                    "value": "AGE: XX"
+                },
+                {
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Hometown",
+                    "value": "MISSISSAUGA, ON"
+                },
+                {
+                    "field": "f4",
+                    "ftype": "textfield",
+                    "title": "Personal Best",
+                    "value": "PERSONAL BEST: XXXXX"
+                },
+                {
+                    "field": "f87",
+                    "ftype": "dropdown",
+                    "title": "Divider",
+                    "value": "Divider",
+                    "items": [
+                        {
+                            "text": "No Divider",
+                            "value": "No Divider"
+                        },
+                        {
+                            "text": "Divider",
+                            "value": "Divider"
+                        }
+                    ]
+                },
+                {
+                    "field": "f5",
+                    "ftype": "textfield",
+                    "title": "Main Note 1",
+                    "value": "X-TIME OLYMPIC GOLD MEDALLIST"
+                },
+                {
+                    "field": "f6",
+                    "ftype": "textfield",
+                    "title": "Sub Note 1A",
+                    "value": "BACKUP INFO"
+                },
+                {
+                    "field": "f7",
+                    "ftype": "textfield",
+                    "title": "Sub Note 1B",
+                    "value": "BACKUP INFO"
+                },
+                {
+                    "field": "f8",
+                    "ftype": "textfield",
+                    "title": "Main Note 2",
+                    "value": "2ND NOTE ABOUT ATHLETE"
+                },
+                {
+                    "field": "f9",
+                    "ftype": "textfield",
+                    "title": "Sub Note 2A",
+                    "value": "BACKUP INFO"
+                },
+                {
+                    "field": "f10",
+                    "ftype": "textfield",
+                    "title": "Sub Note 2B",
+                    "value": "BACKUP INFO"
+                },
+                {
+                    "field": "f11",
+                    "ftype": "textfield",
+                    "title": "Main Note 3",
+                    "value": "3RD NOTE ABOUT ATHLETE"
+                },
+                {
+                    "field": "f12",
+                    "ftype": "textfield",
+                    "title": "Sub Note 3A",
+                    "value": "BACKUP INFO"
+                },
+                {
+                    "field": "f13",
+                    "ftype": "textfield",
+                    "title": "Sub Note 3B",
+                    "value": "BACKUP INFO"
+                },
+                {
+                    "field": "f20",
+                    "ftype": "textfield",
+                    "title": "Flag",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f80",
+                    "ftype": "filelist",
+                    "title": "Flag Reference",
+                    "assetfolder": "./9000/flags",
+                    "extension": "png",
+                    "value": "./9000/flags/CAN - Canada.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f94",
+                    "ftype": "number",
+                    "title": "Zoom",
+                    "value": "100"
+                },
+                {
+                    "field": "f95",
+                    "ftype": "number",
+                    "title": "IMG X-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f96",
+                    "ftype": "number",
+                    "title": "IMG Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f81",
+                    "ftype": "filelist",
+                    "title": "Images",
+                    "assetfolder": "./images",
+                    "extension": "jpg",
+                    "value": "./images/swimming.jpg"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f91",
+                    "ftype": "number",
+                    "title": "Note Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f92",
+                    "ftype": "number",
+                    "title": "Note Size",
+                    "value": "100"
+                },
+                {
+                    "field": "f93",
+                    "ftype": "number",
+                    "title": "Note Height",
+                    "value": "100"
+                },
+                {
+                    "field": "f89",
+                    "ftype": "number",
+                    "title": "Sub Note Size",
+                    "value": "100"
+                },
+                {
+                    "field": "f90",
+                    "ftype": "number",
+                    "title": "Sub Note Height",
+                    "value": "100"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f70",
+                    "ftype": "dropdown",
+                    "title": "Background",
+                    "value": "Background",
+                    "items": [
+                        {
+                            "text": "No Background",
+                            "value": "No Background"
+                        },
+                        {
+                            "text": "Background",
+                            "value": "Background"
+                        }
+                    ]
+                },
+                {
+                    "field": "f71",
+                    "ftype": "dropdown",
+                    "title": "Card Toggle",
+                    "value": "Card",
+                    "items": [
+                        {
+                            "text": "No Card",
+                            "value": "No Card"
+                        },
+                        {
+                            "text": "Card",
+                            "value": "Card"
+                        }
+                    ]
+                },
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="background-box">
+            <img src="./images/swimming.jpg" alt="background image" class="background-img">
+        </div>
+        <div id="font-bg">
+            <img src="./9200/main.png" alt="sidebar" id="sidebar" class="sidebar">
+            <div class="container" id="container">
+                <div class="flag-img" id="flag">
+                    <div>
+                        <img src="./9200/CBC.png" alt="Canada Flag" class="flag">
+                    </div>
+                </div>
+
+                <div class="text-layer" id="text-layer">
+                    <div class="name-container">
+                        <div id="f0_gfx">
+                            <!-- FIRSTNAME -->
+                        </div>
+                        <div id="f1_gfx" class="bold">
+                            <!-- LASTNAME -->
+                        </div>
+                    </div>
+                    <div class="text-box">
+                        <div id="f2_gfx" class="age">
+                            <!-- AGE: XX -->
+                        </div>
+                        <div id="f3_gfx" class="city">
+                            <!-- MISSISSAUGA, ON -->
+                        </div>
+                        <div id="f4_gfx" class="alt">
+                            <!-- PERSONAL BEST: XXXXX -->
+                        </div>
+                    </div>
+                    <div class="divider">
+                        <img src="./9200/divider.png" alt="dividing line">
+                    </div>
+                    <div class="note-box-container">
+                        <div class="note-box" id="box-1">
+                            <div id="f5_gfx" class="note">
+                                <!-- X-TIME OLYMPIC GOLD MEDALLIST -->
+                            </div>
+                            <div id="f6_gfx" class="sub-note">
+                                <!-- BACKUP INFO -->
+                            </div>
+                            <div id="f7_gfx" class="sub-note">
+                                <!-- BACKUP INFO -->
+                            </div>
+                        </div>
+                        <div class="note-box" id="box-2">
+                            <div id="f8_gfx" class="note">
+                                <!-- 2ND NOTE ABOUT ATHLETE -->
+                            </div>
+                            <div id="f9_gfx" class="sub-note">
+                                <!-- BACKUP INFO -->
+                            </div>
+                            <div id="f10_gfx" class="sub-note">
+                                <!-- BACKUP INFO -->
+                            </div>
+                        </div>
+                        <div class="note-box" id="box-3">
+                            <div id="f11_gfx" class="note">
+                                <!-- 3RD NOTE ABOUT ATHLETE -->
+                            </div>
+                            <div id="f12_gfx" class="sub-note">
+                                <!-- BACKUP INFO -->
+                            </div>
+                            <div id="f13_gfx" class="sub-note">
+                                <!-- BACKUP INFO -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div style="display:none;" id="f0"></div>
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="display:none;" id="f3"></div>
+            <div style="display:none;" id="f4"></div>
+            <div style="display:none;" id="f5"></div>
+            <div style="display:none;" id="f6"></div>
+            <div style="display:none;" id="f7"></div>
+            <div style="display:none;" id="f8"></div>
+            <div style="display:none;" id="f9"></div>
+            <div style="display:none;" id="f10"></div>
+            <div style="display:none;" id="f11"></div>
+            <div style="display:none;" id="f12"></div>
+            <div style="display:none;" id="f13"></div>
+            <div style="display:none;" id="f20"></div>
+            <div style="display:none;" id="f70"></div>
+            <div style="display:none;" id="f71"></div>
+            <div style="display:none;" id="f80"></div>
+            <div style="display:none;" id="f81"></div>
+            <div style="display:none;" id="f87"></div>
+            <div style="display:none;" id="f88"></div>
+            <div style="display:none;" id="f89"></div>
+            <div style="display:none;" id="f90"></div>
+            <div style="display:none;" id="f91"></div>
+            <div style="display:none;" id="f92"></div>
+            <div style="display:none;" id="f93"></div>
+            <div style="display:none;" id="f94"></div>
+            <div style="display:none;" id="f95"></div>
+            <div style="display:none;" id="f96"></div>
+        </div>
+
+    </div>
+</body>
+
+</html>

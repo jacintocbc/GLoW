@@ -1,0 +1,280 @@
+@font-face {
+    font-family: 'Gotham Bold';
+    src: url('../fonts/Gotham-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Gotham Book';
+    src: url('../fonts/Gotham-Book.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham Light';
+    src: url('../fonts/Gotham-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham Medium';
+    src: url('../fonts/Gotham-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+#wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#font-bg {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.container {
+    position: absolute;
+    bottom: 150px;
+    left: -1px;
+}
+
+#custom-container {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-box-container {
+    position: absolute;
+    width: 427px;
+    height: 41px;
+    left: 81px;
+    bottom: 85px;
+    animation: slideBarUp .98s ease-in-out;
+    display: flex;
+    z-index: 100;
+}
+
+.top-box {
+    width: 426px;
+    height: 41px;
+    background: rgb(243, 249, 255);
+    clip-path: polygon(9px 0%, 100% 0%, 100% 100%, 0% 100%);
+    display: inline-block;
+    position: relative;
+    left: 0;
+}
+
+.cbc-logo {
+    height: 35px;
+    position: absolute;
+    left: 25px;
+    top: 3px;
+}
+
+.courtesy-text {
+    pointer-events: none;
+    color: #333;
+    font-family: "Gotham Light", sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    display: inline;
+    position: relative;
+    top: 3.5px;
+    margin-left: 93px;
+    padding-right: 30px;
+}
+
+.box-container {
+    width: 508px;
+    height: 300px;
+    position: absolute;
+    bottom: 0px;
+    z-index: 99;
+}
+
+.box {
+    height: 74px;
+    width: 426px;
+    position: absolute;
+    bottom: -63px;
+    left: 81px;
+    display: block;
+}
+
+.background {
+    background: url('./title-bar.png') no-repeat;
+    background-size: cover;
+    background-position: 60% center;
+    display: block;
+    width: calc(100% - 83.5px);
+    height: 74px;
+    position: absolute;
+    left: 83.5px;
+    top: 0;
+}
+
+.box1 {
+    clip-path: inset(100% 0 0 0);
+    animation: boxRevealUp .3s ease-in forwards .2s;
+}
+
+.box2 {
+    position: absolute;
+    bottom: 11px;
+    clip-path: inset(100% 0 0 0);
+    animation: boxRevealUp .3s ease-in forwards .5s;
+}
+
+.left-box {
+    height: 74px;
+    width: 83.5px;
+    overflow: hidden;
+    display: block;
+    background: #dfdfdf;
+    box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.8), 
+    10px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.left-image1 {
+    width: 100%;
+    object-fit: cover;
+    object-position: 0px 0px;
+}
+
+.left-image2 {
+    width: 100%;
+    object-fit: cover;
+    object-position: 0px 0px;
+}
+
+.text-layer-9012 {
+    pointer-events: none;
+    color: white;
+    font-family: "Gotham Light", sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    z-index: 3;
+    display: inline;
+    position: relative;
+    top: 7px;
+    left: 12px;
+}
+
+.no-social-media {
+    top: 22px;
+}
+
+.social-media {
+    display: flex;
+    position: relative;
+    left: -50px;
+    top: 5px;
+}
+
+.social-logo {
+    height: 26px;
+    position: relative;
+    top: 8px;
+    left: 60px;
+    margin-right: 10px;
+}
+
+#instagram1 {
+    left: 60px;
+    display: none;
+}
+
+#instagram2 {
+    left: 60px;
+    display: none;
+}
+
+.subtitle-text {
+    pointer-events: none; 
+    color: rgb(255 225 108);
+    font-family: "Gotham Light", sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    z-index: 3;
+    padding-right: 60px;
+    display: inline;
+    position: relative;
+    top: 6px;
+    margin-left: 60px;
+}
+
+/* Main Bar ---------------- */
+
+/* Animate In */
+@keyframes slideBarUp {
+    0% {
+        opacity: 0;
+        bottom: -100px;
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        /* Different depending on how many boxes */
+        bottom: 84.5px;
+        opacity: 1;
+    }
+}
+
+/* Animate Out */
+@keyframes slideBarDown {
+    0% {
+        bottom: 84.5px;
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    99% {
+        bottom: -65px;
+    }
+    100% {
+        bottom: -100px;
+        opacity: 0;
+    }
+}
+
+/* Box ------------------- */
+
+/* Animate In */
+@keyframes boxRevealUp {
+    0% {
+        clip-path: inset(100% 0 0 0);
+    }
+    100% {
+      clip-path: inset(0 0 0 0);
+    }
+}
+
+/* Animate Out */
+@keyframes boxHideDown {
+    0% {
+        clip-path: inset(0 0 0 0);
+    }
+    100% {
+        clip-path: inset(100% 0 0 0);
+    }
+}

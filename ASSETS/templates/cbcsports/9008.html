@@ -1,0 +1,194 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9008</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9008/9008.css">
+    <script>
+        function runTemplateUpdate() {
+            // Text Replacement
+            e('f0_gfx').innerHTML = htmlDecode(e('f0').innerText);
+            e('f1_gfx').innerHTML = htmlDecode(e('f1').innerText);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerText);
+            processElement('f0_gfx');
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            // Upper Tab / No Upper Tab
+            const upperTab = document.querySelector('.top-box-container');
+            let tabStatus = document.getElementById('f70').innerText;
+            if (tabStatus == "No Upper Tab") {
+                upperTab.style.display = "none";
+            } else {
+                upperTab.style.display = "initial";
+            }
+            // Y-Axis
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+            const topBox = document.querySelector('.top-box');
+
+            goldBar.style.animation = "slideIn .5s ease-in-out forwards";
+            blackBar.style.animation = "slideIn .5s ease-in-out forwards 0.2s";
+            topBox.style.animation = "slideUpTop .3s ease-in forwards .3s";
+        }
+
+        function runAnimationOUT() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+            const topBox = document.querySelector('.top-box');
+
+            blackBar.style.animation = "slideOut .4s ease-in-out forwards";
+            goldBar.style.animation = "slideOut .4s ease-in-out forwards 0.15s";
+            topBox.style.animation = "slideDownTop .1s ease-in forwards";
+        }
+
+        window.onload = function() {
+            adjustBarWidth9008();
+            observeTextLayer9008();
+        }
+
+        function adjustBarWidth9008() {
+            const textLayer = document.querySelector(".text-layer-9008");
+            const goldBar = document.querySelector("#gold-bar");
+            const blackBar = document.querySelector("#black-bar");
+
+            const textLayerWidth = textLayer.offsetWidth;
+            const textLayerStyle = window.getComputedStyle(textLayer);
+            const marginLeft = parseFloat(textLayerStyle.getPropertyValue('margin-left'));
+
+            const barWidth = textLayerWidth + marginLeft;
+            blackBar.style.width = barWidth + "px";
+            goldBar.style.width = (barWidth + 15) + "px";
+        }
+
+        function observeTextLayer9008() {
+            const textLayer = document.querySelector(".text-layer-9008");
+
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === "characterData" || mutation.type === "childList") {
+                        adjustBarWidth9008();
+                    }
+                });
+            });
+
+            const config = { childList: true, characterData: true, subtree: true };
+            observer.observe(textLayer, config);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9008",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "3",
+            "DataFields": [
+                {
+                    "field": "f0",
+                    "ftype": "textfield",
+                    "title": "Title",
+                    "value": "SINGLE LINE LOCATOR"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Subtitle",
+                    "value": "Toronto, Ontario"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Courtesy",
+                    "value": "UPPER TAB GOES HERE"
+                },
+                {
+                    "field": "f70",
+                    "ftype": "dropdown",
+                    "title": "Upper Courtesy",
+                    "value": "Upper Tab",
+                    "items": [
+                        {
+                            "text": "No Upper Tab",
+                            "value": "No Upper Tab"
+                        },
+                        {
+                            "text": "Upper Tab",
+                            "value": "Upper Tab"
+                        }
+                    ]
+                },
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="font-bg">
+
+            <div class="container">
+                <div id="custom-container">
+                    <div class="gold-bar" id="gold-bar" style="width: 100px"></div>
+                    <div class="bar-container">
+                        <div class="black-bar" id="black-bar">
+                            <span class="text-layer-9008" id="f0_gfx">
+                                <!-- SINGLE LINE LOCATOR -->
+                            </span>
+                            <span class="text-layer-9008 alt-text" id="f1_gfx">
+                                <!-- Toronto, Ontario -->
+                            </span>
+                        </div>
+                        <div class="top-box-container">
+                            <div class="top-box">
+                                <span id="f2_gfx" class="courtesy-text">
+                                    <!-- UPPER TAB HERE -->
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div style="display:none;"  id="f0"></div>
+                    <div style="display:none;"  id="f1"></div>
+                    <div style="display:none;"  id="f2"></div>
+                    <div style="opacity:0;"  id="f70"></div>
+                    <div style="opacity:0;"  id="f97"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+  <div id="lineupOptionsCollapsible">
+    <div style="padding: 1.0rem; font-size: 0.9rem;">
+
+      <table style="width: 100%;" cellspacing="12" border="0">
+        <tr>
+          <td width="20%" style="vertical-align: top;">
+            <span class="spxConfigHead">iNews Server</span>
+          </td>
+          <td>
+            <input type="text" class="wide bg_grey15 RDoptionsText" id="iNewsServer" value="es-prod" />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%" style="vertical-align: top;">
+            <span class="spxConfigHead">iNews Lineup</span>
+          </td>
+          <td>
+            <input type="text" class="wide bg_grey15 RDoptionsText" id="iNewsLineup" value="NETWORK-PROG.ELECTION-MAESTRO.NAME" />
+          </td>
+        </tr>
+      </table>
+
+      <div class="button-container">
+        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData(true)">Update Rundown</button>
+        <button type="button" class="btn bg_green" onclick="fetchData(false)">Populate Rundown</button>
+      </div>
+
+    </div>
+  </div>

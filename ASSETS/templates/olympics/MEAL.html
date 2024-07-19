@@ -1,0 +1,514 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./MEAL/MEAL.css">
+    <script>
+        let isLooping = true;
+        function runTemplateUpdate() {
+            // Title
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerText);
+            // is Looping Checkbox
+            isLoopingCheckbox = htmlDecode(e('f68').innerHTML);
+            isLooping = isLoopingCheckbox == 1 ? true : false;
+        }
+
+        function runAnimationIN() {
+
+        }
+
+        function runAnimationOUT() {
+            const wrapper = document.querySelector('#wrapper');
+            wrapper.style.display = 'none';
+        }
+
+        window.onload = function () {
+            preparePages();
+        }
+
+        function preparePages() {
+            setTimeout(() => {
+                const pagesContainer = document.getElementById('pages');
+                const titlePage = document.querySelector('.title-page');
+                pagesContainer.innerHTML = '';
+
+                const transitionDuration = htmlDecode(e('f81').innerHTML);
+                const transitionDurationNumber = +transitionDuration * 1000;
+
+                const createPage = (index) => {
+                    const title = htmlDecode(e('f1').innerText);
+                    const text = document.getElementById(`f${index * 6 - 4}`).innerText.trim();
+                    const picture = document.getElementById(`f${index * 6 - 3}`).innerText.trim();
+
+                    if (!text || !picture) {
+                        return null;
+                    }
+
+                    // Page
+                    const page = document.createElement('div');
+                    page.className = 'page medal-page';
+                    page.id = `page${index}`;
+
+                    const pageRow = document.createElement('div');
+                    pageRow.className = 'page-row';
+
+                    // Food Container
+                    const foodContainer = document.createElement('div');
+                    foodContainer.className = 'food-container';
+
+                    // Food Image
+                    const food = document.createElement('div');
+                    food.className = 'food';
+                    const foodImg = document.createElement('img');
+                    foodImg.src = picture;
+                    foodImg.alt = 'Food Image';
+                    foodImg.className = 'food-img';
+                    foodImg.id = `food_${index}`;
+
+                    food.appendChild(foodImg);
+
+                    // Food Text
+                    const foodText = document.createElement('div');
+                    foodText.className = 'text v-align';
+                    const foodHeader = document.createElement('h1');
+                    foodHeader.id = `f${index * 6 - 4}_gfx`;
+                    foodHeader.textContent = text;
+                    foodText.appendChild(foodHeader);
+
+                    foodContainer.appendChild(food);
+                    foodContainer.appendChild(foodText);
+
+                    pageRow.appendChild(foodContainer);
+
+                    page.appendChild(pageRow);
+
+                    return page;
+                }
+
+                const pages = [];
+
+                for (let i = 1; i <= 10; i++) {
+                    const page = createPage(i);
+                    if (page) {
+                        pages.push(page);
+                    }
+                }
+
+                const displayPages = () => {
+                    let currentPageIndex = 0;
+                    const totalDuration = transitionDurationNumber * (pages.length + 3) + 2000;
+
+                    const showPage = (page) => {
+                        page.classList.add('fade-in');
+                        page.style.display = 'flex';
+                        pagesContainer.appendChild(page);
+
+                        setTimeout(() => {
+                            page.classList.remove('fade-in');
+                            page.classList.add('fade-out');
+
+                            setTimeout(() => {
+                                page.style.display = 'none';
+                                page.classList.remove('fade-out');
+
+                                currentPageIndex++;
+                                if (currentPageIndex < pages.length) {
+                                    showPage(pages[currentPageIndex]);
+                                } else if (isLooping) {
+                                    currentPageIndex = 0;
+                                    titlePage.style.display = 'flex';
+                                    titlePage.classList.add('fade-in');
+                                    setTimeout(() => {
+                                        titlePage.classList.remove('fade-in');
+                                        titlePage.classList.add('fade-out');
+                                        setTimeout(() => {
+                                            titlePage.style.display = 'none';
+                                            titlePage.classList.remove('fade-out');
+                                            showPage(pages[currentPageIndex]);
+                                        }, 1700);
+                                    }, 5000); // Duration to stay on screen (static)
+                                } else {
+                                    runAnimationOUT();
+                                }
+                            }, 1700); // Duration of fade-out animation
+                        }, transitionDurationNumber); // Duration to stay on screen
+                    };
+
+                    setTimeout(() => {
+                        titlePage.classList.add('fade-out');
+
+                        setTimeout(() => {
+                            titlePage.style.display = 'none';
+                            titlePage.classList.remove('fade-out');
+
+                            // Show the first page
+                            if (pages.length > 0) {
+                                showPage(pages[0]);
+                            }
+                        }, 1700); // Duration of fade-out animation
+                    }, 5000); // Duration to stay on screen (static)
+
+                    // Update Total Out Value
+                    // console.log('Total on air time: ' + totalDuration + ' ms');
+                    const totalOutElement = e('f67');
+                    totalOutElement.innerText = totalDuration;
+                };
+
+                // Start the animation sequence
+                displayPages();
+            }, 10);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Meal",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "2",
+            "DataFields": [
+                {
+                    "field": "f81",
+                    "ftype": "textfield",
+                    "title": "Transition (s)",
+                    "value": "7"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Title",
+                    "value": "Meal Time: 12PM - 2PM"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 1"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": "Sample Text"
+                },
+                {
+                    "field": "f3",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 2"
+                },
+                {
+                    "field": "f8",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f9",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 3"
+                },
+                {
+                    "field": "f14",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f15",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 4"
+                },
+                {
+                    "field": "f20",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f21",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 5"
+                },
+                {
+                    "field": "f26",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f27",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 6"
+                },
+                {
+                    "field": "f32",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f32",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 7"
+                },
+                {
+                    "field": "f38",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f39",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 8"
+                },
+                {
+                    "field": "f44",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f45",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 9"
+                },
+                {
+                    "field": "f50",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f51",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Meal 10"
+                },
+                {
+                    "field": "f56",
+                    "ftype": "textfield",
+                    "title": "Text",
+                    "value": ""
+                },
+                {
+                    "field": "f57",
+                    "ftype": "filelist",
+                    "title": "Food Images",
+                    "assetfolder": "./MEAL/icons",
+                    "extension": "png",
+                    "value": "./MEAL/icons/steak.png"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f67",
+                    "ftype": "hidden",
+                    "title": "Total Out",
+                    "value": "57000"
+                },
+                {
+                    "field": "f68",
+                    "ftype": "checkbox",
+                    "title": "Loop Graphic",
+                    "value": "1",
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <!-- Title Page -->
+            <div class="page title-page">
+                <h1 id="f1_gfx" class="v-align">Meal Time from 12PM - 2PM</h1>
+            </div>
+            <div id="pages">
+                <!-- Populated Dynamically -->
+
+                <!-- Page 1 -->
+                <div class="page medal-page" id="page1">
+                    <div class="page-row">
+                        <!-- Food Container -->
+                        <div class="food-container">
+                            <!-- Food Image -->
+                            <div class="food">
+                                <img src="./MEAL/icons/steak.png" alt="Food Image" class="food-img">
+                            </div>
+                            <!-- Food Text -->
+                            <div class="text v-align">
+                                <h1 id="f2_gfx">Lunch: Hamburger and Fries</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="display:none;" id="f3"></div>
+            <div style="display:none;" id="f4"></div>
+            <div style="display:none;" id="f5"></div>
+            <div style="display:none;" id="f6"></div>
+            <div style="display:none;" id="f7"></div>
+            <div style="display:none;" id="f8"></div>
+            <div style="display:none;" id="f9"></div>
+            <div style="display:none;" id="f10"></div>
+            <div style="display:none;" id="f11"></div>
+            <div style="display:none;" id="f12"></div>
+            <div style="display:none;" id="f13"></div>
+            <div style="display:none;" id="f14"></div>
+            <div style="display:none;" id="f15"></div>
+            <div style="display:none;" id="f16"></div>
+            <div style="display:none;" id="f17"></div>
+            <div style="display:none;" id="f18"></div>
+            <div style="display:none;" id="f19"></div>
+            <div style="display:none;" id="f20"></div>
+            <div style="display:none;" id="f21"></div>
+            <div style="display:none;" id="f22"></div>
+            <div style="display:none;" id="f23"></div>
+            <div style="display:none;" id="f24"></div>
+            <div style="display:none;" id="f25"></div>
+            <div style="display:none;" id="f26"></div>
+            <div style="display:none;" id="f27"></div>
+            <div style="display:none;" id="f28"></div>
+            <div style="display:none;" id="f29"></div>
+            <div style="display:none;" id="f30"></div>
+            <div style="display:none;" id="f31"></div>
+            <div style="display:none;" id="f32"></div>
+            <div style="display:none;" id="f33"></div>
+            <div style="display:none;" id="f34"></div>
+            <div style="display:none;" id="f35"></div>
+            <div style="display:none;" id="f36"></div>
+            <div style="display:none;" id="f37"></div>
+            <div style="display:none;" id="f38"></div>
+            <div style="display:none;" id="f39"></div>
+            <div style="display:none;" id="f40"></div>
+            <div style="display:none;" id="f41"></div>
+            <div style="display:none;" id="f42"></div>
+            <div style="display:none;" id="f43"></div>
+            <div style="display:none;" id="f44"></div>
+            <div style="display:none;" id="f45"></div>
+            <div style="display:none;" id="f46"></div>
+            <div style="display:none;" id="f47"></div>
+            <div style="display:none;" id="f48"></div>
+            <div style="display:none;" id="f49"></div>
+            <div style="display:none;" id="f50"></div>
+            <div style="display:none;" id="f51"></div>
+            <div style="display:none;" id="f52"></div>
+            <div style="display:none;" id="f53"></div>
+            <div style="display:none;" id="f54"></div>
+            <div style="display:none;" id="f55"></div>
+            <div style="display:none;" id="f56"></div>
+            <div style="display:none;" id="f57"></div>
+            <div style="display:none;" id="f58"></div>
+            <div style="display:none;" id="f59"></div>
+            <div style="display:none;" id="f60"></div>
+            <div style="display:none;" id="f66"></div>
+            <div style="opacity:0;" id="f67"></div>
+            <div style="opacity:0;" id="f68"></div>
+            <div style="opacity:0;" id="f81"></div>
+        </div>
+    </div>
+</body>
+
+</html>

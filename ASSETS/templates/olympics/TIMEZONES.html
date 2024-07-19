@@ -1,0 +1,111 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timezones</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./TIMEZONES/TIMEZONES.css">
+    <script>
+        function runTemplateUpdate() {
+        }
+
+        function runAnimationIN() {
+        }
+
+        function runAnimationOUT() {
+            const page = document.querySelector('.page');
+            page.classList.add('fade-out');
+            setTimeout(() => {
+                const wrapper = document.querySelector('#wrapper');
+                wrapper.style.display = 'none';
+            }, 2000);
+        }
+
+        window.onload = function () {
+            setInterval(updateTime, 1000);
+            updateTime();
+        }
+
+        function updateTime() {
+            const parisTimeElement = document.getElementById('paris-time');
+            const torontoTimeElement = document.getElementById('toronto-time');
+            const parisContainer = document.getElementById('paris-container');
+
+            const parisTime = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Europe/Paris',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).format(new Date());
+
+            const torontoTime = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/Toronto',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).format(new Date());
+
+            const parisDate = new Date().toLocaleDateString('en-US', { timeZone: 'Europe/Paris' });
+            const torontoDate = new Date().toLocaleDateString('en-US', { timeZone: 'America/Toronto' });
+
+            const parisDay = new Date(parisDate).getDate();
+            const torontoDay = new Date(torontoDate).getDate();
+
+            const dayAheadHeader = document.createElement('h1');
+            dayAheadHeader.className = 'time day-ahead v-align';
+            dayAheadHeader.textContent = '+1';
+
+            if (parisDay !== torontoDay) parisContainer.appendChild(dayAheadHeader);
+
+            parisTimeElement.textContent = parisTime;
+            torontoTimeElement.textContent = torontoTime;
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Timezones",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "5",
+            "DataFields": [
+                {
+                    "ftype" : "instruction",
+                    "value" : "This graphic has no inputs, it animates in and out and shows the Timezone difference between Paris and Toronto"
+                },
+                {
+                    "ftype": "spacer"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <!-- Timezone Page -->
+            <div class="page title-page fade-in">
+                <div class="location flex-row" id="paris-container">
+                    <h1 class="v-align">Paris</h1>
+                    <h1 class="time v-align" id="paris-time">18:12:34</h1>
+                </div>
+                <div class="location flex-row m-left">
+                    <h1 class="v-align">Toronto</h1>
+                    <h1 class="time v-align" id="toronto-time">18:12:34</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

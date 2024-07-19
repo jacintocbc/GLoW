@@ -1,0 +1,374 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9012</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9012/9012.css">
+    <script>
+        function runTemplateUpdate() {
+            // Title / Subtitle / Header
+            e('f0_gfx').innerText = htmlDecode(e('f0').innerHTML);
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
+            e('f3_gfx').innerText = htmlDecode(e('f3').innerHTML);
+            e('f4_gfx').innerText = htmlDecode(e('f4').innerHTML);
+            processElement('f0_gfx');
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            processElement('f3_gfx');
+            processElement('f4_gfx');
+            // Social Media Logo Toggle
+            const twitter1 = document.getElementById('twitter1');
+            const instagram1 = document.getElementById('instagram1');
+            const twitter2 = document.getElementById('twitter2');
+            const instagram2 = document.getElementById('instagram2');
+            let socialIcon = document.getElementById('f70').innerText;
+            if (socialIcon == "Twitter") {
+                twitter1.style.display = "initial";
+                instagram1.style.display = "none";
+                twitter2.style.display = "initial";
+                instagram2.style.display = "none";
+            } else if (socialIcon == "Instagram") {
+                twitter1.style.display = "none";
+                instagram1.style.display = "initial";
+                twitter2.style.display = "none";
+                instagram2.style.display = "initial";
+            } else {
+                twitter1.style.display = "none";
+                instagram1.style.display = "none";
+                twitter2.style.display = "none";
+                instagram2.style.display = "none";
+            }
+            // Social Text 
+            let socialText = document.getElementById('f71').innerText;
+            const socialText1 = document.querySelector('.sm1');
+            const socialText2 = document.querySelector('.sm2');
+            const text1 = document.getElementById('f2_gfx');
+            const text2 = document.getElementById('f0_gfx');
+            if (socialText !== "Show") {
+                socialText1.style.display = "none";
+                socialText2.style.display = "none";
+                text1.classList.add('no-social-media');
+                text2.classList.add('no-social-media');
+            } else {
+                socialText1.style.display = "flex";
+                socialText2.style.display = "flex";
+                text1.classList.remove('no-social-media');
+                text2.classList.remove('no-social-media');
+            }
+            // Font Size
+            const textElements = document.querySelectorAll('.text-layer-9012');
+            let newFontSize = htmlDecode(e('f90').innerText);
+            newFontSize = Math.max(20, Math.min(newFontSize, 200));
+            const ratio = newFontSize / 100;
+            const originalFontSize = 28;
+            textElements.forEach(element => {
+                element.style.fontSize = `${originalFontSize * ratio}px`;
+            });
+            // Bottom / Left Property 
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+            wrapper.style.left = `${htmlDecode(e('f98').innerText)}px`;
+            // Image Properties 1
+            const image1 = document.querySelector('.left-image1');
+            image1.style.width = `${htmlDecode(e('f91').innerText)}%`;
+            const horizontal1 = `${htmlDecode(e('f92').innerText)}px`;
+            const vertical1 = `${htmlDecode(e('f93').innerText)}px`;
+            image1.style.objectPosition = `${horizontal1} ${vertical1}`;
+            // Image Properties 2
+            const image2 = document.querySelector('.left-image2');
+            image2.style.width = `${htmlDecode(e('f94').innerText)}%`;
+            const horizontal2 = `${htmlDecode(e('f95').innerText)}px`;
+            const vertical2 = `${htmlDecode(e('f96').innerText)}px`;
+            image2.style.objectPosition = `${horizontal2} ${vertical2}`;
+            // Image Dropdown 1
+            const imageSrc1 = htmlDecode(e('f81').innerText);
+            if (imageSrc1) image1.src = imageSrc1;
+            // Image Dropdown 2
+            const imageSrc2 = htmlDecode(e('f82').innerText);
+            if (imageSrc2) image2.src = imageSrc2;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const topBoxContainer = document.querySelector('.top-box-container');
+            const leftBoxes = document.querySelectorAll('.left-box');
+            const box1 = document.querySelector('.box1');
+            const box2 = document.querySelector('.box2');
+
+            leftBoxes.forEach((leftBox) => {
+                leftBox.style.boxShadow = "-10px -10px 20px rgba(255, 255, 255, 0.8), 10px 10px 20px rgba(0, 0, 0, 0.2)";
+            });
+            topBoxContainer.style.bottom = "inherit";
+            topBoxContainer.style.left = "inherit";
+            topBoxContainer.style.animation = 'slideBarUp .98s ease-in-out';
+            box1.style.animation = 'boxRevealUp .3s ease-in forwards .2s';
+            box2.style.animation = 'boxRevealUp .3s ease-in forwards .5s';
+        }
+
+        function runAnimationOUT() {
+            const topBoxContainer = document.querySelector('.top-box-container');
+            const leftBoxes = document.querySelectorAll('.left-box');
+            const box1 = document.querySelector('.box1');
+            const box2 = document.querySelector('.box2');
+
+            leftBoxes.forEach((leftBox) => {
+                leftBox.style.boxShadow = "none";
+            });
+            box1.style.clipPath = "none";
+            box2.style.clipPath = "none";
+            topBoxContainer.style.animation = 'slideBarDown .98s ease-in-out';
+            setTimeout(() => {
+                topBoxContainer.style.bottom = "-100px";
+                topBoxContainer.style.opacity = "0";
+            }, 950);
+            box1.style.animation = 'boxHideDown .28s ease-in forwards .5s';
+            box2.style.animation = 'boxHideDown .4s ease-in forwards .1s';
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9012",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "4",
+            "DataFields": [
+                {
+                    "field": "f4",
+                    "ftype": "textfield",
+                    "title": "Title",
+                    "value": "COMMENTATORS"
+                },
+                {
+                    "field": "f0",
+                    "ftype": "textfield",
+                    "title": "Name 1",
+                    "value": "Firstname LAST NAME"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Social Media 1",
+                    "value": "@twitterhandle"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Name 2",
+                    "value": "Firstname LAST NAME"
+                },
+                {
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Social Media 2",
+                    "value": "@twitterhandle"
+                },
+                {
+                    "field": "f70",
+                    "ftype": "dropdown",
+                    "title": "Social Icon",
+                    "value": "Twitter",
+                    "items": [
+                        {
+                            "text": "Twitter",
+                            "value": "Twitter"
+                        },
+                        {
+                            "text": "Instagram",
+                            "value": "Instagram"
+                        },
+                        {
+                            "text": "None",
+                            "value": "None"
+                        }
+                    ]
+                },
+                {
+                    "field": "f71",
+                    "ftype": "dropdown",
+                    "title": "Social Text",
+                    "value": "Show",
+                    "items": [
+                        {
+                            "text": "Show",
+                            "value": "Show"
+                        },
+                        {
+                            "text": "Hide",
+                            "value": "Hide"
+                        }
+                    ]
+                },
+                {
+                    "field": "f90",
+                    "ftype": "number",
+                    "title": "Name Size",
+                    "value": "100"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f81",
+                    "ftype": "filelist",
+                    "title": "Image 1",
+                    "assetfolder": "./images",
+                    "extension": "png",
+                    "value": "./images/ABEL_Jennifer.png"
+                },
+                {
+                    "field": "f91",
+                    "ftype": "number",
+                    "title": "Zoom",
+                    "value": "100"
+                },
+                {
+                    "field": "f92",
+                    "ftype": "number",
+                    "title": "X-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f93",
+                    "ftype": "number",
+                    "title": "Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f82",
+                    "ftype": "filelist",
+                    "title": "Image 2",
+                    "assetfolder": "./images",
+                    "extension": "png",
+                    "value": "./images/ATKINSON_Mike.png"
+                },
+                {
+                    "field": "f94",
+                    "ftype": "number",
+                    "title": "Zoom",
+                    "value": "100"
+                },
+                {
+                    "field": "f95",
+                    "ftype": "number",
+                    "title": "X-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f96",
+                    "ftype": "number",
+                    "title": "Y-Axis",
+                    "value": "0"
+                },
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="font-bg">
+
+            <div class="container">
+                <div id="custom-container">
+                    <div class="top-box-container">
+                        <div class="top-box">
+                            <img src="./9012/cbc-black.png" alt="CBC logo" class="cbc-logo">
+                            <span class="courtesy-text" id="f4_gfx">
+                                <!-- COMMENTATORS -->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="box-container">
+                        <!-- Bottom Box -->
+                        <div class="box box1">
+                            <div class="left-box">
+                                <img src="./images/ABEL_Jennifer.png" alt="commentator" class="left-image2">
+                            </div>
+                            <div class="background">
+                                <div class="text-layer-9012" id="f2_gfx">
+                                    <!-- Firstname LAST NAME -->
+                                </div>
+                                <div class="social-media sm2">
+                                    <img src="./9012/twitter-x.png" alt="Gold Twitter X Logo" class="social-logo"
+                                        id="twitter2">
+                                    <img src="./9012/instagram.png" alt="Gold Instagram Logo" class="social-logo"
+                                        id="instagram2">
+                                    <span id="f3_gfx" class="subtitle-text">
+                                        <!-- @twitterhandle -->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Top Box -->
+                        <div class="box box2">
+                            <div class="left-box">
+                                <img src="./images/ATKINSON_Mike.png" alt="commentator" class="left-image1">
+                            </div>
+                            <div class="background">
+                                <div class="text-layer-9012" id="f0_gfx">
+                                    <!-- Firstname LAST NAME -->
+                                </div>
+                                <div class="social-media sm1">
+                                    <img src="./9012/twitter-x.png" alt="Gold Twitter X Logo" class="social-logo"
+                                        id="twitter1">
+                                    <img src="./9012/instagram.png" alt="Gold Instagram Logo" class="social-logo"
+                                        id="instagram1">
+                                    <span id="f1_gfx" class="subtitle-text">
+                                        <!-- @twitterhandle -->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:none;" id="f0"></div>
+                    <div style="display:none;" id="f1"></div>
+                    <div style="display:none;" id="f2"></div>
+                    <div style="display:none;" id="f3"></div>
+                    <div style="display:none;" id="f4"></div>
+                    <div style="opacity:0;" id="f70"></div>
+                    <div style="opacity:0;" id="f71"></div>
+                    <div style="opacity:0;" id="f81"></div>
+                    <div style="opacity:0;" id="f82"></div>
+                    <div style="opacity:0;" id="f90"></div>
+                    <div style="opacity:0;" id="f91"></div>
+                    <div style="opacity:0;" id="f92"></div>
+                    <div style="opacity:0;" id="f93"></div>
+                    <div style="opacity:0;" id="f94"></div>
+                    <div style="opacity:0;" id="f95"></div>
+                    <div style="opacity:0;" id="f96"></div>
+                    <div style="opacity:0;" id="f97"></div>
+                    <div style="opacity:0;" id="f98"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

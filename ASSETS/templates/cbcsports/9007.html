@@ -1,0 +1,135 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9007</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9007/9007.css">
+    <script>
+        function runTemplateUpdate() {
+            // Text Replacement
+            e('f0_gfx').innerHTML = htmlDecode(e('f0').innerText);
+            processElement('f0_gfx');
+            // Y-Axis
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+        }
+        
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+
+            goldBar.style.animation = "slideIn .5s ease-in-out forwards";
+            blackBar.style.animation = "slideIn .5s ease-in-out forwards .1s";
+        }
+
+        function runAnimationOUT() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+
+            blackBar.style.animation = "slideOut .5s ease-in-out forwards";
+            goldBar.style.animation = "slideOut .5s ease-in-out forwards .1s";
+        }
+
+        window.onload = function() {
+            adjustBarWidth9007();
+            observeTextLayer9007();
+        }
+
+        function adjustBarWidth9007() {
+            const textLayer = document.querySelector(".text-layer-9007");
+            const goldBar = document.querySelector("#gold-bar");
+            const blackBar = document.querySelector("#black-bar");
+
+            const textLayerWidth = textLayer.offsetWidth;
+            const textLayerStyle = window.getComputedStyle(textLayer);
+            const marginLeft = parseFloat(textLayerStyle.getPropertyValue('margin-left'));
+
+            const barWidth = textLayerWidth + marginLeft;
+            blackBar.style.width = barWidth + "px";
+            goldBar.style.width = (barWidth + 15) + "px";
+        }
+
+        function observeTextLayer9007() {
+            const textLayer = document.querySelector(".text-layer-9007");
+
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === "characterData" || mutation.type === "childList") {
+                        adjustBarWidth9007();
+                    }
+                });
+            });
+
+            const config = { childList: true, characterData: true, subtree: true };
+            observer.observe(textLayer, config);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9007",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "3",
+            "DataFields": [
+                {
+                    "field": "f0",
+                    "ftype": "textfield",
+                    "title": "Title",
+                    "value": "SINGLE LINE LOCATOR"
+                },
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="font-bg">
+
+            <div class="container">
+                <div id="custom-container">
+                    <div class="gold-bar" id="gold-bar" style="width: 100px"></div>
+                    <div class="black-bar" id="black-bar">
+                        <span class="text-layer-9007" id="f0_gfx">
+                            <!-- SINGLE LINE LOCATOR -->
+                        </span>
+                    </div>
+        
+                    <div style="display:none;"  id="f0"></div>
+                    <div style="opacity:0;"  id="f97"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

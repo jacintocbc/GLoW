@@ -1,0 +1,290 @@
+@font-face {
+    font-family: 'Gotham Bold';
+    src: url('../fonts/Gotham-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Gotham Book';
+    src: url('../fonts/Gotham-Book.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham Light';
+    src: url('../fonts/Gotham-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham Medium';
+    src: url('../fonts/Gotham-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+#wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+#font-bg {
+    position: relative;
+}
+
+.gif-animation {
+    opacity: 1;
+    animation: hideGif .5s ease-out forwards 1.2s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.container {
+    position: fixed;
+    height: 287px;
+    width: 100%;
+    bottom: -100%;
+    left: 0;
+    animation: animateMainIn .7s ease-out forwards .4s;
+    z-index: 800;
+    background: url('./BLACK_BG.png') no-repeat;
+    clip-path: inset(0 0 0 0);
+}
+
+.background {
+    background: url('./BLACK_BG.png') no-repeat;
+    background-size: cover;
+    background-position: 30% 86%;
+    position: relative;
+    left: 580px;
+    transition: all;
+    /* opacity: .9; */
+}
+
+.black-filter {
+    width: 100%;
+    height: 287px;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 9;
+}
+
+.main {
+    z-index: 10;
+    position: relative;
+    bottom: 287px;
+    width: 100%;
+    height: 287px;
+}
+
+.temp-red-bar {
+    position: absolute;
+    bottom: 285px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: #ad1010;
+}
+
+.red-bar {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 300px;
+    background-color: #ad1010;
+    animation: animateRedBarIn 1s ease-out forwards .4s;
+    transition: all 1s ease-in-out;
+    opacity: 1;
+}
+
+.red-bar-alt {
+    position: relative;
+    top: -198px;
+    width: 100%;
+    height: 15px;
+    background-color: #ad1010;
+    transition: all 1s ease-in-out;
+    display: none;
+    z-index: 1111;
+}
+
+.left-box {
+    width: 580px;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    height: inherit;
+    overflow: hidden;
+}
+
+.left-image {
+    width: 100%;
+    object-fit: cover;
+    object-position: 0px 0px;
+    position: absolute;
+    top: initial;
+    left: 150px;
+    animation: animateImageIn .9s ease-in forwards .5s;
+    transition: left;
+}
+
+.text-layer {
+    position: relative;
+    top: 10px;
+    left: 600px;
+    width: 68%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    z-index: 200;
+    pointer-events: none;
+    font-family: "Gotham Medium", sans-serif;
+    font-size: 55px;
+    color: white;
+    text-align: left;
+    z-index: 2000;
+}
+
+.title {
+    position: relative;
+    animation: animateTextIn 1s ease-out forwards .6s;
+    clip-path: inset(0 100% 0 0);
+}
+
+.subtitle {
+    font-size: 45px;
+}
+
+.note {
+    font-family: "Gotham Light", sans-serif;
+    font-weight: 600;
+    font-size: 34px;
+}
+
+.date {
+    color: rgb(255 225 108);
+    font-family: "Gotham Light", sans-serif;
+    font-size: 43px;
+    font-weight: 600;
+    display: inline-block;
+    width: max-content;
+}
+
+
+/* Main Card ----------------- */
+
+/* Animate In */
+@keyframes animateMainIn {
+    0% {
+        bottom: -100%;
+    }
+
+    100% {
+        bottom: 0;
+    }
+}
+
+/* Animate Out */
+@keyframes animateMainOut {
+    0% {
+        bottom: 0;
+        clip-path: inset(0 0 0 0);
+    }
+
+    100% {
+        bottom: 0;
+        clip-path: inset(100% 0 0 0);
+    }
+}
+
+/* Red Bar ------------------- */
+
+/* Animate In */
+@keyframes animateRedBarIn {
+    0% {
+        height: 300px
+    }
+
+    100% {
+        height: 15px;
+    }
+}
+
+/* Animate Out */
+@keyframes animateRedBarOut {
+    0% {
+        height: 15px;
+        top: -198px; 
+    }
+
+    100% {
+        height: 300px;
+        top: 150px;
+    }
+
+}
+
+@keyframes animateRedBarOutComplete {
+    0% {
+        height: 300px;
+        top: 150px;
+    }
+
+    100% {
+        height: 300px;
+        top: 500px;
+    }
+}
+
+/* Gif Animation ------------ */
+
+/* Hide */
+@keyframes hideGif {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Title -------------------- */
+
+/* Animate In */
+@keyframes animateTextIn {
+    0% {
+        clip-path: inset(0 100% 0 0);
+    }
+
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* Image -------------------- */
+
+/* Animate In */
+@keyframes animateImageIn {
+    0% {
+        left: 150px
+    }
+
+    100% {
+        left: 0;
+    }
+}

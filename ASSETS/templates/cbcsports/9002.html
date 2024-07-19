@@ -1,0 +1,225 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9002</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9002/9002.css">
+    <script>
+        function runTemplateUpdate() {
+            // Title / Subtitle / Header
+            e('f0_gfx').innerText = htmlDecode(e('f0').innerHTML);
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            processElement('f0_gfx');
+            processElement('f1_gfx');
+            // Social Media Logo Toggle
+            const twitter = document.getElementById('twitter1');
+            const instagram = document.getElementById('instagram1');
+            const text1 = document.getElementById('f1_gfx');
+            let socialIcon = document.getElementById('f70').innerText;
+            if (socialIcon == "Twitter") {
+                twitter.style.display = "initial";
+                instagram.style.display = "none";
+                text1.style.top = "initial";
+            } else if (socialIcon == "Instagram") {
+                twitter.style.display = "none";
+                instagram.style.display = "initial";
+                text1.style.top = "initial";
+            } else {
+                twitter.style.display = "none";
+                instagram.style.display = "none";
+                text1.style.top = "6px";
+            }
+            // Bottom / Left Property 
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+            wrapper.style.left = `${htmlDecode(e('f98').innerText)}px`;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+            const logo = document.querySelector('.logo-container');
+            const bottomBox = document.querySelector('.bottom-box');
+
+            logo.style.animation = "revealLeft .5s linear forwards";
+            goldBar.style.animation = "slideIn .5s ease-in-out forwards";
+            blackBar.style.animation = "slideIn .5s ease-in-out forwards .1s";
+            bottomBox.style.animation = "slideDownBottom .6s ease-in-out forwards .2s";
+        }
+
+        function runAnimationOUT() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+            const logo = document.querySelector('.logo-container');
+            const bottomBox = document.querySelector('.bottom-box');
+
+            goldBar.style.clipPath = "none";
+            blackBar.style.clipPath = "none";
+            logo.style.clipPath = "none";
+
+            logo.style.animation = "hideLeft .5s linear forwards";
+            blackBar.style.animation = "slideOut .4s ease-in-out forwards .2s";
+            goldBar.style.animation = "slideOut .4s ease-in-out forwards .3s";
+            bottomBox.style.animation = "slideUpBottom .3s ease-in forwards";
+        }
+
+        window.onload = function() {
+            adjustBarWidth9002();
+            observeTextLayer9002();
+        }
+
+        function adjustBarWidth9002() {
+            const textLayer = document.querySelector(".text-layer-9002");
+            const bottomBoxText = document.querySelector(".bottom-box .subtitle-text");
+            const goldBar = document.querySelector("#gold-bar");
+            const blackBar = document.querySelector("#black-bar");
+            const bottomBar = document.querySelector(".bottom-box");
+
+            const textLayerWidth = textLayer.offsetWidth;
+            const bottomBoxTextWidth = bottomBoxText.offsetWidth;
+
+            const textLayerStyle = window.getComputedStyle(textLayer);
+            const marginLeft = parseFloat(textLayerStyle.getPropertyValue('margin-left'));
+
+            // Use the maximum width of the two texts
+            const barWidth = Math.max(textLayerWidth, bottomBoxTextWidth) + marginLeft;
+
+            blackBar.style.width = barWidth + "px";
+            bottomBar.style.width = `${barWidth + 9}px`;
+            goldBar.style.width = (barWidth + 15) + "px";
+        }
+
+        function observeTextLayer9002() {
+            const textLayer = document.querySelector(".text-layer-9002");
+            const bottomBoxText = document.querySelector(".bottom-box .subtitle-text");
+
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === "characterData" || mutation.type === "childList") {
+                        adjustBarWidth9002();
+                    }
+                });
+            });
+
+            const config = { childList: true, characterData: true, subtree: true };
+            observer.observe(textLayer, config);
+            observer.observe(bottomBoxText, config);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9002",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "1",
+            "DataFields": [
+                {
+                    "field": "f0",
+                    "ftype": "textfield",
+                    "title": "Name",
+                    "value": "Firstname LASTNAME"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Social Media",
+                    "value": "@Twitterhandle"
+                },
+                {
+                    "field": "f70",
+                    "ftype": "dropdown",
+                    "title": "Social Icon",
+                    "value": "Twitter",
+                    "items": [
+                        {
+                            "text": "Twitter",
+                            "value": "Twitter"
+                        },
+                        {
+                            "text": "Instagram",
+                            "value": "Instagram"
+                        },
+                        {
+                            "text": "None",
+                            "value": "None"
+                        }
+                    ]
+                },
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f98",
+                    "ftype": "number",
+                    "title": "Main X-Axis",
+                    "value": "0"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="font-bg">
+
+            <div class="container">
+                <div id="custom-container">
+                    <div class="left-box">
+                        <img src="./9002/CBC.png" alt="CBC Gem logo" class="logo-container">
+                    </div>
+
+                    <div class="gold-bar" id="gold-bar" style="width: 100px"></div>
+                    <div class="bar-container">
+                        <div class="black-bar" id="black-bar">
+                            <span class="text-layer-9002" id="f0_gfx">
+                                <!-- Firstname LASTNAME -->
+                            </span>
+                        </div>
+                        <div class="bottom-box">
+                            <img src="./9002/twitter-x.png" alt="Gold Twitter X Logo" class="social-logo" id="twitter1">
+                            <img src="./9002/instagram.png" alt="Gold Instagram Logo" class="social-logo" id="instagram1">
+                            <span id="f1_gfx" class="subtitle-text">
+                                <!-- @Twitterhandle -->
+                            </span>
+                        </div>
+                    </div>
+        
+                    <div style="display:none;"  id="f0"></div>
+                    <div style="display:none;"  id="f1"></div>
+                    <div style="opacity:0;"  id="f70"></div>
+                    <div style="opacity:0;"  id="f97"></div>
+                    <div style="opacity:0;"  id="f98"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

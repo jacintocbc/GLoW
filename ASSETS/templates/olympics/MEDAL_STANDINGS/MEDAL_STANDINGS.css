@@ -1,0 +1,266 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Radio-Canada', sans-serif;
+}
+
+#wrapper {
+    height: 160px;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: flex-start;
+    color: white;
+}
+
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    height: 160px;
+    overflow: hidden;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateY(100%);
+}
+
+.v-align {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 60px;
+    margin: 0;
+}
+
+.title-page,
+.medal-page {
+    position: relative;
+    margin-left: 25px;
+}
+
+.title-page {
+    animation: inAnimation 1s forwards;
+}
+
+/* Keyframe animations */
+@keyframes inAnimation {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes outAnimation {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+/* Animation classes */
+.fade-in {
+    animation: inAnimation 0.5s forwards;
+}
+
+.fade-out {
+    animation: outAnimation 0.5s forwards;
+}
+
+/* Medal Page */
+.medal-page {
+    height: 160px;
+}
+
+.page-row {
+    display: flex;
+    height: 160px;
+}
+
+.country {
+    display: flex;
+    padding: 7.5px 15px;
+}
+
+.rank {
+    margin-right: 10px;
+}
+
+.flag {
+    height: 145px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flag-img {
+    height: 80px;
+}
+
+.name {
+    margin-left: 10px;
+}
+
+/* Medals */
+.medal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.medal {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+.gold {
+    background: linear-gradient(to bottom right, #FFD700, #FFB700);
+}
+
+.gold::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #FFDF00;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.silver {
+    background: linear-gradient(to bottom right, #C0C0C0, #A9A9A9);
+}
+
+.silver::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #D3D3D3;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.bronze {
+    background: linear-gradient(to bottom right, #CD7F32, #8B5A2B);
+}
+
+.bronze::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #D2691E;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.medal span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Overlapping Medals */
+.overlapping-medals {
+    width: 65px;
+    height: 65px;
+    position: relative;
+    left: 50px;
+    top: 38px;
+}
+
+.overlapping-medals .medal {
+    width: 65px;
+    height: 65px;
+}
+
+.gold-overlap {
+    background: linear-gradient(to bottom right, #FFD700, #FFB700);
+    z-index: 3;
+    top: -120px;
+    left: -20px;
+}
+
+.gold-overlap::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #FFDF00;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.silver-overlap {
+    background: linear-gradient(to bottom right, #C0C0C0, #A9A9A9);
+    z-index: 2;
+    top: -55px;
+    left: 0px;
+}
+
+.silver-overlap::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #D3D3D3;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.bronze-overlap {
+    background: linear-gradient(to bottom right, #CD7F32, #8B5A2B);
+    z-index: 1;
+    top: 10px;
+    left: 20px;
+}
+
+.bronze-overlap::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #D2691E;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.total-count {
+    position: absolute;
+    top: 5.5px;
+    left: 145px;
+}

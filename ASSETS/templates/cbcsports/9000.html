@@ -1,0 +1,272 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9000</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9000/9000.css">
+    <script src="./9000/flagpath.js"></script>
+    <script>
+        function runTemplateUpdate() {
+            // Flag Change
+            e('f68_gfx').innerText = htmlDecode(e('f68').innerText);
+            const flagNameText = htmlDecode(e('f68').innerText);
+            const flagName = document.querySelector('.flag-name');
+            const flag = document.querySelector('.flag-container');
+            const topBox = document.querySelector('.top-box');
+            const courtesyText = document.querySelector('.courtesy-text');
+            const fileList = flagList;
+            const selectedFlagFile = fileList.find(flagItem => flagItem.slice(13, 16) == flagNameText);
+            if (selectedFlagFile) {
+                flag.src = selectedFlagFile;
+                flagName.textContent = htmlDecode(e('f68').innerText);
+                flag.style.display = "initial";
+                flagName.style.display = "initial";
+                topBox.style.left = "22px";
+                courtesyText.style.marginLeft = "48px";
+            } else {
+                flag.style.display = "none";
+                flagName.style.display = "none";
+                topBox.style.left = "15px";
+                courtesyText.style.marginLeft = "55px";
+            }          
+            // Title / Subtitle / Header
+            e('f68_gfx').innerText = htmlDecode(e('f68').innerHTML);
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
+            e('f3_gfx').innerText = htmlDecode(e('f3').innerHTML);
+            processElement('f68_gfx');
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            processElement('f3_gfx');
+            // Upper Tab / No Upper Tab
+            const upperTab = document.querySelector('.top-box-container');
+            let tabStatus = document.getElementById('f70').innerText;
+            if (tabStatus == "No Upper Tab") {
+                upperTab.style.display = "none";
+            } else {
+                upperTab.style.display = "initial";
+            }
+            // Bottom / Left Property 
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+            wrapper.style.left = `${htmlDecode(e('f98').innerText)}px`;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+            const logo = document.querySelector('.flag-container');
+            const bottomBox = document.querySelector('.bottom-box');
+            const topBox = document.querySelector('.top-box');
+
+            logo.style.animation = "revealLeft .5s linear forwards";
+            goldBar.style.animation = "slideIn .5s ease-in-out forwards .1s";
+            blackBar.style.animation = "slideIn .5s ease-in-out forwards .2s";
+            bottomBox.style.animation = "slideDownBottom .6s ease-in-out forwards .2s";
+            topBox.style.animation = "slideUpTop .5s ease-in forwards .2s";
+        }
+
+        function runAnimationOUT() {
+            const goldBar = document.getElementById('gold-bar');
+            const blackBar = document.getElementById('black-bar');
+            const logo = document.querySelector('.flag-container');
+            const bottomBox = document.querySelector('.bottom-box');
+            const topBox = document.querySelector('.top-box');
+
+            goldBar.style.clipPath = "polygon(15px 0, 100% 0, 100% 100%, 0% 100%)";
+            blackBar.style.clipPath = "polygon(15px 0, 100% 0, 100% 100%, 0% 100%)";
+            logo.style.clipPath = "none";
+
+            logo.style.animation = "hideLeft .5s linear forwards";
+            blackBar.style.animation = "slideOut .4s ease-in-out forwards .2s";
+            goldBar.style.animation = "slideOut .4s ease-in-out forwards .3s";
+            bottomBox.style.animation = "slideUpBottom .3s ease-in forwards";
+            topBox.style.animation = "slideDownTop .3s ease-in forwards";
+        }
+
+        window.onload = function() {
+            adjustBarWidth9000();
+            observeTextLayer9000();
+        }
+
+        function adjustBarWidth9000() {
+            const textLayer = document.querySelector(".text-layer-9000");
+            const bottomBoxText = document.querySelector(".bottom-box .subtitle-text");
+            const goldBar = document.querySelector("#gold-bar");
+            const blackBar = document.querySelector("#black-bar");
+            const bottomBar = document.querySelector(".bottom-box");
+
+            const textLayerWidth = textLayer.offsetWidth;
+            const bottomBoxTextWidth = bottomBoxText.offsetWidth;
+
+            const textLayerStyle = window.getComputedStyle(textLayer);
+            const marginLeft = parseFloat(textLayerStyle.getPropertyValue('margin-left'));
+
+            // Use the maximum width of the two texts
+            const barWidth = Math.max(textLayerWidth, bottomBoxTextWidth) + marginLeft;
+
+            blackBar.style.width = barWidth + "px";
+            bottomBar.style.width = `${barWidth + 9}px`;
+            goldBar.style.width = (barWidth + 15) + "px";
+        }
+
+
+        function observeTextLayer9000() {
+            const textLayer = document.querySelector(".text-layer-9000");
+            const bottomBoxText = document.querySelector(".bottom-box .subtitle-text");
+
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === "characterData" || mutation.type === "childList") {
+                        adjustBarWidth9000();
+                    }
+                });
+            });
+
+            const config = { childList: true, characterData: true, subtree: true };
+            observer.observe(textLayer, config);
+            observer.observe(bottomBoxText, config);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9000",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "0",
+            "DataFields": [
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Name",
+                    "value": "Firstname LASTNAME"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Subtitle",
+                    "value": "HIGH PERFORMANCE DIRECTOR, SKATE CANADA"
+                },
+                {
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Courtesy",
+                    "value": "UPPER TAB COURTESY GOES HERE"
+                },
+                {
+                    "field": "f70",
+                    "ftype": "dropdown",
+                    "title": "Upper Courtesy",
+                    "value": "Upper Tab",
+                    "items": [
+                        {
+                            "text": "No Upper Tab",
+                            "value": "No Upper Tab"
+                        },
+                        {
+                            "text": "Upper Tab",
+                            "value": "Upper Tab"
+                        }
+                    ]
+                },
+                {
+                    "field": "f68",
+                    "ftype": "textfield",
+                    "title": "Flag",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f80",
+                    "ftype": "filelist",
+                    "title": "Flag Reference",
+                    "assetfolder" : "./9000/flags",
+                    "extension" : "png",
+                    "value": "./9000/flags/CAN - Canada.png"
+                }, 
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f98",
+                    "ftype": "number",
+                    "title": "Main X-Axis",
+                    "value": "0"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="font-bg">
+
+            <div class="container">
+                <div id="custom-container">
+                    <div class="left-box">
+                        <img src="./9000/opacity.png" alt="Flag Image" class="flag-container">
+                    </div>
+
+                    <div class="gold-bar" id="gold-bar" style="width: 100px"></div>
+                    <div class="bar-container">
+                        <div class="black-bar" id="black-bar">
+                            <div id="f68_gfx" class="flag-name">CAN</div>
+                            <span class="text-layer-9000" id="f1_gfx">
+                                <!-- Firstname LASTNAME -->
+                            </span>
+                        </div>
+                        <div class="bottom-box">
+                            <span id="f2_gfx" class="subtitle-text">
+                                <!-- HIGH PERFORMANCE DIRECTOR, SKATE CANADA -->
+                            </span>
+                        </div>
+                        <div class="top-box-container">
+                            <div class="top-box">
+                                <span id="f3_gfx" class="courtesy-text">
+                                    <!-- UPPER TAB COURTESY GOES HERE -->
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div style="display:none;"  id="f68"></div>
+                    <div style="display:none;"  id="f1"></div>
+                    <div style="display:none;"  id="f2"></div>
+                    <div style="display:none;"  id="f3"></div>
+                    <div style="opacity:0;"  id="f70"></div>
+                    <div style="opacity:0;"  id="f80"></div>
+                    <div style="opacity:0;"  id="f97"></div>
+                    <div style="opacity:0;"  id="f98"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

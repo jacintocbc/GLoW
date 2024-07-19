@@ -1,0 +1,1 @@
+// Created to ensure folder is created by default, but doesn't contain real templates. 

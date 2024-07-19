@@ -1,0 +1,193 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9115</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9115/9115.css">
+    <script>
+        function runTemplateUpdate() {
+            // Text Replacements
+            e('f0_gfx').innerHTML = htmlDecode(e('f0').innerText);
+            e('f1_gfx').innerHTML = htmlDecode(e('f1').innerText);
+            e('f2_gfx').innerHTML = htmlDecode(e('f2').innerText);
+            e('f3_gfx').innerHTML = htmlDecode(e('f3').innerText);
+            processElement('f0_gfx');
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            processElement('f3_gfx');
+            for (let i = 0; i <= 3; i++) {
+                let text = htmlDecode(e('f' + i).innerHTML);
+                text = text.replace(/\|/g, '<br />');
+                e('f' + i + '_gfx').innerHTML = text;
+            }
+            // Image Settings
+            const leftImage = document.querySelector('.left-image');
+            const leftImageSrc = htmlDecode(e('f80').innerText);
+            if (leftImageSrc) leftImage.src = leftImageSrc;
+            leftImage.style.width = `${htmlDecode(e('f94').innerText)}%`;
+            const horizontal = `${htmlDecode(e('f95').innerText)}px`;
+            const vertical = `${htmlDecode(e('f96').innerText)}px`;
+            leftImage.style.objectPosition = `${horizontal} ${vertical}`;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const gifAnimation = document.querySelector('.gif-animation');
+            const container = document.querySelector('.container');
+            const redBar = document.querySelector('.red-bar');
+            const leftImage = document.querySelector('.left-image');
+            const title = document.querySelector('.title');
+
+            gifAnimation.style.opacity = "1";
+            gifAnimation.src = "./9115/bigpromo.png";
+            container.style.animation = "animateMainIn .7s ease-out forwards .4s";
+            redBar.style.animation = "animateRedBarIn 1s ease-out forwards .4s";
+            leftImage.style.animation = "animateImageIn .9s ease-in forwards .5s";
+            title.style.animation = "animateTextIn 1s ease-out forwards .6s";
+        }
+
+        function runAnimationOUT() {
+            const container = document.querySelector('.container');
+            const redBar = document.querySelector('.red-bar');
+            const redBarAlt = document.querySelector('.red-bar-alt');
+            const gifAnimation = document.querySelector('.gif-animation');
+
+            gifAnimation.style.opacity = "0";
+            gifAnimation.src = "./9000/opacity.png";
+            redBar.style.opacity = "0";
+            redBarAlt.style.display = "block";
+            container.style.animation = "animateMainOut 1s ease-out forwards";
+            redBarAlt.style.animation = "animateRedBarOut .5s ease-in forwards, animateRedBarOutComplete .5s ease-in forwards .7s";
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9115",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "6",
+            "DataFields": [
+                {
+                    "field": "f0",
+                    "ftype": "textfield",
+                    "title": "Title",
+                    "value": "EVENT TITLE"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Subtitle",
+                    "value": "SUBTITLE"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Note",
+                    "value": "XXXXXXXXXXXX"
+                },
+                {
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Date",
+                    "value": "NEXT SATURDAY, 2:30 PM ET / 11:30 AM PT"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f80",
+                    "ftype": "filelist",
+                    "title": "Images",
+                    "assetfolder": "./images",
+                    "extension": "jpg",
+                    "value": "./images/cbc-sports.jpg"
+                },
+                {
+                    "field": "f94",
+                    "ftype": "number",
+                    "title": "Zoom",
+                    "value": "100"
+                },
+                {
+                    "field": "f95",
+                    "ftype": "number",
+                    "title": "IMG X-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f96",
+                    "ftype": "number",
+                    "title": "IMG Y-Axis",
+                    "value": "0"
+                },
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="font-bg">
+            <img src="./9115/bigpromo.png" alt="Promo Animation" class="gif-animation">
+            <div class="red-bar-alt"></div>
+            <div class="container" id="container">
+                <div class="background">
+                    <div class="black-filter"></div>
+                </div>
+                <div class="main">
+                    <div class="red-bar"></div>
+                    <div class="left-box">
+                        <img src="./images/cbc-sports.jpg" alt="left image" class="left-image">
+                    </div>
+                    <div class="text-layer" id="text-layer">
+                        <div id="f0_gfx" class="title">
+                            <!-- EVENT TITLE -->
+                        </div>
+                        <div id="f1_gfx" class="subtitle">
+                            <!-- SUBTITLE -->
+                        </div>
+                        <div id="f2_gfx" class="note">
+                            <!-- XXXXXXXXXXXX -->
+                        </div>
+                        <div id="f3_gfx" class="date">
+                            <!-- NEXT SATURDAY, 2:30 PM ET / 11:30 AM PT -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:none;" id="f0"></div>
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="display:none;" id="f3"></div>
+            <div style="opacity:0;" id="f80"></div>
+            <div style="opacity:0;" id="f94"></div>
+            <div style="opacity:0;" id="f95"></div>
+            <div style="opacity:0;" id="f96"></div>
+        </div>
+
+    </div>
+</body>
+
+</html>

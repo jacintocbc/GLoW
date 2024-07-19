@@ -1,0 +1,343 @@
+@font-face {
+    font-family: 'Gotham Bold';
+    src: url('../fonts/Gotham-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Gotham Book';
+    src: url('../fonts/Gotham-Book.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham Light';
+    src: url('../fonts/Gotham-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham Medium';
+    src: url('../fonts/Gotham-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+#wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#font-bg {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.container {
+    position: absolute;
+    bottom: 150px;
+    left: 0;
+}
+
+#custom-container {
+    position: absolute;
+    bottom: 0px;
+}
+
+.left-box {
+    position: absolute;
+    z-index: 10;
+    height: 146.5px;
+    width: 195px;
+    overflow: hidden;
+    animation: slideImageIn .5s ease-in-out forwards .3s;
+}
+
+.left-image {
+    width: 189%;
+    object-fit: cover;
+    object-position: -101px -4px;
+}
+
+.bar-container {
+    position: relative;
+    width: max-content;
+}
+
+.gold-bar {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    z-index: 1;
+    background: url(../9040/gold-bar.png) no-repeat;
+    height: 105px;
+    width: 762px;
+    background-size: cover;
+    background-position: top right;
+    clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+    animation: slideInGold .5s ease-in-out forwards;
+    opacity: 0;
+}
+
+.black-bar {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    display: inline-block;
+    background: #040404;
+    width: 750px;
+    max-width: 50vw;
+    height: 107px;
+    clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+    animation: slideIn .5s ease-in-out forwards .1s;
+}
+
+.text-layer-9040 {
+    pointer-events: none;
+    color: white;
+    font-family: "Gotham Light", sans-serif;
+    font-weight: 600;
+    font-size: 38px;
+    z-index: 3;
+    padding-right: 60px;
+    display: inline;
+    position: relative;
+    margin-left: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.top {
+    top: 10px;
+}
+
+.bottom {
+    top: 15px;
+}
+
+.time {
+    color: rgb(255 225 108);
+    width: max-content;
+    display: inline-block;
+}
+
+.bottom-box {
+    height: 41px;
+    width: 759px;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0;
+    left: -9px;
+    opacity: 0;
+    animation: slideDownBottom .5s ease-in forwards .2s;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.subtitle-text {
+    pointer-events: none;
+    color: white;
+    font-family: "Gotham Light", sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    z-index: 3;
+    padding-right: 60px;
+    display: inline;
+    position: relative;
+    top: 7px;
+    margin-left: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.top-box {
+    width: 507px;
+    height: 41px;
+    background: rgba(243, 249, 255, 0.9);
+    position: absolute;
+    top: -40px;
+    left: 243px;
+    opacity: 0;
+    clip-path: polygon(9px 0%, 100% 0%, 100% 100%, 0% 100%);
+    animation: slideUpTop .3s ease-in forwards .4s;
+    display: inline-block;
+}
+
+.courtesy-text {
+    pointer-events: none;
+    color: #333;
+    font-family: "Gotham Light", sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    display: inline;
+    position: relative;
+    top: 3.5px;
+    margin-left: 19px;
+    padding-right: 30px;
+}
+
+/* Main Bar ---------------- */
+
+/* Animate In */
+@keyframes slideIn {
+    0% {
+        clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+    }
+
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+}
+
+@keyframes slideInGold {
+    0% {
+        clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+        opacity: 0;
+    }
+    55% {
+        opacity: 1;
+    }
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        opacity: 1;
+    }
+}
+
+/* Animate Out */
+@keyframes slideOut {
+    0% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    100% {
+        clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+    }
+}
+
+@keyframes slideOutGold {
+    0% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        opacity: 1;
+    }
+    100% {
+        clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+        opacity: 1;
+    }
+}
+
+/* Bottom Bar -------------- */
+
+/* Animate In */
+@keyframes slideDownBottom {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    55% {
+        opacity: 1;
+    }
+    100% {
+        top: 106px;
+        opacity: 1;
+    }
+}
+
+/* Animate Out */
+@keyframes slideUpBottom {
+    0% {
+        top: 106px;
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    100% {
+        top: 0;
+        opacity: 0;
+    }
+}
+
+/* Top Bar ----------------- */
+
+/* Animate In */
+@keyframes slideUpTop {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    100% {
+        top: -40px;
+        opacity: 1;
+    }
+}
+
+/* Animate Out */
+@keyframes slideDownTop {
+    0% {
+        top: -40px;
+        opacity: 1;
+    }
+
+    98% {
+        opacity: 1;
+    }
+
+    99% {
+        opacity: 0;
+    }
+
+    100% {
+        top: 0;
+        opacity: 0;
+    }
+}
+
+/* Left Box -------------- */
+
+/* Animate In */
+@keyframes slideImageIn {
+    0% {
+        left: -200px;
+    }
+
+    100% {
+        left: 47px;
+    }
+}
+
+/* Animate Out */
+@keyframes slideImageOut {
+    0% {
+        left: 47px;
+    }
+
+    100% {
+        left: -200px;
+    }
+}

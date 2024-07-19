@@ -1,0 +1,851 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympic Medal Standings</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./MEDAL_STANDINGS/MEDAL_STANDINGS.css">
+    <script>
+        let isLooping = true;
+        function runTemplateUpdate() {
+            // Day Input
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            // is Looping Checkbox
+            isLoopingCheckbox = htmlDecode(e('f68').innerHTML);
+            isLooping = isLoopingCheckbox == 1 ? true : false;
+        }
+
+        function runAnimationIN() {
+
+        }
+
+        function runAnimationOUT() {
+            const wrapper = document.querySelector('#wrapper');
+            wrapper.style.display = 'none';
+        }
+
+        window.onload = function () {
+            preparePages();
+        }
+
+        function preparePages() {
+            setTimeout(() => {
+                const pagesContainer = document.getElementById('pages');
+                const titlePage = document.querySelector('.title-page');
+                pagesContainer.innerHTML = '';
+
+                const transitionDuration = htmlDecode(e('f81').innerHTML);
+                const transitionDurationNumber = +transitionDuration * 1000;
+
+                const createPage = (index) => {
+                    const rank = document.getElementById(`f${index * 6 - 4}`).innerText.trim();
+                    const countryCode = document.getElementById(`f${index * 6 - 3}`).innerText.trim();
+                    const goldCount = document.getElementById(`f${index * 6 - 2}`).innerText.trim();
+                    const silverCount = document.getElementById(`f${index * 6 - 1}`).innerText.trim();
+                    const bronzeCount = document.getElementById(`f${index * 6}`).innerText.trim();
+                    const totalCount = document.getElementById(`f${index * 6 + 1}`).innerText.trim();
+
+                    if (!rank || !countryCode) {
+                        return null;
+                    }
+
+                    // Page
+                    const page = document.createElement('div');
+                    page.className = 'page medal-page';
+                    page.id = `page${index}`;
+
+                    const pageRow = document.createElement('div');
+                    pageRow.className = 'page-row';
+
+                    const countryDiv = document.createElement('div');
+                    countryDiv.className = 'country';
+
+                    // Rank
+                    const rankDiv = document.createElement('div');
+                    rankDiv.className = 'rank v-align';
+                    const rankH1 = document.createElement('h1');
+                    rankH1.id = `f${index * 6 - 4}_gfx`;
+                    rankH1.textContent = rank;
+                    rankDiv.appendChild(rankH1);
+
+                    // Flag
+                    const flagDiv = document.createElement('div');
+                    flagDiv.className = 'flag';
+                    const flagImg = document.createElement('img');
+                    flagImg.src = `./MEDAL_STANDINGS/flags/${countryCode}.jpg`;
+                    flagImg.alt = "Flag Image";
+                    flagImg.className = 'flag-img';
+                    flagImg.id = `flag_${index}`;
+                    flagDiv.appendChild(flagImg);
+
+                    // Name
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'name v-align';
+                    const nameH1 = document.createElement('h1');
+                    nameH1.id = `f${index * 6 - 3}_gfx`;
+                    nameH1.className = 'flag-name';
+                    nameH1.textContent = countryCode;
+                    nameDiv.appendChild(nameH1);
+
+                    countryDiv.appendChild(rankDiv);
+                    countryDiv.appendChild(flagDiv);
+                    countryDiv.appendChild(nameDiv);
+
+                    // Medal Container
+                    const medalContainer = document.createElement('div');
+                    medalContainer.className = 'medal-container';
+
+                    // Gold Medals
+                    const goldMedal = document.createElement('div');
+                    goldMedal.className = 'medal gold';
+                    const goldSpan = document.createElement('span');
+                    goldSpan.textContent = 'G';
+                    goldMedal.appendChild(goldSpan);
+                    const goldCountH1 = document.createElement('h1');
+                    goldCountH1.className = 'gold-count';
+                    goldCountH1.id = `f${index * 6 - 2}_gfx`;
+                    goldCountH1.textContent = goldCount;
+
+                    // Silver Medals
+                    const silverMedal = document.createElement('div');
+                    silverMedal.className = 'medal silver';
+                    const silverSpan = document.createElement('span');
+                    silverSpan.textContent = 'S';
+                    silverMedal.appendChild(silverSpan);
+                    const silverCountH1 = document.createElement('h1');
+                    silverCountH1.className = 'silver-count';
+                    silverCountH1.id = `f${index * 6 - 1}_gfx`;
+                    silverCountH1.textContent = silverCount;
+
+                    // Bronze Medals
+                    const bronzeMedal = document.createElement('div');
+                    bronzeMedal.className = 'medal bronze';
+                    const bronzeSpan = document.createElement('span');
+                    bronzeSpan.textContent = 'B';
+                    bronzeMedal.appendChild(bronzeSpan);
+                    const bronzeCountH1 = document.createElement('h1');
+                    bronzeCountH1.className = 'bronze-count';
+                    bronzeCountH1.id = `f${index * 6}_gfx`;
+                    bronzeCountH1.textContent = bronzeCount;
+
+                    medalContainer.appendChild(goldMedal);
+                    medalContainer.appendChild(goldCountH1);
+                    medalContainer.appendChild(silverMedal);
+                    medalContainer.appendChild(silverCountH1);
+                    medalContainer.appendChild(bronzeMedal);
+                    medalContainer.appendChild(bronzeCountH1);
+
+                    // Total Medals
+                    const overlappingMedals = document.createElement('div');
+                    overlappingMedals.className = 'overlapping-medals';
+                    const bronzeOverlap = document.createElement('div');
+                    bronzeOverlap.className = 'medal bronze-overlap';
+                    const silverOverlap = document.createElement('div');
+                    silverOverlap.className = 'medal silver-overlap';
+                    const goldOverlap = document.createElement('div');
+                    goldOverlap.className = 'medal gold-overlap';
+                    const totalCountH1 = document.createElement('h1');
+                    totalCountH1.className = 'total-count';
+                    totalCountH1.id = `f${index * 6 + 1}_gfx`;
+                    totalCountH1.textContent = totalCount;
+
+                    overlappingMedals.appendChild(bronzeOverlap);
+                    overlappingMedals.appendChild(silverOverlap);
+                    overlappingMedals.appendChild(goldOverlap);
+                    overlappingMedals.appendChild(totalCountH1);
+
+                    pageRow.appendChild(countryDiv);
+                    pageRow.appendChild(medalContainer);
+                    pageRow.appendChild(overlappingMedals);
+
+                    page.appendChild(pageRow);
+
+                    return page;
+                }
+
+                const pages = [];
+
+                for (let i = 1; i <= 10; i++) {
+                    const page = createPage(i);
+                    if (page) {
+                        pages.push(page);
+                    }
+                }
+
+                const displayPages = () => {
+                    let currentPageIndex = 0;
+                    const totalDuration = transitionDurationNumber * (pages.length + 3) + 2000;
+
+                    const showPage = (page) => {
+                        page.classList.add('fade-in');
+                        page.style.display = 'flex';
+                        pagesContainer.appendChild(page);
+
+                        setTimeout(() => {
+                            page.classList.remove('fade-in');
+                            page.classList.add('fade-out');
+
+                            setTimeout(() => {
+                                page.style.display = 'none';
+                                page.classList.remove('fade-out');
+
+                                currentPageIndex++;
+                                if (currentPageIndex < pages.length) {
+                                    showPage(pages[currentPageIndex]);
+                                } else if (isLooping) {
+                                    currentPageIndex = 0;
+                                    titlePage.style.display = 'flex';
+                                    titlePage.classList.add('fade-in');
+                                    setTimeout(() => {
+                                        titlePage.classList.remove('fade-in');
+                                        titlePage.classList.add('fade-out');
+                                        setTimeout(() => {
+                                            titlePage.style.display = 'none';
+                                            titlePage.classList.remove('fade-out');
+                                            showPage(pages[currentPageIndex]);
+                                        }, 500);
+                                    }, transitionDurationNumber);
+                                } else {
+                                    runAnimationOUT();
+                                }
+                            }, 500); // Duration of fade-out animation
+                        }, transitionDurationNumber); // Duration to stay on screen
+                    };
+
+                    setTimeout(() => {
+                        titlePage.classList.add('fade-out');
+
+                        setTimeout(() => {
+                            titlePage.style.display = 'none';
+                            titlePage.classList.remove('fade-out');
+
+                            // Show the first page
+                            if (pages.length > 0) {
+                                showPage(pages[0]);
+                            }
+                        }, 500); // Duration of fade-out animation
+                    }, transitionDurationNumber); // Duration to stay on screen
+
+                    // Update Total Out Value
+                    // console.log('Total on air time: ' + totalDuration + ' ms');
+                    const totalOutElement = e('f67');
+                    totalOutElement.innerText = totalDuration;
+                };
+
+                // Start the animation sequence
+                displayPages();
+            }, 10);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Medal Standings",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "4",
+            "DataFields": [
+                {
+                    "field": "f81",
+                    "ftype": "textfield",
+                    "title": "Transition (s)",
+                    "value": "5"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Day",
+                    "value": "Day 1"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 1"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "1."
+                },
+                {
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f4",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f5",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f6",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f7",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 2"
+                },
+                {
+                    "field": "f8",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "2."
+                },
+                {
+                    "field": "f9",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f10",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f11",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f12",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f13",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 3"
+                },
+                {
+                    "field": "f14",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "3."
+                },
+                {
+                    "field": "f15",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f16",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f17",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f18",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f19",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 4"
+                },
+                {
+                    "field": "f20",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "4."
+                },
+                {
+                    "field": "f21",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f22",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f23",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f24",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f25",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 5"
+                },
+                {
+                    "field": "f26",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "5."
+                },
+                {
+                    "field": "f27",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f28",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f29",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f30",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f31",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 6"
+                },
+                {
+                    "field": "f32",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "6."
+                },
+                {
+                    "field": "f33",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f34",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f35",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f36",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f37",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 7"
+                },
+                {
+                    "field": "f38",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "7."
+                },
+                {
+                    "field": "f39",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f40",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f41",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f42",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f43",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 8"
+                },
+                {
+                    "field": "f44",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "8."
+                },
+                {
+                    "field": "f45",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f46",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f47",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f48",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f49",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 9"
+                },
+                {
+                    "field": "f50",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "9."
+                },
+                {
+                    "field": "f51",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f52",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f53",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f54",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f55",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Country 10"
+                },
+                {
+                    "field": "f56",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "10."
+                },
+                {
+                    "field": "f57",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f58",
+                    "ftype": "textfield",
+                    "title": "Gold Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f59",
+                    "ftype": "textfield",
+                    "title": "Silver Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f60",
+                    "ftype": "textfield",
+                    "title": "Bronze Count",
+                    "value": "10"
+                },
+                {
+                    "field": "f61",
+                    "ftype": "textfield",
+                    "title": "Total Count",
+                    "value": "10"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f80",
+                    "ftype": "filelist",
+                    "title": "Flag Reference",
+                    "assetfolder": "./MEDAL_STANDINGS/flags",
+                    "extension": "jpg",
+                    "value": "./MEDAL_STANDINGS/flags/CAN.jpg"
+                },
+                {
+                    "field": "f67",
+                    "ftype": "hidden",
+                    "title": "Total Out",
+                    "value": "57000"
+                },
+                {
+                    "field": "f68",
+                    "ftype": "checkbox",
+                    "title": "Loop Graphic",
+                    "value": "1",
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <!-- Title Page -->
+            <div class="page v-align title-page">
+                <h1>Medal Standings - <span id="f1_gfx">Day 1</span></h1>
+            </div>
+            <div id="pages">
+                <!-- Populated Dynamically -->
+
+                <!-- Page 1 -->
+                <div class="page medal-page" id="page1">
+                    <div class="page-row">
+                        <!-- Country -->
+                        <div class="country">
+                            <!-- Rank -->
+                            <div class="rank v-align">
+                                <h1 id="f2_gfx">20.</h1>
+                            </div>
+                            <!-- Flag -->
+                            <div class="flag">
+                                <img src="./MEDAL_STANDINGS/flags/CAN.jpg" alt="Flag Image" class="flag-img">
+                            </div>
+                            <!-- Name -->
+                            <div class="name v-align">
+                                <h1 id="f3_gfx" class="flag-name">CAN</h1>
+                            </div>
+                        </div>
+                        <!-- Medals -->
+                        <div class="medal-container">
+                            <!-- Gold -->
+                            <div class="medal gold"><span>G</span></div>
+                            <div>
+                                <h1 class="gold-count" id="f4_gfx">10</h1>
+                            </div>
+                            <!-- Silver -->
+                            <div class="medal silver"><span>S</span></div>
+                            <div>
+                                <h1 class="silver-count" id="f5_gfx">19</h1>
+                            </div>
+                            <!-- Bronze -->
+                            <div class="medal bronze"><span>B</span></div>
+                            <div>
+                                <h1 class="bronze-count" id="f6_gfx">5</h1>
+                            </div>
+                        </div>
+                        <!-- Overlapping Medals -->
+                        <div class="overlapping-medals">
+                            <div class="medal bronze-overlap"></div>
+                            <div class="medal silver-overlap"></div>
+                            <div class="medal gold-overlap"></div>
+                            <!-- Total -->
+                            <div>
+                                <h1 class="total-count" id="f7_gfx">34</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="display:none;" id="f3"></div>
+            <div style="display:none;" id="f4"></div>
+            <div style="display:none;" id="f5"></div>
+            <div style="display:none;" id="f6"></div>
+            <div style="display:none;" id="f7"></div>
+            <div style="display:none;" id="f8"></div>
+            <div style="display:none;" id="f9"></div>
+            <div style="display:none;" id="f10"></div>
+            <div style="display:none;" id="f11"></div>
+            <div style="display:none;" id="f12"></div>
+            <div style="display:none;" id="f13"></div>
+            <div style="display:none;" id="f14"></div>
+            <div style="display:none;" id="f15"></div>
+            <div style="display:none;" id="f16"></div>
+            <div style="display:none;" id="f17"></div>
+            <div style="display:none;" id="f18"></div>
+            <div style="display:none;" id="f19"></div>
+            <div style="display:none;" id="f20"></div>
+            <div style="display:none;" id="f21"></div>
+            <div style="display:none;" id="f22"></div>
+            <div style="display:none;" id="f23"></div>
+            <div style="display:none;" id="f24"></div>
+            <div style="display:none;" id="f25"></div>
+            <div style="display:none;" id="f26"></div>
+            <div style="display:none;" id="f27"></div>
+            <div style="display:none;" id="f28"></div>
+            <div style="display:none;" id="f29"></div>
+            <div style="display:none;" id="f30"></div>
+            <div style="display:none;" id="f31"></div>
+            <div style="display:none;" id="f32"></div>
+            <div style="display:none;" id="f33"></div>
+            <div style="display:none;" id="f34"></div>
+            <div style="display:none;" id="f35"></div>
+            <div style="display:none;" id="f36"></div>
+            <div style="display:none;" id="f37"></div>
+            <div style="display:none;" id="f38"></div>
+            <div style="display:none;" id="f39"></div>
+            <div style="display:none;" id="f40"></div>
+            <div style="display:none;" id="f41"></div>
+            <div style="display:none;" id="f42"></div>
+            <div style="display:none;" id="f43"></div>
+            <div style="display:none;" id="f44"></div>
+            <div style="display:none;" id="f45"></div>
+            <div style="display:none;" id="f46"></div>
+            <div style="display:none;" id="f47"></div>
+            <div style="display:none;" id="f48"></div>
+            <div style="display:none;" id="f49"></div>
+            <div style="display:none;" id="f50"></div>
+            <div style="display:none;" id="f51"></div>
+            <div style="display:none;" id="f52"></div>
+            <div style="display:none;" id="f53"></div>
+            <div style="display:none;" id="f54"></div>
+            <div style="display:none;" id="f55"></div>
+            <div style="display:none;" id="f56"></div>
+            <div style="display:none;" id="f57"></div>
+            <div style="display:none;" id="f58"></div>
+            <div style="display:none;" id="f59"></div>
+            <div style="display:none;" id="f60"></div>
+            <div style="display:none;" id="f61"></div>
+            <div style="opacity:0;" id="f67"></div>
+            <div style="opacity:0;" id="f68"></div>
+            <div style="opacity:0;" id="f80"></div>
+            <div style="opacity:0;" id="f81"></div>
+        </div>
+    </div>
+</body>
+
+</html>
