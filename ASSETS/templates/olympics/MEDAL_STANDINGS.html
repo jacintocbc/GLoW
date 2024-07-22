@@ -23,8 +23,12 @@
         }
 
         function runAnimationOUT() {
-            const wrapper = document.querySelector('#wrapper');
-            wrapper.style.display = 'none';
+            const container = document.querySelector('.container');
+            container.classList.add('fade-out');
+            setTimeout(() => {
+                const wrapper = document.querySelector('#wrapper');
+                wrapper.style.display = 'none';
+            }, 750);
         }
 
         window.onload = function () {
