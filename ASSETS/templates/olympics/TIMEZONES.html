@@ -50,18 +50,6 @@
                 hour12: false
             }).format(new Date());
 
-            const parisDate = new Date().toLocaleDateString('en-US', { timeZone: 'Europe/Paris' });
-            const torontoDate = new Date().toLocaleDateString('en-US', { timeZone: 'America/Toronto' });
-
-            const parisDay = new Date(parisDate).getDate();
-            const torontoDay = new Date(torontoDate).getDate();
-
-            const dayAheadHeader = document.createElement('h1');
-            dayAheadHeader.className = 'time day-ahead v-align';
-            dayAheadHeader.textContent = '+1';
-
-            if (parisDay !== torontoDay) parisContainer.appendChild(dayAheadHeader);
-
             parisTimeElement.textContent = parisTime;
             torontoTimeElement.textContent = torontoTime;
         }
@@ -98,6 +86,9 @@
                 <div class="location flex-row" id="paris-container">
                     <h1 class="v-align">Paris</h1>
                     <h1 class="time v-align" id="paris-time">18:12:34</h1>
+                </div>
+                <div class="rings v-align">
+                    <img src="./TIMEZONES/rings.png" alt="Olympic Rings">
                 </div>
                 <div class="location flex-row m-left">
                     <h1 class="v-align">Toronto</h1>

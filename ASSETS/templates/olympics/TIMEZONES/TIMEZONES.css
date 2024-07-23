@@ -81,7 +81,17 @@ h2 {
 }
 
 .m-left {
-    margin-left: 150px;
+    margin-left: 100px;
+}
+
+.rings {
+    height: 160px;
+    position: relative;
+    left: 50px;
+}
+
+.rings img {
+    max-height: 80px;
 }
 
 /* Keyframe animations */
