@@ -65,16 +65,21 @@
                     const foodContainer = document.createElement('div');
                     foodContainer.className = 'food-container';
 
-                    // Food Image
-                    const food = document.createElement('div');
-                    food.className = 'food';
-                    const foodImg = document.createElement('img');
-                    foodImg.src = picture;
-                    foodImg.alt = 'Food Image';
-                    foodImg.className = 'food-img';
-                    foodImg.id = `food_${index}`;
+                    const iconStatus = document.getElementById('f70').innerText;
 
-                    food.appendChild(foodImg);
+                    if (iconStatus === 'Show Icons') {
+                        // Food Image
+                        const food = document.createElement('div');
+                        food.className = 'food';
+                        const foodImg = document.createElement('img');
+                        foodImg.src = picture;
+                        foodImg.alt = 'Food Image';
+                        foodImg.className = 'food-img';
+                        foodImg.id = `food_${index}`;
+
+                        food.appendChild(foodImg);
+                        foodContainer.appendChild(food);
+                    }
 
                     // Food Text
                     const foodText = document.createElement('div');
@@ -84,7 +89,6 @@
                     foodHeader.textContent = text;
                     foodText.appendChild(foodHeader);
 
-                    foodContainer.appendChild(food);
                     foodContainer.appendChild(foodText);
 
                     pageRow.appendChild(foodContainer);
@@ -191,6 +195,22 @@
                     "ftype": "textfield",
                     "title": "Title",
                     "value": "Meal Time: 12PM - 2PM"
+                },
+                {
+                    "field": "f70",
+                    "ftype": "dropdown",
+                    "title": "Toggle Icons",
+                    "value": "Show Icons",
+                    "items": [
+                        {
+                            "text": "Hide Icons",
+                            "value": "Hide Icons"
+                        },
+                        {
+                            "text": "Show Icons",
+                            "value": "Show Icons"
+                        }
+                    ]
                 },
                 {
                     "ftype": "caption",
@@ -510,6 +530,7 @@
             <div style="display:none;" id="f66"></div>
             <div style="opacity:0;" id="f67"></div>
             <div style="opacity:0;" id="f68"></div>
+            <div style="opacity:0;" id="f70"></div>
             <div style="opacity:0;" id="f81"></div>
         </div>
     </div>

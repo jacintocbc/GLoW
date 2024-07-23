@@ -38,6 +38,8 @@ body {
     width: 100%;
     height: 100%;
     transform: translateX(100%);
+    display: flex;
+    justify-content: center;
 }
 
 .v-align {
@@ -110,12 +112,9 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-right: 10px;
 }
 
 .food-img {
     height: 160px;
-}
-
-.text {
-    margin-left: 10px;
 }

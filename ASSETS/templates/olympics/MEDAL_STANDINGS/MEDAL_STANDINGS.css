@@ -53,6 +53,11 @@ h1 {
 .title-page {
     position: relative;
     margin-left: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1440px;
 }
 
 .title-page {
