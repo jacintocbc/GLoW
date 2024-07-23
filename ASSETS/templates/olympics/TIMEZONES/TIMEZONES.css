@@ -92,6 +92,7 @@ h2 {
 
 .rings img {
     max-height: 80px;
+    filter: drop-shadow(0px -1px 1px white);
 }
 
 /* Keyframe animations */
