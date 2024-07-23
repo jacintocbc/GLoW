@@ -34,7 +34,6 @@ body {
 }
 
 .page {
-    position: absolute;
     width: 100%;
     height: 100%;
     transform: translateY(100%);
@@ -51,8 +50,7 @@ h1 {
     margin: 0;
 }
 
-.title-page,
-.medal-page {
+.title-page {
     position: relative;
     margin-left: 25px;
 }
@@ -93,12 +91,16 @@ h1 {
 
 /* Medal Page */
 .medal-page {
+    position: relative;
     height: 160px;
 }
 
 .page-row {
-    display: flex;
     height: 160px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 1440px;
 }
 
 .country {
@@ -196,7 +198,7 @@ h1 {
 
 /* Overlapping Medals */
 .overlapping-medals {
-    width: 65px;
+    width: 282px;
     height: 65px;
     position: relative;
     left: 50px;
