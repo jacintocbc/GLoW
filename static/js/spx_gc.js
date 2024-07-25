@@ -4093,20 +4093,23 @@ function playNextItemSequentially(outTimeArray, index, totalOutTime) {
         }, outTimeArray[index]);
         timeouts.push(timeoutId);
     } else {
+        clearAllTimeouts();
         // Restart the sequence immediately
         stopFocused();
         const timeoutId = setTimeout(() => {
             playNextItemSequentially(outTimeArray, 0, totalOutTime);
-        }, 100);
+        }, 1700);
         timeouts.push(timeoutId);
     }
+    console.log(timeouts);
 }
 
 function playNextItemControl() {
-    focusNextControl();
+    stopFocused();
     const timeoutId = setTimeout(() => {
+        focusNextControl();
         playFocused();
-    }, 500);
+    }, 1700);
     timeouts.push(timeoutId);
 }
 
