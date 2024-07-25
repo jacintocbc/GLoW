@@ -70,7 +70,7 @@
                     event.className = 'event';
                     const eventHeader = document.createElement('h2');
                     eventHeader.className = 'f1_gfx';
-                    eventHeader.textContent = discipline;
+                    eventHeader.innerHTML = discipline;
 
                     event.appendChild(eventHeader);
 
@@ -79,7 +79,7 @@
                     subEvent.className = 'sub-event';
                     const subEventHeader = document.createElement('h2');
                     subEventHeader.className = 'f66_gfx';
-                    subEventHeader.textContent = eventName;
+                    subEventHeader.innerHTML = eventName;
                     
                     subEvent.appendChild(subEventHeader);
 
@@ -109,7 +109,7 @@
                     const nameHeader1 = document.createElement('h1');
                     nameHeader1.id = `f${index * 6 - 4}_gfx`;
                     nameHeader1.className = 'flag-name';
-                    nameHeader1.textContent = countryCode1;
+                    nameHeader1.innerHTML = countryCode1;
                     nameDiv1.appendChild(nameHeader1);
 
                     // Result
@@ -117,7 +117,7 @@
                     resultDiv1.className = 'result v-align';
                     const resultHeader1 = document.createElement('h1');
                     resultHeader1.id = `f${index * 6 - 3}_gfx`;
-                    resultHeader1.textContent = result1;
+                    resultHeader1.innerHTML = result1;
                     resultDiv1.appendChild(resultHeader1);
 
                     countryDiv1.appendChild(flagDiv1);
@@ -144,7 +144,7 @@
                     const nameHeader2 = document.createElement('h1');
                     nameHeader2.id = `f${index * 6 - 2}_gfx`;
                     nameHeader2.className = 'flag-name';
-                    nameHeader2.textContent = countryCode2;
+                    nameHeader2.innerHTML = countryCode2;
                     nameDiv2.appendChild(nameHeader2);
 
                     // Result
@@ -152,7 +152,7 @@
                     resultDiv2.className = 'result v-align';
                     const resultHeader2 = document.createElement('h1');
                     resultHeader2.id = `f${index * 6 - 1}_gfx`;
-                    resultHeader2.textContent = result2;
+                    resultHeader2.innerHTML = result2;
                     resultDiv2.appendChild(resultHeader2);
 
                     countryDiv2.appendChild(flagDiv2);

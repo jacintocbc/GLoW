@@ -40,7 +40,7 @@
             const targetTime = new Date(dateTimeValue).getTime();
 
             if (isNaN(targetTime)) {
-                countdownElement.textContent = 'Invalid date';
+                countdownElement.innerHTML = 'Invalid date';
                 return;
             }
 
@@ -50,7 +50,7 @@
 
                 if (timeRemaining <= 0) {
                     clearInterval(interval);
-                    countdownElement.textContent = 'Happening Now!';
+                    countdownElement.innerHTML = 'Happening Now!';
                     return;
                 }
 
@@ -60,9 +60,9 @@
                 const secs = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
                 if (days > 0) {
-                    countdownElement.textContent = `${days}d ${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    countdownElement.innerHTML = `${days}d ${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                 } else {
-                    countdownElement.textContent = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    countdownElement.innerHTML = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                 }
             }, 1000);
         }

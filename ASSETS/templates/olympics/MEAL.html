@@ -86,7 +86,7 @@
                     foodText.className = 'text v-align';
                     const foodHeader = document.createElement('h1');
                     foodHeader.id = `f${index * 6 - 4}_gfx`;
-                    foodHeader.textContent = text;
+                    foodHeader.innerHTML = text;
                     foodText.appendChild(foodHeader);
 
                     foodContainer.appendChild(foodText);

@@ -71,7 +71,7 @@
                     event.className = 'event';
                     const eventHeader = document.createElement('h2');
                     eventHeader.className = 'f1_gfx';
-                    eventHeader.textContent = discipline;
+                    eventHeader.innerHTML = discipline;
 
                     event.appendChild(eventHeader);
 
@@ -80,7 +80,7 @@
                     subEvent.className = 'sub-event';
                     const subEventHeader = document.createElement('h2');
                     subEventHeader.className = 'f66_gfx';
-                    subEventHeader.textContent = eventName;
+                    subEventHeader.innerHTML = eventName;
                     
                     subEvent.appendChild(subEventHeader);
 
@@ -134,7 +134,7 @@
                     firstNameDiv.className = 'first-name v-align';
                     const firstNameH1 = document.createElement('h1');
                     firstNameH1.id = `f${index * 6 - 2}_gfx`;
-                    firstNameH1.textContent = firstName;
+                    firstNameH1.innerHTML = firstName;
                     firstNameDiv.appendChild(firstNameH1);
 
                     // Last Name
@@ -142,7 +142,7 @@
                     lastNameDiv.className = 'last-name v-align';
                     const lastNameH1 = document.createElement('h1');
                     lastNameH1.id = `f${index * 6 - 1}_gfx`;
-                    lastNameH1.textContent = lastName;
+                    lastNameH1.innerHTML = lastName;
                     lastNameDiv.appendChild(lastNameH1);
 
                     // Full Name
@@ -158,9 +158,9 @@
                     resultH1.id = `f${index * 6}_gfx`;
                     const resultDisplay = document.getElementById('f70').innerText;
                     if (resultDisplay == "Show Results") {
-                        resultH1.textContent = result;
+                        resultH1.innerHTML = result;
                     } else {
-                        resultH1.textContent = "";
+                        resultH1.innerHTML = "";
                     }
                     resultDiv.appendChild(resultH1);
 
