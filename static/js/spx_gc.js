@@ -4044,6 +4044,7 @@ function populateRundownForiNews(iNewsArray) {
 
 // Get Rundown
 function getRundownPlayAll() {
+    clearAllTimeouts();
     axios.get('http://localhost:5656/api/v1/rundown/get')
         .then(response => {
             const existingRundown = response.data;
@@ -4106,9 +4107,13 @@ function playNextItemSequentially(outTimeArray, index, totalOutTime) {
 
 function playNextItemControl() {
     stopFocused();
+    let timeoutIdAlt;
     const timeoutId = setTimeout(() => {
         focusNextControl();
-        playFocused();
+        timeoutIdAlt = setTimeout(() => {
+            playFocused();
+        }, 100);
+        timeouts.push(timeoutIdAlt);
     }, 1700);
     timeouts.push(timeoutId);
 }
