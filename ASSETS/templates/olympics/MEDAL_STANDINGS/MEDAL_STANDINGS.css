@@ -140,14 +140,14 @@ h1 {
 }
 
 .medal {
-    width: 65px;
-    height: 65px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    font-size: 2rem;
+    font-size: 40px;
     font-weight: bold;
     color: white;
     margin-left: 50px;
@@ -161,8 +161,8 @@ h1 {
 .gold::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #FFDF00;
     border-radius: 50%;
     z-index: 0;
@@ -175,8 +175,8 @@ h1 {
 .silver::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #D3D3D3;
     border-radius: 50%;
     z-index: 0;
@@ -189,8 +189,8 @@ h1 {
 .bronze::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #D2691E;
     border-radius: 50%;
     z-index: 0;
@@ -204,30 +204,30 @@ h1 {
 
 /* Overlapping Medals */
 .overlapping-medals {
-    width: 282px;
-    height: 65px;
+    width: 340px;
+    height: 80px;
     position: relative;
     left: 50px;
     top: 38px;
 }
 
 .overlapping-medals .medal {
-    width: 65px;
-    height: 65px;
+    width: 80px;
+    height: 80px;
 }
 
 .gold-overlap {
     background: linear-gradient(to bottom right, #FFD700, #FFB700);
     z-index: 3;
-    top: -120px;
-    left: -20px;
+    top: -157px;
+    left: -45px;
 }
 
 .gold-overlap::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #FFDF00;
     border-radius: 50%;
     z-index: 0;
@@ -236,15 +236,15 @@ h1 {
 .silver-overlap {
     background: linear-gradient(to bottom right, #C0C0C0, #A9A9A9);
     z-index: 2;
-    top: -55px;
-    left: 0px;
+    top: -78px;
+    left: -20px;
 }
 
 .silver-overlap::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #D3D3D3;
     border-radius: 50%;
     z-index: 0;
@@ -253,15 +253,15 @@ h1 {
 .bronze-overlap {
     background: linear-gradient(to bottom right, #CD7F32, #8B5A2B);
     z-index: 1;
-    top: 10px;
-    left: 20px;
+    top: 2px;
+    left: 5px;
 }
 
 .bronze-overlap::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #D2691E;
     border-radius: 50%;
     z-index: 0;

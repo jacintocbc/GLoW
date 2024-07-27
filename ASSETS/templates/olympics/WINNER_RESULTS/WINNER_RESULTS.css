@@ -117,11 +117,6 @@ h2 {
     display: flex;
 }
 
-.sub-event {
-    display: flex;
-    font-style: italic;
-}
-
 .country {
     display: flex;
     padding: 7.5px 15px;
@@ -155,15 +150,20 @@ h2 {
     margin-right: 10px;
 }
 
+.result {
+    margin-left: 100px;
+}
+
+/* Medal Winner */
 .medal {
-    width: 65px;
-    height: 65px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    font-size: 2rem;
+    font-size: 40px;
     font-weight: bold;
     color: white;
     margin-left: 0px;
@@ -177,8 +177,8 @@ h2 {
 .gold::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #FFDF00;
     border-radius: 50%;
     z-index: 0;
@@ -191,8 +191,8 @@ h2 {
 .silver::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #D3D3D3;
     border-radius: 50%;
     z-index: 0;
@@ -205,8 +205,8 @@ h2 {
 .bronze::before {
     content: '';
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 61px;
+    height: 61px;
     background: #D2691E;
     border-radius: 50%;
     z-index: 0;

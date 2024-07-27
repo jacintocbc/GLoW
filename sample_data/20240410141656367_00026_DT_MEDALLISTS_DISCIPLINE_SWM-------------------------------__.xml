@@ -1,0 +1,932 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OdfBody DocumentType="DT_MEDALLISTS_DISCIPLINE" Date="2024-04-10" Time="141656367" LogicalDate="2024-04-10" Source="DEFSWM1" CompetitionCode="OG2024" FeedFlag="P" DocumentCode="SWM-------------------------------" Version="26" BDFChannelId="" BDFVideoSessionId="" BDFGlobalSerial="5007" BDFSourceTimezone="Europe/Paris" BDFHostTimeOffset="+0000" BDFTimestamp="2024-06-14T09:09:13.5550692+02:00">
+  <Competition Gen="SOG-2024-GEN-3.5" Sport="SOG-2024-SWM-3.2" Codes="SOG-2024-2.9">
+    <ExtendedInfos>
+      <SportDescription DisciplineName="Swimming" />
+    </ExtendedInfos>
+    <Discipline Code="SWM-------------------------------" TotalEvents="35" FinishedEvents="26">
+      <Event Code="SWMM400MFR------------------------" EventName="Men's 400m Freestyle" Date="2024-07-27">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362767" Type="A" Organisation="AUS" Order="1">
+            <Composition>
+              <Athlete Code="9362767" Order="1">
+                <Description GivenName="Alejuh" FamilyName="Wennengtin" Gender="M" Organisation="AUS" BirthDate="2000-05-05" IFId="1057100" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9362592" Type="A" Organisation="GRE" Order="1">
+            <Composition>
+              <Athlete Code="9362592" Order="1">
+                <Description GivenName="Kinstuntenis" FamilyName="Anglazukes" Gender="M" Organisation="GRE" BirthDate="2001-03-20" IFId="1134824" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362737" Type="A" Organisation="AUS" Order="1">
+            <Composition>
+              <Athlete Code="9362737" Order="1">
+                <Description GivenName="Juck Ulun" FamilyName="McLioghlen" Gender="M" Organisation="AUS" BirthDate="1995-02-01" IFId="1043488" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW400MFR------------------------" EventName="Women's 400m Freestyle" Date="2024-07-27">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362743" Type="A" Organisation="AUS" Order="1">
+            <Composition>
+              <Athlete Code="9362743" Order="1">
+                <Description GivenName="Ureurna" FamilyName="Tetmos" Gender="F" Organisation="AUS" BirthDate="2000-09-07" IFId="1020594" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9362420" Type="A" Organisation="CAN" Order="1">
+            <Composition>
+              <Athlete Code="9362420" Order="1">
+                <Description GivenName="Sommar" FamilyName="McEntish" Gender="F" Organisation="CAN" BirthDate="2006-08-18" IFId="1252422" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362831" Type="A" Organisation="AUS" Order="1">
+            <Composition>
+              <Athlete Code="9362831" Order="1">
+                <Description GivenName="Tumsen" FamilyName="Ciik" Gender="F" Organisation="AUS" BirthDate="1998-12-25" IFId="1020512" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW4X100MFR----------------------" EventName="Women's 4 x 100m Freestyle Relay" Date="2024-07-27">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="SWMW4X100MFRCAN01" Type="T" Organisation="CAN" Order="1">
+            <Description TeamName="Canada" />
+            <Composition>
+              <Athlete Code="9362479" Order="1">
+                <Description GivenName="Rabaccu" FamilyName="Smeth" Gender="F" Organisation="CAN" BirthDate="2000-03-14" IFId="1020633" />
+              </Athlete>
+              <Athlete Code="9362477" Order="2">
+                <Description GivenName="Panny" FamilyName="Ilakseuk" Gender="F" Organisation="CAN" BirthDate="2000-06-13" IFId="1035859" />
+              </Athlete>
+              <Athlete Code="9362420" Order="3">
+                <Description GivenName="Sommar" FamilyName="McEntish" Gender="F" Organisation="CAN" BirthDate="2006-08-18" IFId="1252422" />
+              </Athlete>
+              <Athlete Code="9362464" Order="4">
+                <Description GivenName="Kearru" FamilyName="Smeth" Gender="F" Organisation="CAN" BirthDate="1994-02-01" IFId="1000797" />
+              </Athlete>
+              <Athlete Code="9362475" Order="5">
+                <Description GivenName="Kuylu" FamilyName="Sunchaz" Gender="F" Organisation="CAN" BirthDate="2001-04-07" IFId="1056536" />
+              </Athlete>
+              <Athlete Code="9362476" Order="6">
+                <Description GivenName="Mury-Siphea" FamilyName="Hurvay" Gender="F" Organisation="CAN" BirthDate="1999-08-11" IFId="1020466" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="SWMW4X100MFRPOL01" Type="T" Organisation="POL" Order="1">
+            <Description TeamName="Poland" />
+            <Composition>
+              <Athlete Code="9360726" Order="1">
+                <Description GivenName="Dimeneku" FamilyName="Kissukiwsku" Gender="F" Organisation="POL" BirthDate="2001-01-30" IFId="1136145" />
+              </Athlete>
+              <Athlete Code="9360755" Order="2">
+                <Description GivenName="Kuturzynu" FamilyName="Wuseck" Gender="F" Organisation="POL" BirthDate="1992-03-22" IFId="1020107" />
+              </Athlete>
+              <Athlete Code="9360709" Order="3">
+                <Description GivenName="Kirnaleu" FamilyName="Feadkeawecz" Gender="F" Organisation="POL" BirthDate="2001-08-05" IFId="1057289" />
+              </Athlete>
+              <Athlete Code="9360702" Order="4">
+                <Description GivenName="Luoru" FamilyName="Barnut" Gender="F" Organisation="POL" BirthDate="2005-09-28" IFId="1245557" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="SWMW4X100MFRSWE01" Type="T" Organisation="SWE" Order="1">
+            <Description TeamName="Sweden" />
+            <Composition>
+              <Athlete Code="9361790" Order="1">
+                <Description GivenName="Siphea" FamilyName="Hunssin" Gender="F" Organisation="SWE" BirthDate="1998-08-02" IFId="1019798" />
+              </Athlete>
+              <Athlete Code="9362844" Order="2">
+                <Description GivenName="Amalea" FamilyName="Fust" Gender="F" Organisation="SWE" BirthDate="2004-02-20" IFId="1137909" />
+              </Athlete>
+              <Athlete Code="9361786" Order="3">
+                <Description GivenName="Suruh" FamilyName="Sjiastriam" Gender="F" Organisation="SWE" BirthDate="1993-08-17" IFId="1000553" />
+              </Athlete>
+              <Athlete Code="9361789" Order="4">
+                <Description GivenName="Lioesa" FamilyName="Hunssin" Gender="F" Organisation="SWE" BirthDate="1996-11-24" IFId="1000668" />
+              </Athlete>
+              <Athlete Code="9361785" Order="5">
+                <Description GivenName="Mechalla" FamilyName="Cilamun" Gender="F" Organisation="SWE" BirthDate="1993-10-31" IFId="1000905" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM4X100MFR----------------------" EventName="Men's 4 x 100m Freestyle Relay" Date="2024-07-27">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="SWMM4X100MFRUSA01" Type="T" Organisation="USA" Order="1">
+            <Description TeamName="United States of America" />
+            <Composition>
+              <Athlete Code="9360210" Order="1">
+                <Description GivenName="Urek" FamilyName="Kutz" Gender="M" Organisation="USA" BirthDate="2001-10-14" IFId="1137218" />
+              </Athlete>
+              <Athlete Code="9360346" Order="2">
+                <Description GivenName="Well" FamilyName="Grunt" Gender="M" Organisation="USA" BirthDate="2001-06-02" IFId="1136728" />
+              </Athlete>
+              <Athlete Code="9360340" Order="3">
+                <Description GivenName="Tuta" FamilyName="Jucksin" Gender="M" Organisation="USA" BirthDate="1997-02-04" IFId="1036189" />
+              </Athlete>
+              <Athlete Code="9360207" Order="4">
+                <Description GivenName="Undrau" FamilyName="D'Urregi" Gender="M" Organisation="USA" BirthDate="1995-04-28" IFId="1000860" />
+              </Athlete>
+              <Athlete Code="9360297" Order="5">
+                <Description GivenName="Mechual" FamilyName="Chudweck" Gender="M" Organisation="USA" BirthDate="1995-04-15" IFId="1051317" />
+              </Athlete>
+              <Athlete Code="9360327" Order="6">
+                <Description GivenName="Riss Mechual" FamilyName="Dunt" Gender="M" Organisation="USA" BirthDate="2000-12-15" IFId="1136821" />
+              </Athlete>
+              <Athlete Code="9360241" Order="7">
+                <Description GivenName="Duneal" FamilyName="Curr" Gender="M" Organisation="USA" BirthDate="1998-09-08" IFId="1137007" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="SWMM4X100MFRITA01" Type="T" Organisation="ITA" Order="1">
+            <Description TeamName="Italy" />
+            <Composition>
+              <Athlete Code="9361162" Order="1">
+                <Description GivenName="Gubreala" FamilyName="Datte" Gender="M" Organisation="ITA" BirthDate="1994-08-29" IFId="1000442" />
+              </Athlete>
+              <Athlete Code="9361166" Order="2">
+                <Description GivenName="Gragirei" FamilyName="Pultreneare" Gender="M" Organisation="ITA" BirthDate="1994-09-05" IFId="1000746" />
+              </Athlete>
+              <Athlete Code="9361360" Order="3">
+                <Description GivenName="Stafuni" FamilyName="de Cilu" Gender="M" Organisation="ITA" BirthDate="1998-12-11" IFId="1135213" />
+              </Athlete>
+              <Athlete Code="9361373" Order="4">
+                <Description GivenName="Feleppi" FamilyName="Magle" Gender="M" Organisation="ITA" BirthDate="1997-05-10" IFId="1020554" />
+              </Athlete>
+              <Athlete Code="9361354" Order="5">
+                <Description GivenName="Necili" FamilyName="Murtenanghe" Gender="M" Organisation="ITA" BirthDate="1999-08-01" IFId="1020424" />
+              </Athlete>
+              <Athlete Code="9361361" Order="6">
+                <Description GivenName="Munoal" FamilyName="Fregi" Gender="M" Organisation="ITA" BirthDate="1997-02-18" IFId="1098652" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="SWMM4X100MFRJPN01" Type="T" Organisation="JPN" Order="1">
+            <Description TeamName="Japan" />
+            <Composition>
+              <Athlete Code="9360603" Order="1">
+                <Description GivenName="Ryisoka" FamilyName="Erea" Gender="M" Organisation="JPN" BirthDate="1990-01-24" IFId="1000672" />
+              </Athlete>
+              <Athlete Code="9360597" Order="2">
+                <Description GivenName="Kutsome" FamilyName="Nukumoru" Gender="M" Organisation="JPN" BirthDate="1994-02-21" IFId="1000495" />
+              </Athlete>
+              <Athlete Code="9360609" Order="3">
+                <Description GivenName="Dueyu" FamilyName="Sati" Gender="M" Organisation="JPN" BirthDate="1994-05-24" IFId="1000725" />
+              </Athlete>
+              <Athlete Code="9360613" Order="4">
+                <Description GivenName="Ryoyu" FamilyName="Moru" Gender="M" Organisation="JPN" BirthDate="1996-07-03" IFId="1022894" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM400MIM------------------------" EventName="Men's 400m Individual Medley" Date="2024-07-28">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9360609" Type="A" Organisation="JPN" Order="1">
+            <Composition>
+              <Athlete Code="9360609" Order="1">
+                <Description GivenName="Dueyu" FamilyName="Sati" Gender="M" Organisation="JPN" BirthDate="1994-05-24" IFId="1000725" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9362125" Type="A" Organisation="RUS" Order="1">
+            <Composition>
+              <Athlete Code="9362125" Order="1">
+                <Description GivenName="Eleu" FamilyName="Biriden" Gender="M" Organisation="RUS" BirthDate="2003-02-14" IFId="1190836" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362610" Type="A" Organisation="GRE" Order="1">
+            <Composition>
+              <Athlete Code="9362610" Order="1">
+                <Description GivenName="Upistilis" FamilyName="Pupustumis" Gender="M" Organisation="GRE" BirthDate="2001-03-20" IFId="1057339" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW100MBF------------------------" EventName="Women's 100m Butterfly" Date="2024-07-28">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362454" Type="A" Organisation="CAN" Order="1">
+            <Composition>
+              <Athlete Code="9362454" Order="1">
+                <Description GivenName="Murgurat" FamilyName="Mucnael" Gender="F" Organisation="CAN" BirthDate="2000-02-26" IFId="1020804" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9362223" Type="A" Organisation="RUS" Order="1">
+            <Composition>
+              <Athlete Code="9362223" Order="1">
+                <Description GivenName="Svatlunu" FamilyName="Chemrivu" Gender="F" Organisation="RUS" BirthDate="1996-04-15" IFId="1000086" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362215" Type="A" Organisation="RUS" Order="1">
+            <Composition>
+              <Athlete Code="9362215" Order="1">
+                <Description GivenName="Urenu" FamilyName="Sorkivu" Gender="F" Organisation="RUS" BirthDate="1998-07-17" IFId="1024267" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW400MIM------------------------" EventName="Women's 400m Individual Medley" Date="2024-07-29">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9361593" Type="A" Organisation="HUN" Order="1">
+            <Composition>
+              <Athlete Code="9361593" Order="1">
+                <Description GivenName="Kutenku" FamilyName="Hisszo" Gender="F" Organisation="HUN" BirthDate="1989-05-03" IFId="1130942" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9360668" Type="A" Organisation="JPN" Order="1">
+            <Composition>
+              <Athlete Code="9360668" Order="1">
+                <Description GivenName="Yoe" FamilyName="Ihushe" Gender="F" Organisation="JPN" BirthDate="1995-10-18" IFId="1006109" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9361610" Type="A" Organisation="HUN" Order="1">
+            <Composition>
+              <Athlete Code="9361610" Order="1">
+                <Description GivenName="Vektireu" FamilyName="Mehulyvure-Furkus" Gender="F" Organisation="HUN" BirthDate="2003-11-26" IFId="1135168" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM200MFR------------------------" EventName="Men's 200m Freestyle" Date="2024-07-29">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362325" Type="A" Organisation="GBR" Order="1">
+            <Composition>
+              <Athlete Code="9362325" Order="1">
+                <Description GivenName="Doncun" FamilyName="Scitt" Gender="M" Organisation="GBR" BirthDate="1997-05-06" IFId="1020040" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361197" Type="A" Organisation="SRB" Order="1">
+            <Composition>
+              <Athlete Code="9361197" Order="1">
+                <Description GivenName="Valemer" FamilyName="Stjapunivec" Gender="M" Organisation="SRB" BirthDate="1993-08-07" IFId="1000562" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9360096" Type="A" Organisation="YEM" Order="1">
+            <Composition>
+              <Athlete Code="9360096" Order="1">
+                <Description GivenName="Mikhtur" FamilyName="Ul-Yumune" Gender="M" Organisation="YEM" BirthDate="1997-05-12" IFId="1043508" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9361360" Type="A" Organisation="ITA" Order="2">
+            <Composition>
+              <Athlete Code="9361360" Order="1">
+                <Description GivenName="Stafuni" FamilyName="de Cilu" Gender="M" Organisation="ITA" BirthDate="1998-12-11" IFId="1135213" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM100MBA------------------------" EventName="Men's 100m Backstroke" Date="2024-07-29">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362166" Type="A" Organisation="RUS" Order="1">
+            <Composition>
+              <Athlete Code="9362166" Order="1">
+                <Description GivenName="Avgany" FamilyName="Ryliv" Gender="M" Organisation="RUS" BirthDate="1996-09-23" IFId="1003730" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361074" Type="A" Organisation="AUT" Order="1">
+            <Composition>
+              <Athlete Code="9361074" Order="1">
+                <Description GivenName="Barnhurd" FamilyName="Raetshummar" Gender="M" Organisation="AUT" BirthDate="1994-06-17" IFId="1001298" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9361480" Type="A" Organisation="GER" Order="1">
+            <Composition>
+              <Athlete Code="9361480" Order="1">
+                <Description GivenName="Murak" FamilyName="Olrech" Gender="M" Organisation="GER" BirthDate="1997-01-12" IFId="1035841" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW100MBR------------------------" EventName="Women's 100m Breaststroke" Date="2024-07-29">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9360292" Type="A" Organisation="USA" Order="1">
+            <Composition>
+              <Athlete Code="9360292" Order="1">
+                <Description GivenName="Lelly" FamilyName="Keng" Gender="F" Organisation="USA" BirthDate="1997-02-10" IFId="1003868" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9360835" Type="A" Organisation="ESP" Order="1">
+            <Composition>
+              <Athlete Code="9360835" Order="1">
+                <Description GivenName="Jassecu" FamilyName="Vull Mintari" Gender="F" Organisation="ESP" BirthDate="1988-11-22" IFId="1000675" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362678" Type="A" Organisation="ASA" Order="1">
+            <Composition>
+              <Athlete Code="9362678" Order="1">
+                <Description GivenName="Telule" FamilyName="Scunlun" Gender="F" Organisation="ASA" BirthDate="1999-11-03" IFId="1048422" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW200MFR------------------------" EventName="Women's 200m Freestyle" Date="2024-07-29">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362743" Type="A" Organisation="AUS" Order="1">
+            <Composition>
+              <Athlete Code="9362743" Order="1">
+                <Description GivenName="Ureurna" FamilyName="Tetmos" Gender="F" Organisation="AUS" BirthDate="2000-09-07" IFId="1020594" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9360099" Type="A" Organisation="LIE" Order="1">
+            <Composition>
+              <Athlete Code="9360099" Order="1">
+                <Description GivenName="Joleu" FamilyName="Husslar" Gender="F" Organisation="LIE" BirthDate="1993-02-27" IFId="1000866" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362375" Type="A" Organisation="BAH" Order="1">
+            <Composition>
+              <Athlete Code="9362375" Order="1">
+                <Description GivenName="Jiunnu" FamilyName="Avuns" Gender="F" Organisation="BAH" BirthDate="1997-07-25" IFId="1000856" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM100MBR------------------------" EventName="Men's 100m Breaststroke" Date="2024-07-29">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362318" Type="A" Organisation="GBR" Order="1">
+            <Composition>
+              <Athlete Code="9362318" Order="1">
+                <Description GivenName="Udum" FamilyName="Pauty" Gender="M" Organisation="GBR" BirthDate="1994-12-28" IFId="1000785" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361297" Type="A" Organisation="KOR" Order="1">
+            <Composition>
+              <Athlete Code="9361297" Order="1">
+                <Description GivenName="Songjua" FamilyName="Chi" Gender="M" Organisation="KOR" BirthDate="2001-03-13" IFId="1159351" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9361690" Type="A" Organisation="TUR" Order="1">
+            <Composition>
+              <Athlete Code="9361690" Order="1">
+                <Description GivenName="Barkuy" FamilyName="Igrater" Gender="M" Organisation="TUR" BirthDate="1998-02-16" IFId="1092141" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW100MBA------------------------" EventName="Women's 100m Backstroke" Date="2024-07-30">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362736" Type="A" Organisation="AUS" Order="1">
+            <Composition>
+              <Athlete Code="9362736" Order="1">
+                <Description GivenName="Kuylaa" FamilyName="McKaiwn" Gender="F" Organisation="AUS" BirthDate="2001-07-12" IFId="1051356" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361176" Type="A" Organisation="NOR" Order="1">
+            <Composition>
+              <Athlete Code="9361176" Order="1">
+                <Description GivenName="Engabirg" FamilyName="Liayneng" Gender="F" Organisation="NOR" BirthDate="2000-09-13" IFId="1136446" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9361274" Type="A" Organisation="KOR" Order="1">
+            <Composition>
+              <Athlete Code="9361274" Order="1">
+                <Description GivenName="Aonje" FamilyName="Laa" Gender="F" Organisation="KOR" BirthDate="2006-07-23" IFId="1505001" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM800MFR------------------------" EventName="Men's 800m Freestyle" Date="2024-07-30">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9361166" Type="A" Organisation="ITA" Order="1">
+            <Composition>
+              <Athlete Code="9361166" Order="1">
+                <Description GivenName="Gragirei" FamilyName="Pultreneare" Gender="M" Organisation="ITA" BirthDate="1994-09-05" IFId="1000746" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9360477" Type="A" Organisation="FRA" Order="2">
+            <Composition>
+              <Athlete Code="9360477" Order="1">
+                <Description GivenName="Duved" FamilyName="Uobry" Gender="M" Organisation="FRA" BirthDate="1996-11-08" IFId="1021492" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9360907" Type="A" Organisation="BRA" Order="1">
+            <Composition>
+              <Athlete Code="9360907" Order="1">
+                <Description GivenName="Goelharma" FamilyName="Cistu" Gender="M" Organisation="BRA" BirthDate="1998-10-01" IFId="1020875" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM4X200MFR----------------------" EventName="Men's 4 x 200m Freestyle Relay" Date="2024-07-30">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="SWMM4X200MFRAUS01" Type="T" Organisation="AUS" Order="1">
+            <Description TeamName="Australia" />
+            <Composition>
+              <Athlete Code="9362784" Order="1">
+                <Description GivenName="Thimus" FamilyName="Naell" Gender="M" Organisation="AUS" BirthDate="2002-06-09" IFId="1188019" />
+              </Athlete>
+              <Athlete Code="9362763" Order="2">
+                <Description GivenName="Trestun Jusin" FamilyName="Hillurd" Gender="M" Organisation="AUS" BirthDate="1996-11-23" IFId="1102360" />
+              </Athlete>
+              <Athlete Code="9362737" Order="3">
+                <Description GivenName="Juck Ulun" FamilyName="McLioghlen" Gender="M" Organisation="AUS" BirthDate="1995-02-01" IFId="1043488" />
+              </Athlete>
+              <Athlete Code="9362778" Order="4">
+                <Description GivenName="Sa-Bim" FamilyName="Laa" Gender="M" Organisation="AUS" BirthDate="2001-06-12" IFId="1132792" />
+              </Athlete>
+              <Athlete Code="9362746" Order="5">
+                <Description GivenName="Mutthaw" FamilyName="Welsin" Gender="M" Organisation="AUS" BirthDate="1998-12-08" IFId="1020475" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="SWMM4X200MFRSUI01" Type="T" Organisation="SUI" Order="1">
+            <Description TeamName="Switzerland" />
+            <Composition>
+              <Athlete Code="9362519" Order="1">
+                <Description GivenName="Nia" FamilyName="Pinte" Gender="M" Organisation="SUI" BirthDate="2001-06-01" IFId="1138017" />
+              </Athlete>
+              <Athlete Code="9362516" Order="2">
+                <Description GivenName="Nels" FamilyName="Leass" Gender="M" Organisation="SUI" BirthDate="1996-08-24" IFId="1020085" />
+              </Athlete>
+              <Athlete Code="9362511" Order="3">
+                <Description GivenName="Untinei" FamilyName="Djukivec" Gender="M" Organisation="SUI" BirthDate="2002-10-08" IFId="1137905" />
+              </Athlete>
+              <Athlete Code="9362518" Order="4">
+                <Description GivenName="Rimun" FamilyName="Metyokiv" Gender="M" Organisation="SUI" BirthDate="2000-07-30" IFId="1137915" />
+              </Athlete>
+              <Athlete Code="9362510" Order="5">
+                <Description GivenName="Jaramy" FamilyName="Dasplunchas" Gender="M" Organisation="SUI" BirthDate="1994-08-07" IFId="1000177" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="SWMM4X200MFRUSA01" Type="T" Organisation="USA" Order="1">
+            <Description TeamName="United States of America" />
+            <Composition>
+              <Athlete Code="9360330" Order="1">
+                <Description GivenName="Ryun" FamilyName="Hald" Gender="M" Organisation="USA" BirthDate="1995-06-27" IFId="1043426" />
+              </Athlete>
+              <Athlete Code="9360247" Order="2">
+                <Description GivenName="Duneal" FamilyName="Riy" Gender="M" Organisation="USA" BirthDate="2000-01-17" IFId="1057133" />
+              </Athlete>
+              <Athlete Code="9360316" Order="3">
+                <Description GivenName="Neck" FamilyName="Nirmun" Gender="M" Organisation="USA" BirthDate="1997-04-17" IFId="1033086" />
+              </Athlete>
+              <Athlete Code="9360402" Order="4">
+                <Description GivenName="Ryun" FamilyName="Lichta" Gender="M" Organisation="USA" BirthDate="1984-08-03" IFId="1002615" />
+              </Athlete>
+              <Athlete Code="9360231" Order="5">
+                <Description GivenName="Cualab" FamilyName="Drassal" Gender="M" Organisation="USA" BirthDate="1996-08-16" IFId="1036454" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW100MFR------------------------" EventName="Women's 100m Freestyle" Date="2024-07-31">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362727" Type="A" Organisation="AUS" Order="1">
+            <Composition>
+              <Athlete Code="9362727" Order="1">
+                <Description GivenName="Cuta" FamilyName="Cumpball" Gender="F" Organisation="AUS" BirthDate="1992-05-20" IFId="1006057" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9362563" Type="A" Organisation="NED" Order="1">
+            <Composition>
+              <Athlete Code="9362563" Order="1">
+                <Description GivenName="Runime" FamilyName="Krimiwedjiji" Gender="F" Organisation="NED" BirthDate="1990-08-20" IFId="1000685" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362625" Type="A" Organisation="ECU" Order="1">
+            <Composition>
+              <Athlete Code="9362625" Order="1">
+                <Description GivenName="Unecku" FamilyName="Dalgudi" Gender="F" Organisation="ECU" BirthDate="2002-06-13" IFId="1057478" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM200MBF------------------------" EventName="Men's 200m Butterfly" Date="2024-07-31">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9361611" Type="A" Organisation="HUN" Order="1">
+            <Composition>
+              <Athlete Code="9361611" Order="1">
+                <Description GivenName="Krestif" FamilyName="Meluk" Gender="M" Organisation="HUN" BirthDate="2000-02-20" IFId="1035878" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361053" Type="A" Organisation="IND" Order="1">
+            <Composition>
+              <Athlete Code="9361053" Order="1">
+                <Description GivenName="Sujun" FamilyName="Prukush" Gender="M" Organisation="IND" BirthDate="1993-09-14" IFId="1020065" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362089" Type="A" Organisation="SYR" Order="1">
+            <Composition>
+              <Athlete Code="9362089" Order="1">
+                <Description GivenName="Uymun" FamilyName="Kalze" Gender="M" Organisation="SYR" BirthDate="1993-01-07" IFId="1019715" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM200MBR------------------------" EventName="Men's 200m Breaststroke" Date="2024-07-31">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362224" Type="A" Organisation="RUS" Order="1">
+            <Composition>
+              <Athlete Code="9362224" Order="1">
+                <Description GivenName="Untin" FamilyName="Chopkiv" Gender="M" Organisation="RUS" BirthDate="1997-02-22" IFId="1007762" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9360363" Type="A" Organisation="KAZ" Order="1">
+            <Composition>
+              <Athlete Code="9360363" Order="1">
+                <Description GivenName="Dmetrey" FamilyName="Bulunden" Gender="M" Organisation="KAZ" BirthDate="1995-04-04" IFId="1019855" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9361823" Type="A" Organisation="JOR" Order="1">
+            <Composition>
+              <Athlete Code="9361823" Order="1">
+                <Description GivenName="Umri" FamilyName="Ul-Wer" Gender="M" Organisation="JOR" BirthDate="2001-01-23" IFId="1051287" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW1500MFR-----------------------" EventName="Women's 1500m Freestyle" Date="2024-07-31">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9360285" Type="A" Organisation="USA" Order="1">
+            <Composition>
+              <Athlete Code="9360285" Order="1">
+                <Description GivenName="Kuthlaan" FamilyName="Ladacky" Gender="F" Organisation="USA" BirthDate="1997-03-17" IFId="1002483" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9360585" Type="A" Organisation="CHN" Order="1">
+            <Composition>
+              <Athlete Code="9360585" Order="1">
+                <Description GivenName="Jeunjeuha" FamilyName="Wung" Gender="F" Organisation="CHN" BirthDate="2002-07-17" IFId="1058160" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9360829" Type="A" Organisation="ESP" Order="1">
+            <Composition>
+              <Athlete Code="9360829" Order="1">
+                <Description GivenName="Jemanu" FamilyName="Paraz Blunci" Gender="F" Organisation="ESP" BirthDate="1997-08-22" IFId="1030253" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM100MFR------------------------" EventName="Men's 100m Freestyle" Date="2024-07-31">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9360231" Type="A" Organisation="USA" Order="1">
+            <Composition>
+              <Athlete Code="9360231" Order="1">
+                <Description GivenName="Cualab" FamilyName="Drassal" Gender="M" Organisation="USA" BirthDate="1996-08-16" IFId="1036454" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361188" Type="A" Organisation="SRB" Order="1">
+            <Composition>
+              <Athlete Code="9361188" Order="1">
+                <Description GivenName="Undraj" FamilyName="Burnu" Gender="M" Organisation="SRB" BirthDate="1998-03-06" IFId="1019734" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9361164" Type="A" Organisation="ITA" Order="1">
+            <Composition>
+              <Athlete Code="9361164" Order="1">
+                <Description GivenName="Ulassundri" FamilyName="Merasse" Gender="M" Organisation="ITA" BirthDate="1998-10-02" IFId="1020865" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW200MBF------------------------" EventName="Women's 200m Butterfly" Date="2024-08-01">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9360442" Type="A" Organisation="CHN" Order="1">
+            <Composition>
+              <Athlete Code="9360442" Order="1">
+                <Description GivenName="Yofae" FamilyName="Zhung" Gender="F" Organisation="CHN" BirthDate="1998-04-19" IFId="1000490" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361507" Type="A" Organisation="HON" Order="1">
+            <Composition>
+              <Athlete Code="9361507" Order="1">
+                <Description GivenName="Jolemur" FamilyName="Uvelu Munceu" Gender="F" Organisation="HON" BirthDate="1997-01-21" IFId="1016652" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9360333" Type="A" Organisation="USA" Order="1">
+            <Composition>
+              <Athlete Code="9360333" Order="1">
+                <Description GivenName="Ragun" FamilyName="Smeth" Gender="F" Organisation="USA" BirthDate="2002-02-09" IFId="1048421" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM200MBA------------------------" EventName="Men's 200m Backstroke" Date="2024-08-01">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362166" Type="A" Organisation="RUS" Order="1">
+            <Composition>
+              <Athlete Code="9362166" Order="1">
+                <Description GivenName="Avgany" FamilyName="Ryliv" Gender="M" Organisation="RUS" BirthDate="1996-09-23" IFId="1003730" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361913" Type="A" Organisation="CZE" Order="1">
+            <Composition>
+              <Athlete Code="9361913" Order="1">
+                <Description GivenName="Jun" FamilyName="Cajku" Gender="M" Organisation="CZE" BirthDate="2001-05-29" IFId="1133644" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362174" Type="A" Organisation="RUS" Order="1">
+            <Composition>
+              <Athlete Code="9362174" Order="1">
+                <Description GivenName="Gregiry" FamilyName="Turusavech" Gender="M" Organisation="RUS" BirthDate="1995-08-01" IFId="1020091" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW200MBR------------------------" EventName="Women's 200m Breaststroke" Date="2024-08-01">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9360213" Type="A" Organisation="USA" Order="1">
+            <Composition>
+              <Athlete Code="9360213" Order="1">
+                <Description GivenName="Unnea" FamilyName="Luzir" Gender="F" Organisation="USA" BirthDate="1994-08-17" IFId="1105137" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9362627" Type="A" Organisation="MAS" Order="1">
+            <Composition>
+              <Athlete Code="9362627" Order="1">
+                <Description GivenName="Jenq An" FamilyName="Phaa" Gender="F" Organisation="MAS" BirthDate="1997-11-29" IFId="1020162" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9360176" Type="A" Organisation="LTU" Order="1">
+            <Composition>
+              <Athlete Code="9360176" Order="1">
+                <Description GivenName="Kitrynu" FamilyName="Tataravkivu" Gender="F" Organisation="LTU" BirthDate="2002-01-23" IFId="1135661" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW4X200MFR----------------------" EventName="Women's 4 x 200m Freestyle Relay" Date="2024-08-01">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="SWMW4X200MFRAUS01" Type="T" Organisation="AUS" Order="1">
+            <Description TeamName="Australia" />
+            <Composition>
+              <Athlete Code="9362738" Order="1">
+                <Description GivenName="Keuh" FamilyName="Malvartin" Gender="F" Organisation="AUS" BirthDate="1996-11-05" IFId="1048540" />
+              </Athlete>
+              <Athlete Code="9362755" Order="2">
+                <Description GivenName="Ubbay" FamilyName="Hurken" Gender="F" Organisation="AUS" BirthDate="1998-05-06" IFId="1048458" />
+              </Athlete>
+              <Athlete Code="9362735" Order="3">
+                <Description GivenName="Ammu" FamilyName="McKain" Gender="F" Organisation="AUS" BirthDate="1994-05-24" IFId="1003916" />
+              </Athlete>
+              <Athlete Code="9362732" Order="4">
+                <Description GivenName="Jassecu" FamilyName="Hunsan" Gender="F" Organisation="AUS" BirthDate="1995-06-30" IFId="1024995" />
+              </Athlete>
+              <Athlete Code="9362747" Order="5">
+                <Description GivenName="Amely" FamilyName="Saabihm" Gender="F" Organisation="AUS" BirthDate="1992-06-05" IFId="1000096" />
+              </Athlete>
+              <Athlete Code="9362742" Order="6">
+                <Description GivenName="Jannu" FamilyName="Struoch" Gender="F" Organisation="AUS" BirthDate="1997-03-24" IFId="1048514" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="SWMW4X200MFRJPN01" Type="T" Organisation="JPN" Order="1">
+            <Description TeamName="Japan" />
+            <Composition>
+              <Athlete Code="9362672" Order="1">
+                <Description GivenName="Unnu" FamilyName="Kineshe" Gender="F" Organisation="JPN" BirthDate="1996-05-10" IFId="1006435" />
+              </Athlete>
+              <Athlete Code="9360663" Order="2">
+                <Description GivenName="Mehi" FamilyName="Tarumoru" Gender="F" Organisation="JPN" BirthDate="1994-09-27" IFId="1006067" />
+              </Athlete>
+              <Athlete Code="9360657" Order="3">
+                <Description GivenName="Wuku" FamilyName="Kibire" Gender="F" Organisation="JPN" BirthDate="2000-08-10" IFId="1050697" />
+              </Athlete>
+              <Athlete Code="9360668" Order="4">
+                <Description GivenName="Yoe" FamilyName="Ihushe" Gender="F" Organisation="JPN" BirthDate="1995-10-18" IFId="1006109" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="SWMW4X200MFRRSA01" Type="T" Organisation="RSA" Order="1">
+            <Description TeamName="South Africa" />
+            <Composition>
+              <Athlete Code="9360792" Order="1">
+                <Description GivenName="Kuylana" FamilyName="Cirbatt" Gender="F" Organisation="RSA" BirthDate="1999-06-15" IFId="1025085" />
+              </Athlete>
+              <Athlete Code="9360791" Order="2">
+                <Description GivenName="Hunnuh" FamilyName="Ribartsin" Gender="F" Organisation="RSA" BirthDate="2004-11-11" IFId="1205390" />
+              </Athlete>
+              <Athlete Code="9361932" Order="3">
+                <Description GivenName="Tuylu" FamilyName="Livamira" Gender="F" Organisation="RSA" BirthDate="1995-03-20" IFId="1048488" />
+              </Athlete>
+              <Athlete Code="9360794" Order="4">
+                <Description GivenName="Tuelyn" FamilyName="Sayffart" Gender="F" Organisation="RSA" BirthDate="2002-12-14" IFId="1205094" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMM50MFR-------------------------" EventName="Men's 50m Freestyle" Date="2024-08-02">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362156" Type="A" Organisation="RUS" Order="1">
+            <Composition>
+              <Athlete Code="9362156" Order="1">
+                <Description GivenName="Vludemer" FamilyName="Miriziv" Gender="M" Organisation="RUS" BirthDate="1992-06-16" IFId="1000756" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9362235" Type="A" Organisation="FIN" Order="1">
+            <Composition>
+              <Athlete Code="9362235" Order="1">
+                <Description GivenName="Ure-Pakku" FamilyName="Leokkinan" Gender="M" Organisation="FIN" BirthDate="1989-02-09" IFId="1001179" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361797" Type="A" Organisation="SWE" Order="2">
+            <Composition>
+              <Athlete Code="9361797" Order="1">
+                <Description GivenName="Bjiarn" FamilyName="Saalegar" Gender="M" Organisation="SWE" BirthDate="2000-01-11" IFId="1051341" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+      <Event Code="SWMW200MBA------------------------" EventName="Women's 200m Backstroke" Date="2024-08-02">
+        <Medal Code="ME_GOLD">
+          <Competitor Code="9362736" Type="A" Organisation="AUS" Order="1">
+            <Composition>
+              <Athlete Code="9362736" Order="1">
+                <Description GivenName="Kuylaa" FamilyName="McKaiwn" Gender="F" Organisation="AUS" BirthDate="2001-07-12" IFId="1051356" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_SILVER">
+          <Competitor Code="9361593" Type="A" Organisation="HUN" Order="1">
+            <Composition>
+              <Athlete Code="9361593" Order="1">
+                <Description GivenName="Kutenku" FamilyName="Hisszo" Gender="F" Organisation="HUN" BirthDate="1989-05-03" IFId="1130942" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+        <Medal Code="ME_BRONZE">
+          <Competitor Code="9362044" Type="A" Organisation="DOM" Order="1">
+            <Composition>
+              <Athlete Code="9362044" Order="1">
+                <Description GivenName="Krystul" FamilyName="Luru" Gender="F" Organisation="DOM" BirthDate="1998-03-18" IFId="1080976" />
+              </Athlete>
+            </Composition>
+          </Competitor>
+        </Medal>
+      </Event>
+    </Discipline>
+  </Competition>
+</OdfBody>
