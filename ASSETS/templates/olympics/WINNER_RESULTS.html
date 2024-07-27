@@ -1,0 +1,1331 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympic Winner Results</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./WINNER_RESULTS/WINNER_RESULTS.css">
+    <script>
+        let isLooping = true;
+        function runTemplateUpdate() {
+            // Discipline / Event Input
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerText);
+            // is Looping Checkbox
+            isLoopingCheckbox = htmlDecode(e('f168').innerHTML);
+            isLooping = isLoopingCheckbox == 1 ? true : false;
+        }
+
+        function runAnimationIN() {
+
+        }
+
+        function runAnimationOUT() {
+            const container = document.querySelector('.container');
+            container.classList.add('fade-out');
+            setTimeout(() => {
+                const wrapper = document.querySelector('#wrapper');
+                wrapper.style.display = 'none';
+            }, 2000);
+        }
+
+        window.onload = function () {
+            preparePages();
+        }
+
+        function preparePages() {
+            setTimeout(() => {
+                const pagesContainer = document.getElementById('pages');
+                const titlePage = document.querySelector('.title-page');
+                pagesContainer.innerHTML = '';
+
+                const transitionDuration = htmlDecode(e('f181').innerHTML);
+                const transitionDurationNumber = +transitionDuration * 1000;
+
+                const createPage = (index) => {
+                    const discipline = htmlDecode(e('f1').innerText);
+                    const rank = document.getElementById(`f${index * 6 - 4}`).innerText.trim();
+                    const countryCode = document.getElementById(`f${index * 6 - 3}`).innerText.trim();
+                    const firstName = document.getElementById(`f${index * 6 - 2}`).innerText.trim();
+                    const lastName = document.getElementById(`f${index * 6 - 1}`).innerText.trim();
+                    const result = document.getElementById(`f${index * 6}`).innerText.trim();
+                    const eventName = document.getElementById(`f${index * 6 + 1}`).innerText.trim();
+
+                    if (!rank || !countryCode) {
+                        return null;
+                    }
+
+                    // Page
+                    const page = document.createElement('div');
+                    page.className = 'page medal-page';
+                    page.id = `page${index}`;
+
+                    const pageRow = document.createElement('div');
+                    pageRow.className = 'page-row';
+
+                    // Discipline
+                    const disciplineEl = document.createElement('div');
+                    disciplineEl.className = 'discipline';
+                    const disciplineHeader = document.createElement('h1');
+                    disciplineHeader.className = 'f1_gfx';
+                    disciplineHeader.innerHTML = discipline;
+
+                    disciplineEl.appendChild(disciplineHeader);
+
+                    // Discipline Container
+                    const disciplineContainer = document.createElement('div');
+                    disciplineContainer.className = 'discipline-container';
+                    disciplineContainer.appendChild(disciplineEl);
+
+                    // Country
+                    const countryDiv = document.createElement('div');
+                    countryDiv.className = 'country';
+
+                    // Flag
+                    const flagDiv = document.createElement('div');
+                    flagDiv.className = 'flag';
+                    const flagImg = document.createElement('img');
+                    flagImg.src = `./MEDAL_STANDINGS/flags/${countryCode}.jpg`;
+                    flagImg.alt = "Flag Image";
+                    flagImg.className = 'flag-img';
+                    flagImg.id = `flag_${index}`;
+                    flagDiv.appendChild(flagImg);
+
+                    countryDiv.appendChild(flagDiv);
+
+                    // Athlete
+                    const athleteContainer = document.createElement('div');
+                    athleteContainer.className = 'athlete';
+
+                    // Result
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'result v-align';
+                    const medalContainer = document.createElement('div');
+                    let medalType = '';
+                    if (rank == 1) {
+                        medalType = 'gold';
+                    } else if (rank == 2) {
+                        medalType = 'silver';
+                    } else if (rank == 3) {
+                        medalType = 'bronze';
+                    }
+                    medalContainer.className = `medal ${medalType}`;
+                    const medalSpan = document.createElement('span');
+                    medalSpan.textContent = result.charAt(0);
+                    medalContainer.appendChild(medalSpan);
+                    resultDiv.appendChild(medalContainer);
+
+                    // First Name
+                    const firstNameDiv = document.createElement('div');
+                    firstNameDiv.className = 'first-name v-align';
+                    const firstNameH1 = document.createElement('h1');
+                    firstNameH1.id = `f${index * 6 - 2}_gfx`;
+                    firstNameH1.innerHTML = firstName;
+                    firstNameDiv.appendChild(firstNameH1);
+
+                    // Last Name
+                    const lastNameDiv = document.createElement('div');
+                    lastNameDiv.className = 'last-name v-align';
+                    const lastNameH1 = document.createElement('h1');
+                    lastNameH1.id = `f${index * 6 - 1}_gfx`;
+                    lastNameH1.innerHTML = lastName;
+                    lastNameDiv.appendChild(lastNameH1);
+
+                    // Full Name
+                    const fullNameDiv = document.createElement('div');
+                    fullNameDiv.className = 'full-name';
+                    fullNameDiv.appendChild(firstNameDiv);
+                    fullNameDiv.appendChild(lastNameDiv);
+
+                    // Event
+                    const eventDiv = document.createElement('div');
+                    eventDiv.className = 'event-name';
+                    const eventWrapper = document.createElement('div');
+                    eventWrapper.className = 'event';
+                    const eventHeader = document.createElement('h2');
+                    eventHeader.id = lastNameH1.id = `f${index * 6 + 1}_gfx`;
+                    eventHeader.innerHTML = eventName;
+                    eventWrapper.appendChild(eventHeader);
+                    eventDiv.appendChild(eventWrapper);
+
+                    // Vertical Group
+                    const verticalGroup = document.createElement('div');
+                    verticalGroup.className = 'vertical-group v-align';
+                    verticalGroup.appendChild(fullNameDiv);
+                    verticalGroup.appendChild(eventDiv);
+
+                    athleteContainer.appendChild(resultDiv);
+                    athleteContainer.appendChild(verticalGroup);
+
+                    pageRow.appendChild(disciplineContainer);
+                    pageRow.appendChild(countryDiv);
+                    pageRow.appendChild(athleteContainer);
+
+                    page.appendChild(pageRow);
+
+                    return page;
+                }
+
+                const pages = [];
+
+                for (let i = 1; i <= 20; i++) {
+                    const page = createPage(i);
+                    if (page) {
+                        pages.push(page);
+                    }
+                }
+
+                const displayPages = () => {
+                    let currentPageIndex = 0;
+                    const totalDuration = transitionDurationNumber * (pages.length + 3) + 2000;
+
+                    const showPage = (page) => {
+                        page.classList.add('fade-in');
+                        page.style.display = 'flex';
+                        pagesContainer.appendChild(page);
+
+                        setTimeout(() => {
+                            page.classList.remove('fade-in');
+                            page.classList.add('fade-out');
+
+                            setTimeout(() => {
+                                page.style.display = 'none';
+                                page.classList.remove('fade-out');
+
+                                currentPageIndex++;
+                                if (currentPageIndex < pages.length) {
+                                    showPage(pages[currentPageIndex]);
+                                } else if (isLooping) {
+                                    currentPageIndex = 0;
+                                    titlePage.style.display = 'flex';
+                                    titlePage.classList.add('fade-in');
+                                    setTimeout(() => {
+                                        titlePage.classList.remove('fade-in');
+                                        titlePage.classList.add('fade-out');
+                                        setTimeout(() => {
+                                            titlePage.style.display = 'none';
+                                            titlePage.classList.remove('fade-out');
+                                            showPage(pages[currentPageIndex]);
+                                        }, 1700);
+                                    }, 5000); // Duration to stay on screen (static)
+                                } else {
+                                    runAnimationOUT();
+                                }
+                            }, 1700); // Duration of fade-out animation
+                        }, transitionDurationNumber); // Duration to stay on screen
+                    };
+
+                    setTimeout(() => {
+                        titlePage.classList.add('fade-out');
+
+                        setTimeout(() => {
+                            titlePage.style.display = 'none';
+                            titlePage.classList.remove('fade-out');
+
+                            // Show the first page
+                            if (pages.length > 0) {
+                                showPage(pages[0]);
+                            }
+                        }, 1700); // Duration of fade-out animation
+                    }, 5000); // Duration to stay on screen (static)
+
+                    // Update Total Out Value
+                    // console.log('Total on air time: ' + totalDuration + ' ms');
+                    const totalOutElement = e('f167');
+                    totalOutElement.innerText = totalDuration;
+                };
+
+                // Start the animation sequence
+                displayPages();
+            }, 10);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Winner Results",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "3",
+            "DataFields": [
+                {
+                    "field": "f181",
+                    "ftype": "textfield",
+                    "title": "Transition (s)",
+                    "value": "5"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Discipline",
+                    "value": "Cycling Mountain Bike"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 1"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "1."
+                },
+                {
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f4",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f5",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f6",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f7",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 2"
+                },
+                {
+                    "field": "f8",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "2."
+                },
+                {
+                    "field": "f9",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f10",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f11",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f12",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f13",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 3"
+                },
+                {
+                    "field": "f14",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "3."
+                },
+                {
+                    "field": "f15",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f16",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f17",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f18",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f19",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 4"
+                },
+                {
+                    "field": "f20",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "4."
+                },
+                {
+                    "field": "f21",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f22",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f23",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f24",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f25",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 5"
+                },
+                {
+                    "field": "f26",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "5."
+                },
+                {
+                    "field": "f27",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f28",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f29",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f30",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f31",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 6"
+                },
+                {
+                    "field": "f32",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "6."
+                },
+                {
+                    "field": "f33",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f34",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f35",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f36",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f37",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 7"
+                },
+                {
+                    "field": "f38",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "7."
+                },
+                {
+                    "field": "f39",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f40",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f41",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f42",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f43",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 8"
+                },
+                {
+                    "field": "f44",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "8."
+                },
+                {
+                    "field": "f45",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f46",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f47",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f48",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f49",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 9"
+                },
+                {
+                    "field": "f50",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "9."
+                },
+                {
+                    "field": "f51",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f52",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f53",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f54",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f55",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 10"
+                },
+                {
+                    "field": "f56",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "10."
+                },
+                {
+                    "field": "f57",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f58",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f59",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f60",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f61",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 11"
+                },
+                {
+                    "field": "f62",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "1."
+                },
+                {
+                    "field": "f63",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f64",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f65",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f66",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f67",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 12"
+                },
+                {
+                    "field": "f68",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "2."
+                },
+                {
+                    "field": "f69",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f70",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f71",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f72",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f73",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 13"
+                },
+                {
+                    "field": "f74",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "3."
+                },
+                {
+                    "field": "f75",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f76",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f77",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f78",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f79",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 14"
+                },
+                {
+                    "field": "f80",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "4."
+                },
+                {
+                    "field": "f81",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f82",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f83",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f84",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f85",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 15"
+                },
+                {
+                    "field": "f86",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "5."
+                },
+                {
+                    "field": "f87",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f88",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f89",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f90",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f91",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 16"
+                },
+                {
+                    "field": "f92",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "6."
+                },
+                {
+                    "field": "f93",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f94",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f95",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f96",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f97",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 17"
+                },
+                {
+                    "field": "f98",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "7."
+                },
+                {
+                    "field": "f99",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f100",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f101",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f102",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f103",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 18"
+                },
+                {
+                    "field": "f104",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "8."
+                },
+                {
+                    "field": "f105",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f106",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f107",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f108",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f109",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 19"
+                },
+                {
+                    "field": "f110",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "9."
+                },
+                {
+                    "field": "f111",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f112",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f113",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f114",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f115",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "ftype": "caption",
+                    "value": "Athlete 20"
+                },
+                {
+                    "field": "f116",
+                    "ftype": "textfield",
+                    "title": "Rank",
+                    "value": "10."
+                },
+                {
+                    "field": "f117",
+                    "ftype": "textfield",
+                    "title": "Country Code",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f118",
+                    "ftype": "textfield",
+                    "title": "First Name",
+                    "value": "FirstName"
+                },
+                {
+                    "field": "f119",
+                    "ftype": "textfield",
+                    "title": "Last Name",
+                    "value": "LastName"
+                },
+                {
+                    "field": "f120",
+                    "ftype": "textfield",
+                    "title": "Result",
+                    "value": "GOLD"
+                },
+                {
+                    "field": "f121",
+                    "ftype": "textfield",
+                    "title": "Event",
+                    "value": "Women's 4 x 400m Relay"
+                },
+                {
+                    "ftype": "divider"
+                },
+                {
+                    "field": "f167",
+                    "ftype": "hidden",
+                    "title": "Total Out",
+                    "value": "57000"
+                },
+                {
+                    "field": "f168",
+                    "ftype": "checkbox",
+                    "title": "Loop Graphic",
+                    "value": "1",
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <!-- Title Page -->
+            <div class="page title-page">
+                <h1 class="v-align">Canadian Medal Winners</h1>
+                <h1 class="v-align">&nbsp;-&nbsp;</h1>
+                <h1 id="f1_gfx" class="v-align">SWM</h1>
+            </div>
+            <div id="pages">
+                <!-- Populated Dynamically -->
+
+                <!-- Page 1 -->
+                <div class="page medal-page" id="page1">
+                    <div class="page-row">
+                        <!-- Discipline -->
+                        <div class="discipline-container">
+                            <div class="discipline">
+                                <h1 class="f1_gfx">SWM</h1>
+                            </div>
+                        </div>
+                        <!-- Country -->
+                        <div class="country">
+                            <!-- Flag -->
+                            <div class="flag">
+                                <img src="./WINNER_RESULTS/flags/CAN.jpg" alt="Flag Image" class="flag-img">
+                            </div>
+                        </div>
+                        <!-- Athlete -->
+                        <div class="athlete">
+                            <!-- Medal -->
+                            <div class="result v-align">
+                                <div id="f6_gfx" class="medal gold"><span>G</span></div>
+                            </div>
+                            <div class="vertical-group v-align">
+                                <div class="full-name">
+                                    <!-- First Name -->
+                                    <div class="first-name v-align">
+                                        <h1 id="f4_gfx">Summer</h1>
+                                    </div>
+                                    <!-- Last Name -->
+                                    <div class="last-name v-align">
+                                        <h1 id="f5_gfx">McIntosh</h1>
+                                    </div>
+                                </div>
+                                <!-- Event Name -->
+                                <div class="event-name">
+                                    <div class="event">
+                                        <h2 id="f7_gfx">Women's 4 x 100m Freestyle Relay</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="display:none;" id="f3"></div>
+            <div style="display:none;" id="f4"></div>
+            <div style="display:none;" id="f5"></div>
+            <div style="display:none;" id="f6"></div>
+            <div style="display:none;" id="f7"></div>
+            <div style="display:none;" id="f8"></div>
+            <div style="display:none;" id="f9"></div>
+            <div style="display:none;" id="f10"></div>
+            <div style="display:none;" id="f11"></div>
+            <div style="display:none;" id="f12"></div>
+            <div style="display:none;" id="f13"></div>
+            <div style="display:none;" id="f14"></div>
+            <div style="display:none;" id="f15"></div>
+            <div style="display:none;" id="f16"></div>
+            <div style="display:none;" id="f17"></div>
+            <div style="display:none;" id="f18"></div>
+            <div style="display:none;" id="f19"></div>
+            <div style="display:none;" id="f20"></div>
+            <div style="display:none;" id="f21"></div>
+            <div style="display:none;" id="f22"></div>
+            <div style="display:none;" id="f23"></div>
+            <div style="display:none;" id="f24"></div>
+            <div style="display:none;" id="f25"></div>
+            <div style="display:none;" id="f26"></div>
+            <div style="display:none;" id="f27"></div>
+            <div style="display:none;" id="f28"></div>
+            <div style="display:none;" id="f29"></div>
+            <div style="display:none;" id="f30"></div>
+            <div style="display:none;" id="f31"></div>
+            <div style="display:none;" id="f32"></div>
+            <div style="display:none;" id="f33"></div>
+            <div style="display:none;" id="f34"></div>
+            <div style="display:none;" id="f35"></div>
+            <div style="display:none;" id="f36"></div>
+            <div style="display:none;" id="f37"></div>
+            <div style="display:none;" id="f38"></div>
+            <div style="display:none;" id="f39"></div>
+            <div style="display:none;" id="f40"></div>
+            <div style="display:none;" id="f41"></div>
+            <div style="display:none;" id="f42"></div>
+            <div style="display:none;" id="f43"></div>
+            <div style="display:none;" id="f44"></div>
+            <div style="display:none;" id="f45"></div>
+            <div style="display:none;" id="f46"></div>
+            <div style="display:none;" id="f47"></div>
+            <div style="display:none;" id="f48"></div>
+            <div style="display:none;" id="f49"></div>
+            <div style="display:none;" id="f50"></div>
+            <div style="display:none;" id="f51"></div>
+            <div style="display:none;" id="f52"></div>
+            <div style="display:none;" id="f53"></div>
+            <div style="display:none;" id="f54"></div>
+            <div style="display:none;" id="f55"></div>
+            <div style="display:none;" id="f56"></div>
+            <div style="display:none;" id="f57"></div>
+            <div style="display:none;" id="f58"></div>
+            <div style="display:none;" id="f59"></div>
+            <div style="display:none;" id="f60"></div>
+            <div style="display:none;" id="f61"></div>
+            <div style="display:none;" id="f62"></div>
+            <div style="display:none;" id="f63"></div>
+            <div style="display:none;" id="f64"></div>
+            <div style="display:none;" id="f65"></div>
+            <div style="display:none;" id="f66"></div>
+            <div style="display:none;" id="f67"></div>
+            <div style="display:none;" id="f68"></div>
+            <div style="display:none;" id="f69"></div>
+            <div style="display:none;" id="f70"></div>
+            <div style="display:none;" id="f71"></div>
+            <div style="display:none;" id="f72"></div>
+            <div style="display:none;" id="f73"></div>
+            <div style="display:none;" id="f74"></div>
+            <div style="display:none;" id="f75"></div>
+            <div style="display:none;" id="f76"></div>
+            <div style="display:none;" id="f77"></div>
+            <div style="display:none;" id="f78"></div>
+            <div style="display:none;" id="f79"></div>
+            <div style="display:none;" id="f80"></div>
+            <div style="display:none;" id="f81"></div>
+            <div style="display:none;" id="f82"></div>
+            <div style="display:none;" id="f83"></div>
+            <div style="display:none;" id="f84"></div>
+            <div style="display:none;" id="f85"></div>
+            <div style="display:none;" id="f86"></div>
+            <div style="display:none;" id="f87"></div>
+            <div style="display:none;" id="f88"></div>
+            <div style="display:none;" id="f89"></div>
+            <div style="display:none;" id="f90"></div>
+            <div style="display:none;" id="f91"></div>
+            <div style="display:none;" id="f92"></div>
+            <div style="display:none;" id="f93"></div>
+            <div style="display:none;" id="f94"></div>
+            <div style="display:none;" id="f95"></div>
+            <div style="display:none;" id="f96"></div>
+            <div style="display:none;" id="f97"></div>
+            <div style="display:none;" id="f98"></div>
+            <div style="display:none;" id="f99"></div>
+            <div style="display:none;" id="f100"></div>
+            <div style="display:none;" id="f101"></div>
+            <div style="display:none;" id="f102"></div>
+            <div style="display:none;" id="f103"></div>
+            <div style="display:none;" id="f104"></div>
+            <div style="display:none;" id="f105"></div>
+            <div style="display:none;" id="f106"></div>
+            <div style="display:none;" id="f107"></div>
+            <div style="display:none;" id="f108"></div>
+            <div style="display:none;" id="f109"></div>
+            <div style="display:none;" id="f110"></div>
+            <div style="display:none;" id="f111"></div>
+            <div style="display:none;" id="f112"></div>
+            <div style="display:none;" id="f113"></div>
+            <div style="display:none;" id="f114"></div>
+            <div style="display:none;" id="f115"></div>
+            <div style="display:none;" id="f116"></div>
+            <div style="display:none;" id="f117"></div>
+            <div style="display:none;" id="f118"></div>
+            <div style="display:none;" id="f119"></div>
+            <div style="display:none;" id="f120"></div>
+            <div style="display:none;" id="f121"></div>
+            <div style="opacity:0;" id="f167"></div>
+            <div style="opacity:0;" id="f168"></div>
+            <div style="opacity:0;" id="f181"></div>
+        </div>
+    </div>
+</body>
+
+</html>
