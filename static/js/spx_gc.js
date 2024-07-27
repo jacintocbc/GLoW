@@ -4067,7 +4067,7 @@ function parseRundown(rundown) {
             if (template.out !== 'manual') {
                 outTimeString = template.out;
             } else {
-                outTimeString = '60000';
+                outTimeString = '90000';
             }
             const outTime = +outTimeString;
             outTimeArray.push(outTime);
