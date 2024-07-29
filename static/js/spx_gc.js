@@ -4067,7 +4067,7 @@ function parseRundown(rundown) {
             if (template.out !== 'manual') {
                 outTimeString = template.out;
             } else {
-                outTimeString = '90000';
+                outTimeString = '60000';
             }
             const outTime = +outTimeString;
             outTimeArray.push(outTime);
@@ -4084,7 +4084,10 @@ function parseRundown(rundown) {
 function playNextItemSequentially(outTimeArray, index, totalOutTime) {
     if (index === 0) {
         focusFirstControl();
-        playFocused();
+        const timeoutIdStart = setTimeout(() => {
+            playFocused();
+        }, 100);
+        timeouts.push(timeoutIdStart);
     }
 
     if (index <= outTimeArray.length) {
