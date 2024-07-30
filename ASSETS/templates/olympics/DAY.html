@@ -1,0 +1,110 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./DAY/DAY.css">
+    <script>
+        function runTemplateUpdate() {
+            // Text
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerText);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerText);
+        }
+
+        function runAnimationIN() {
+
+        }
+
+        function runAnimationOUT() {
+            const page = document.querySelector('.page');
+            page.classList.add('fade-out');
+            setTimeout(() => {
+                const wrapper = document.querySelector('#wrapper');
+                wrapper.style.display = 'none';
+            }, 2000);
+        }
+
+        window.onload = function () {
+            setTimeout(() => {
+                const dayElement = document.getElementById('day');
+                dayElement.textContent = updateOlympicDay();
+            }, 10);
+        }
+
+        function updateOlympicDay() {
+            // Set the start and end dates for the Olympics
+            const startDate = new Date('2024-07-27T00:00:00-04:00'); // Midnight EST on July 27
+            const endDate = new Date('2024-08-11T23:59:59-04:00'); // End of August 11 EST
+
+            // Get the current date and time in EST
+            const currentDate = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+            const currentESTDate = new Date(currentDate);
+
+            // Calculate the difference in days from the start date
+            const diffTime = Math.abs(currentESTDate - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            // Check if the current date is within the Olympic period
+            if (currentESTDate >= startDate && currentESTDate <= endDate) {
+                return `${diffDays}`;
+            } else {
+                return '';
+            }
+        }
+
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Day",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "15000",
+            "dataformat": "json",
+            "uicolor": "5",
+            "DataFields": [
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Day",
+                    "value": "JOUR"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Emoji",
+                    "value": "🤺"
+                },
+                {
+                    "ftype": "spacer"
+                },
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <!-- Countdown Page -->
+            <div class="page title-page fade-in">
+                <div class="flex-row">
+                    <h1 id="f1_gfx" class="v-align text">JOUR</h1>
+                    <h1 id="day" class="v-align alt-text">4</h1>
+                    <h1 id="f2_gfx" class="v-align text">🤺</h1>
+                </div>
+            </div>
+
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+        </div>
+    </div>
+</body>
+
+</html>
