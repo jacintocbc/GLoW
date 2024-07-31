@@ -1046,53 +1046,53 @@ function notifyMultipleControllers() {
 }
 
 // iNews Related Logic ------------------------------------------------------------- //
-const accessTokenUrl = 'https://as.cbcrc.ca/connect/token';
-const scope = 'inews-api.cbcrc.ca';
-const clientId = 'maestro.cbcrc.ca';
-const clientSecret = '8c15e6e8-8557-4c5d-bc2b-ec6189919dad';
+// const accessTokenUrl = 'https://as.cbcrc.ca/connect/token';
+// const scope = 'inews-api.cbcrc.ca';
+// const clientId = 'maestro.cbcrc.ca';
+// const clientSecret = '8c15e6e8-8557-4c5d-bc2b-ec6189919dad';
 
-// // Get Token
-app.post('/get-token', async (req, res) => {
-  const body = new URLSearchParams();
-  body.append('grant_type', 'client_credentials');
-  body.append('scope', scope);
-  body.append('client_id', clientId);
-  body.append('client_secret', clientSecret);
+// // // Get Token
+// app.post('/get-token', async (req, res) => {
+//   const body = new URLSearchParams();
+//   body.append('grant_type', 'client_credentials');
+//   body.append('scope', scope);
+//   body.append('client_id', clientId);
+//   body.append('client_secret', clientSecret);
 
-  try {
-    const response = await axios.post(accessTokenUrl, body.toString(), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    });
+//   try {
+//     const response = await axios.post(accessTokenUrl, body.toString(), {
+//       headers: {
+//         'Content-Type': 'application/x-www-form-urlencoded'
+//       }
+//     });
 
-    const responseData = response.data;
-    const accessToken = responseData.access_token;
-    const expiresIn = responseData.expires_in;
+//     const responseData = response.data;
+//     const accessToken = responseData.access_token;
+//     const expiresIn = responseData.expires_in;
 
-    // Send token back to client
-    res.json({ accessToken, expiresIn });
+//     // Send token back to client
+//     res.json({ accessToken, expiresIn });
 
-  } catch (error) {
-    console.error('Error fetching access token:', error);
-    res.status(500).json({ error: 'Failed to fetch access token' });
-  }
-});
+//   } catch (error) {
+//     console.error('Error fetching access token:', error);
+//     res.status(500).json({ error: 'Failed to fetch access token' });
+//   }
+// });
 
-app.get('/fetch-data', async (req, res) => {
-  const token = req.query.token;
-  const server = req.query.server;
-  const lineup = req.query.lineup;
-  try {
-    const response = await axios.get(`https://cbcrc.azure-api.net/it/inews/api/v2/nsmlstories/${server}/${lineup}?clientId=api-maestro-prod`, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch data from API' });
-  }
-});
+// app.get('/fetch-data', async (req, res) => {
+//   const token = req.query.token;
+//   const server = req.query.server;
+//   const lineup = req.query.lineup;
+//   try {
+//     const response = await axios.get(`https://cbcrc.azure-api.net/it/inews/api/v2/nsmlstories/${server}/${lineup}?clientId=api-maestro-prod`, {
+//       headers: { 'Authorization': `Bearer ${token}` }
+//     });
+//     res.json(response.data);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Failed to fetch data from API' });
+//   }
+// });
 
-app.listen(altPort, () => {
-  console.log(`API Server is running on http://localhost:${altPort}`);
-});
+// app.listen(altPort, () => {
+//   console.log(`API Server is running on http://localhost:${altPort}`);
+// });
