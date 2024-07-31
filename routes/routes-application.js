@@ -55,6 +55,10 @@ router.get('/', spxAuth.CheckLogin, cors(), spx.getNotificationsMiddleware, asyn
   //   req.session.showMessage = null;
 }); // get / end
 
+router.get('/medalBoard', spxAuth.CheckLogin, function (req, res) {
+  res.render('medal-board', { layout: false });
+}); // get /admin end
+
 router.get('/admin', spxAuth.CheckLogin, function (req, res) {
   res.render('view-admin', { layout: false });
 }); // get /admin end

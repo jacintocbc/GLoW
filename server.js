@@ -38,6 +38,7 @@ const rfs = require('rotating-file-stream')
 var macaddress = require('macaddress');
 const axios = require('axios');
 const altPort = 3000;
+const WebSocket = require('ws');
 
 console.log('\n  SPX Graphics Controller server is starting.\n  Closing this window/process will stop the server.\n');
 
@@ -1096,3 +1097,37 @@ function notifyMultipleControllers() {
 // app.listen(altPort, () => {
 //   console.log(`API Server is running on http://localhost:${altPort}`);
 // });
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
+
+// Endpoint to receive data from the desktop app
+app.post('/update', (req, res) => {
+    const data = req.body;
+    console.log('Received data:', data);
+
+    // Broadcast the data to all connected WebSocket clients
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+        }
+    });
+
+    res.status(200).send('Data received');
+});
+
+app.listen(altPort, () => {
+    console.log(`HTTP server is running on http://localhost:${altPort}`);
+});
+
+wss.on('connection', ws => {
+    console.log('Client connected');
+
+    ws.on('close', () => {
+        console.log('Client disconnected');
+    });
+});
+
+console.log('WebSocket server is running on ws://10.151.234.49:8080');
