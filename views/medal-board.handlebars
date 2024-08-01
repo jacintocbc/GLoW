@@ -137,6 +137,10 @@
           position: relative;
       }
 
+      .dynamic-rows {
+        overflow: hidden;
+      }
+
       .row {
           height: 65px;
           background: #f0f0f0;
@@ -151,8 +155,14 @@
 
       .spacer {
           background: white;
-          opacity: 0.33;
+          opacity: 0.5;
           position: relative;
+      }
+
+      .row-spacer-alt {
+        height: 5px;
+        background: white;
+        opacity: 0.5;
       }
 
       .medal-icons {
@@ -266,7 +276,7 @@
                     <img src="/img/images/TOTAL.png" alt="Overlapping Medals" class="total">
                 </div>
                 <div class="dynamic-rows"></div>
-                <div class="row spacer"></div>
+                <div class="row-spacer-alt"></div>
             </div>
         </div>
     </div>
