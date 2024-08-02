@@ -4086,12 +4086,22 @@ function parseRundown(rundown) {
     });
 
     const totalOutTime = outTimeArray.reduce((sum, outTime) => sum + outTime, 0);
+    populateRundownTime(totalOutTime);
     console.log(totalOutTime, outTimeArray);
 
     // Start the recursive playback
     playNextItemSequentially(outTimeArray, 0, totalOutTime);
 }
 
+// Populate Input with Total Out Time
+function populateRundownTime(totalOutTime) {
+    const totalOutTimeSeconds = (totalOutTime / 1000) + 61;
+    const roundedOutTimeSeconds = Math.round(totalOutTimeSeconds);
+    const rundownTimeInput = document.getElementById('rundownTotalTime');
+    rundownTimeInput.value = roundedOutTimeSeconds;
+}
+
+// Play Next Items in order
 function playNextItemSequentially(outTimeArray, index, totalOutTime) {
     if (index === 0) {
         focusFirstControl();
