@@ -186,7 +186,8 @@ socket.on('SPXMessage2Controller', function (data) {
             break;
 
         case 'ItemContinue':
-            nextItem(getFocusedRow())
+            // nextItem(getFocusedRow())
+            parseRundown(savedRundown);
             break;
 
         case 'ItemContinueID':
@@ -843,6 +844,7 @@ function clearUsedChannels(ServerName = '') {
     // Will call a command over API which will clear passed
     // server or all by default.
     clearAllTimeouts();
+    console.log('Clear All');
     let data = {};
     data.server = ServerName;
     data.foldername = document.getElementById('foldername').value;
@@ -2622,6 +2624,7 @@ function stopAll() {
     // develop a server-side function for this. 
     // Function implemented in v1.0.8 from ExtraFunctions -library
     clearAllTimeouts();
+    console.log('Stop All');
     let ITEMS = document.querySelectorAll('.itemrow');
     ITEMS.forEach(function (templateItem, itemNro) {
         setTimeout(function () {
@@ -4042,13 +4045,21 @@ function populateRundownForiNews(iNewsArray) {
 
 // Play All Logic ----------------------------------------------------------------------------- //
 
+let savedRundown;
+
 // Get Rundown
 function getRundownPlayAll() {
     clearAllTimeouts();
     axios.get('http://localhost:5656/api/v1/rundown/get')
         .then(response => {
-            const existingRundown = response.data;
-            parseRundown(existingRundown);
+            let existingRundown;
+            if (response.data) {
+                existingRundown = response.data;
+                savedRundown = existingRundown;
+                parseRundown(existingRundown);
+            } else {
+                parseRundown(savedRundown);
+            }
         })
         .catch(error => {
             console.error('Error:', error);
