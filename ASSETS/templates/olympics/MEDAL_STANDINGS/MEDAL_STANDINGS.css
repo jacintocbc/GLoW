@@ -24,6 +24,7 @@ body {
     display: flex;
     justify-content: flex-start;
     color: white;
+    background: black;
 }
 
 .container {
