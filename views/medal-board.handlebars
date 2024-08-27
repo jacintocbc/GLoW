@@ -516,7 +516,7 @@
             return countryMap.get(code) || 'Unknown country code';
         };
 
-        const socket = new WebSocket('ws://10.151.234.49:8080');
+        const socket = new WebSocket('ws://10.151.122.21:8080');
 
         socket.addEventListener('open', function (event) {
             console.log('Connected to the WebSocket server');
