@@ -57,7 +57,11 @@ router.get('/', spxAuth.CheckLogin, cors(), spx.getNotificationsMiddleware, asyn
 
 router.get('/medalBoard', spxAuth.CheckLogin, function (req, res) {
   res.render('medal-board', { layout: false });
-}); // get /admin end
+}); // get /medalBoard end
+
+router.get('/voteShare', spxAuth.CheckLogin, function (req, res) {
+  res.render('vote-share', { layout: false });
+}); // get /voteShare end
 
 router.get('/admin', spxAuth.CheckLogin, function (req, res) {
   res.render('view-admin', { layout: false });

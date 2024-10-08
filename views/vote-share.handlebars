@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Share</title>
+    <style>
+      @font-face {
+        font-family: 'Radio-Canada';
+        src: url('img/fonts/RadioCanada-Variable.ttf') format('truetype');
+      }
+
+      @font-face {
+        font-family: 'Radio-Canada Italic';
+        src: url('img/fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+      }
+
+      body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        position: relative;
+        font-family: 'Radio-Canada', sans-serif;
+        background: black;
+      }
+
+      .container {
+        height: 160px;
+        width: 800px;
+        background: black;
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .party {
+        display: flex;
+        flex-direction: column;
+        padding-left: 10px;
+        flex: 1;
+        color: white;
+      }
+
+      .party:first-child {
+        margin-right: 1px;
+      }
+
+      .party:last-child {
+        margin-left: 1px;
+      }
+
+      .party-color-SP {
+        background: #005941;
+      }
+
+      .party-color-NDP {
+        background: #E87504;
+      }
+
+      .party-name {
+        font-weight: 500;
+        font-size: 30px;
+        text-transform: uppercase;
+        position: relative;
+        top: 20px;
+        left: 2px;
+      }
+
+      .party-vote-share {
+        font-weight: 800;
+        font-size: 100px;
+      }
+
+      .percent {
+        position: relative;
+        top: -25px;
+        font-size: 60px;
+      }
+
+      .sp {
+        left: 7px;
+      }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <div class="party party-color-SP">
+                <div class="party-name sp">SP</div>
+                <div class="party-vote-share">0<span class="percent">%</span></div>
+            </div>
+            <div class="party party-color-NDP">
+                <div class="party-name">NDP</div>
+                <div class="party-vote-share">0<span class="percent">%</span></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const socket = new WebSocket('ws://localhost:8081');
+
+        socket.addEventListener('open', function (event) {
+            console.log('Connected to the WebSocket server');
+        });
+
+        socket.addEventListener('message', function (event) {
+            const data = JSON.parse(event.data);
+            updateHTML(data);
+        });
+
+        function updateHTML(data) {
+            console.log(data);
+
+            const partyStandings = data.PartyStandings; // Get PartyStandings object
+            const partyNumber = data.PartyNumber; // Get PartyNumber
+
+            const parties = partyStandings.Parties || []; // Ensure you have the array
+            const selectedParties = parties.slice(0, partyNumber); // Take only the required number of parties
+
+            const partyContainer = document.querySelector('.container'); // Select the container to append parties
+            partyContainer.textContent = ''; // Clear previous entries
+
+            selectedParties.forEach(party => {
+                const totalVotesPercentage = calculateTotalVotesPercentage(party, partyStandings.CurrentTotalVotes);
+
+                // Create the party element
+                const partyElement = document.createElement('div');
+                partyElement.classList.add('party', `party-color-${party.EnglishCode}`); // Replace with your color logic if needed
+
+                // Create the party name element
+                const partyNameElement = document.createElement('div');
+                partyNameElement.classList.add('party-name');
+                if (party.EnglishCode === 'SP') partyNameElement.classList.add('sp')
+                partyNameElement.textContent = party.EnglishCode; // Set party name
+
+                // Create the party vote share element
+                const partyVoteShareElement = document.createElement('div');
+                partyVoteShareElement.classList.add('party-vote-share');
+                partyVoteShareElement.textContent = `${totalVotesPercentage.toFixed(1)}`; // Set vote percentage
+                const percentElement = document.createElement('span');
+                percentElement.classList.add('percent');
+                percentElement.textContent = '%';
+                partyVoteShareElement.appendChild(percentElement);
+
+                // Append name and vote share to the party element
+                partyElement.appendChild(partyNameElement);
+                partyElement.appendChild(partyVoteShareElement);
+
+                // Append the party element to the container
+                partyContainer.appendChild(partyElement);
+            });
+        }
+
+        function calculateTotalVotesPercentage(party, currentTotalVotes) {
+            if (currentTotalVotes > 0) {
+                return (party.CurrentVotes / currentTotalVotes) * 100; // Calculate percentage
+            }
+            return 0; // Return 0 if total votes is 0 to avoid division by zero
+        }
+    </script>
+</body>
+</html>

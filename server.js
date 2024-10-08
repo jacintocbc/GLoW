@@ -1098,36 +1098,36 @@ function notifyMultipleControllers() {
 //   console.log(`API Server is running on http://localhost:${altPort}`);
 // });
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 8081 });
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
 // Endpoint to receive data from the desktop app
 app.post('/update', (req, res) => {
-    const data = req.body;
-    console.log('Received data:', data);
+  const data = req.body;
+  console.log('Received data:', data);
 
-    // Broadcast the data to all connected WebSocket clients
-    wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(data));
-        }
-    });
+  // Broadcast the data to all connected WebSocket clients
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(data));
+    }
+  });
 
-    res.status(200).send('Data received');
+  res.status(200).send('Data received');
 });
 
 app.listen(altPort, () => {
-    console.log(`HTTP server is running on http://localhost:${altPort}`);
+  console.log(`HTTP server is running on http://localhost:${altPort}`);
 });
 
 wss.on('connection', ws => {
-    console.log('Client connected');
+  console.log('Client connected');
 
-    ws.on('close', () => {
-        console.log('Client disconnected');
-    });
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
 });
 
-console.log('WebSocket server is running on ws://10.151.122.21:8080');
+console.log('WebSocket server is running on ws://localhost:8080');
