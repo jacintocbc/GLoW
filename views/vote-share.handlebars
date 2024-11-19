@@ -24,12 +24,16 @@
         background: black;
       }
 
+      /* Vote Share */
       .container {
         height: 160px;
         width: 800px;
         background: black;
         display: flex;
         justify-content: flex-start;
+        overflow: hidden;
+        position: relative;
+        z-index: 10;
       }
 
       .party {
@@ -38,22 +42,31 @@
         padding-left: 10px;
         flex: 1;
         color: white;
+        margin-top: 30px;
       }
 
-      .party:first-child {
-        margin-right: 1px;
-      }
-
-      .party:last-child {
+      .party:not(:first-child) {
         margin-left: 1px;
       }
 
-      .party-color-SP {
-        background: #005941;
+      .party-color-PC {
+        background: #1C4F80;
+      }
+
+      .party-color-LIB {
+        background: #B02229;
       }
 
       .party-color-NDP {
         background: #E87504;
+      }
+
+      .party-color-GRN {
+        background: #3D9B35;
+      }
+
+      .party-color-IND {
+        background: #6D777E;
       }
 
       .party-name {
@@ -61,100 +74,226 @@
         font-size: 30px;
         text-transform: uppercase;
         position: relative;
-        top: 20px;
-        left: 2px;
+        top: 15px;
+        left: 3px;
       }
 
       .party-vote-share {
         font-weight: 800;
-        font-size: 100px;
+        font-size: 75px;
+        position: relative;
       }
 
       .percent {
         position: relative;
-        top: -25px;
-        font-size: 60px;
+        top: -15px;
+        font-size: 50px;
       }
 
-      .sp {
-        left: 7px;
+      .title {
+        position: absolute;
+        top: -26px;
+        width: 800px;
+      }
+
+      .title h1 {
+        text-align: center;
+        color: white;
+        font-size: 32px;
+      }
+
+      /* Background */
+      .container-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 800px;
+        height: 160px;
+        background: #282a32;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .wordmark {
+        max-height: 140px;
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-30px);
+        }
+      }
+
+      @keyframes float-alt {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .shape-1 {
+        height: 150px;
+        width: 60px;
+        position: absolute;
+        left: 60px;
+        bottom: -40px;
+        animation: float 7s ease-in infinite;
+      }
+
+      .shape-2 {
+        height: 140px;
+        width: 60px;
+        position: absolute;
+        right: 40px;
+        top: -20px;
+        animation: float 9s ease-in-out infinite; 
+      }
+
+      .shape-3 {
+        height: 100px;
+        width: 40px;
+        position: absolute;
+        right: 130px;
+        top: -30px;
+        animation: float-alt 5s ease-in-out infinite;
+      }
+
+      /* Controls */
+      .controls-container {
+        position: absolute;
+        top: 250px;
+        left: 10px;
       }
     </style>
 </head>
 <body>
-    <div id="wrapper">
-        <div class="container">
-            <div class="party party-color-SP">
-                <div class="party-name sp">SP</div>
-                <div class="party-vote-share">0<span class="percent">%</span></div>
-            </div>
-            <div class="party party-color-NDP">
-                <div class="party-name">NDP</div>
-                <div class="party-vote-share">0<span class="percent">%</span></div>
-            </div>
-        </div>
+  <div id="wrapper">
+    <div class="container-background">
+      <img src="/img/images/NS_VOTES.png" alt="Nova Scotia Votes" class="wordmark">
+      <div class="party-color-PC shape-1"></div>
+      <div class="party-color-LIB shape-2"></div>
+      <div class="party-color-NDP shape-3"></div>
     </div>
-    <script>
-        const socket = new WebSocket('ws://localhost:8081');
 
-        socket.addEventListener('open', function (event) {
-            console.log('Connected to the WebSocket server');
-        });
+    <div class="container">
+      <div class="title">
+        <h1>Share of Vote</h1>
+      </div>
+      <div class="party party-color-PC">
+        <div class="party-name pc">PC</div>
+        <div class="party-vote-share">57.7<span class="percent">%</span></div>
+      </div>
+      <div class="party party-color-LIB">
+        <div class="party-name">LIB</div>
+        <div class="party-vote-share">27.8<span class="percent">%</span></div>
+      </div>
+      <div class="party party-color-NDP">
+        <div class="party-name">NDP</div>
+        <div class="party-vote-share">10.3<span class="percent">%</span></div>
+      </div>
+    </div>
+  </div>
 
-        socket.addEventListener('message', function (event) {
-            const data = JSON.parse(event.data);
-            updateHTML(data);
-        });
+  <div class="controls-container">
+    <button type="button" id="voteShareBtn">Vote Share</button>
+    <button type="button" id="defaultBtn">Default</button>
+  </div>
 
-        function updateHTML(data) {
-            console.log(data);
+  <script>
+    const voteShareBtn = document.getElementById('voteShareBtn');
+    const defaultBtn = document.getElementById('defaultBtn');
+    const voteShareContainer = document.querySelector('.container');
+    const defaultContainer = document.querySelector('.container-background');
+    const title = document.querySelector('.title');
+    const party1 = document.querySelector('.party-color-PC');
+    const party2 = document.querySelector('.party-color-LIB');
+    const party3 = document.querySelector('.party-color-NDP');
 
-            const partyStandings = data.PartyStandings; // Get PartyStandings object
-            const partyNumber = data.PartyNumber; // Get PartyNumber
+    voteShareBtn.addEventListener('click', () => {
+      voteShareContainer.style.opacity = "1";
+      defaultContainer.style.opacity = "0";
+    });
 
-            const parties = partyStandings.Parties || []; // Ensure you have the array
-            const selectedParties = parties.slice(0, partyNumber); // Take only the required number of parties
+    defaultBtn.addEventListener('click', () => {
+      voteShareContainer.style.opacity = "0";
+      defaultContainer.style.opacity = "1";
+    });
 
-            const partyContainer = document.querySelector('.container'); // Select the container to append parties
-            partyContainer.textContent = ''; // Clear previous entries
+    // Change to IP address on-site
+    const socket = new WebSocket('ws://localhost:8081');
 
-            selectedParties.forEach(party => {
-                const totalVotesPercentage = calculateTotalVotesPercentage(party, partyStandings.CurrentTotalVotes);
+    socket.addEventListener('open', function (event) {
+      console.log('Connected to the WebSocket server');
+    });
 
-                // Create the party element
-                const partyElement = document.createElement('div');
-                partyElement.classList.add('party', `party-color-${party.EnglishCode}`); // Replace with your color logic if needed
+    socket.addEventListener('message', function (event) {
+      const data = JSON.parse(event.data);
+      updateHTML(data);
+    });
 
-                // Create the party name element
-                const partyNameElement = document.createElement('div');
-                partyNameElement.classList.add('party-name');
-                if (party.EnglishCode === 'SP') partyNameElement.classList.add('sp')
-                partyNameElement.textContent = party.EnglishCode; // Set party name
+    function updateHTML(data) {
+      console.log(data);
 
-                // Create the party vote share element
-                const partyVoteShareElement = document.createElement('div');
-                partyVoteShareElement.classList.add('party-vote-share');
-                partyVoteShareElement.textContent = `${totalVotesPercentage.toFixed(1)}`; // Set vote percentage
-                const percentElement = document.createElement('span');
-                percentElement.classList.add('percent');
-                percentElement.textContent = '%';
-                partyVoteShareElement.appendChild(percentElement);
+      const partyStandings = data.PartyStandings; // Get PartyStandings object
+      const partyNumber = data.PartyNumber; // Get PartyNumber
 
-                // Append name and vote share to the party element
-                partyElement.appendChild(partyNameElement);
-                partyElement.appendChild(partyVoteShareElement);
+      const parties = partyStandings.Parties || []; // Ensure you have the array
+      const selectedParties = parties.slice(0, partyNumber); // Take only the required number of parties
 
-                // Append the party element to the container
-                partyContainer.appendChild(partyElement);
-            });
-        }
+      const partyContainer = document.querySelector('.container'); // Select the container to append parties
+      partyContainer.textContent = ''; // Clear previous entries
 
-        function calculateTotalVotesPercentage(party, currentTotalVotes) {
-            if (currentTotalVotes > 0) {
-                return (party.CurrentVotes / currentTotalVotes) * 100; // Calculate percentage
-            }
-            return 0; // Return 0 if total votes is 0 to avoid division by zero
-        }
-    </script>
+      const titleElement = document.createElement('div');
+      titleElement.className = 'title';
+      const headerElement = document.createElement('h1');
+      headerElement.textContent = 'Share of Vote';
+      titleElement.appendChild(headerElement);
+      partyContainer.appendChild(titleElement);
+
+      selectedParties.forEach(party => {
+        const totalVotesPercentage = calculateTotalVotesPercentage(party, partyStandings.CurrentTotalVotes);
+
+        // Create the party element
+        const partyElement = document.createElement('div');
+        partyElement.classList.add('party', `party-color-${party.EnglishCode}`); // Replace with your color logic if needed
+
+        // Create the party name element
+        const partyNameElement = document.createElement('div');
+        partyNameElement.classList.add('party-name');
+        partyNameElement.textContent = party.EnglishCode; // Set party name
+
+        // Create the party vote share element
+        const partyVoteShareElement = document.createElement('div');
+        partyVoteShareElement.classList.add('party-vote-share');
+        partyVoteShareElement.textContent = `${totalVotesPercentage.toFixed(1)}`; // Set vote percentage
+        const percentElement = document.createElement('span');
+        percentElement.classList.add('percent');
+        percentElement.textContent = '%';
+        partyVoteShareElement.appendChild(percentElement);
+
+        // Append name and vote share to the party element
+        partyElement.appendChild(partyNameElement);
+        partyElement.appendChild(partyVoteShareElement);
+
+        // Append the party element to the container
+        partyContainer.appendChild(partyElement);
+      });
+    }
+
+    function calculateTotalVotesPercentage(party, currentTotalVotes) {
+      if (currentTotalVotes > 0) {
+        return (party.CurrentVotes / currentTotalVotes) * 100; // Calculate percentage
+      }
+      return 0; // Return 0 if total votes is 0 to avoid division by zero
+    }
+  </script>
 </body>
 </html>
