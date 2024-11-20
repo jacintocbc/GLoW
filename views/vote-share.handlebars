@@ -1,181 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote Share</title>
-    <style>
-      @font-face {
-        font-family: 'Radio-Canada';
-        src: url('img/fonts/RadioCanada-Variable.ttf') format('truetype');
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote Share</title>
+  <style>
+    @font-face {
+      font-family: 'Radio-Canada';
+      src: url('img/fonts/RadioCanada-Variable.ttf') format('truetype');
+    }
 
-      @font-face {
-        font-family: 'Radio-Canada Italic';
-        src: url('img/fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
-      }
+    @font-face {
+      font-family: 'Radio-Canada Italic';
+      src: url('img/fonts/RadioCanada-Italic-Variable.ttf') format('truetype');
+    }
 
-      body {
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-        position: relative;
-        font-family: 'Radio-Canada', sans-serif;
-        background: black;
-      }
+    body {
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      font-family: 'Radio-Canada', sans-serif;
+      background: black;
+    }
 
-      /* Vote Share */
-      .container {
-        height: 160px;
-        width: 800px;
-        background: black;
-        display: flex;
-        justify-content: flex-start;
-        overflow: hidden;
-        position: relative;
-        z-index: 10;
-      }
+    /* Vote Share Container */
+    .container {
+      height: 160px;
+      width: 800px;
+      background: black;
+      display: flex;
+      justify-content: flex-start;
+      overflow: hidden;
+      position: absolute;
+      bottom: 0; /* Position at the bottom */
+      left: 0;
+      transform: translateY(100%); /* Initially hidden below */
+      z-index: 10;
+      transition: transform 0.5s ease-in-out;
+    }
 
-      .party {
-        display: flex;
-        flex-direction: column;
-        padding-left: 10px;
-        flex: 1;
-        color: white;
-        margin-top: 30px;
-      }
+    .container.active {
+      transform: translateY(0); /* Slide up into view */
+    }
 
-      .party:not(:first-child) {
-        margin-left: 1px;
-      }
+    /* Title */
+    .title {
+      position: absolute;
+      top: -26px;
+      width: 800px;
+    }
 
-      .party-color-PC {
-        background: #1C4F80;
-      }
+    .title h1 {
+      text-align: center;
+      color: white;
+      font-size: 32px;
+    }
 
-      .party-color-LIB {
-        background: #B02229;
-      }
+    /* Party */
+    .party {
+      display: flex;
+      flex-direction: column;
+      padding-left: 10px;
+      flex: 1;
+      color: white;
+      margin-top: 30px;
+      opacity: 1;
+      transform: translateY(0px);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
 
-      .party-color-NDP {
-        background: #E87504;
-      }
+    .container.active .party {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      .party-color-GRN {
-        background: #3D9B35;
-      }
+    /* Existing Party Color Styles */
+    .party:not(:first-child) {
+      margin-left: 1px;
+    }
 
-      .party-color-IND {
-        background: #6D777E;
-      }
+    .party-color-PC {
+      background: #1C4F80;
+    }
 
-      .party-name {
-        font-weight: 500;
-        font-size: 30px;
-        text-transform: uppercase;
-        position: relative;
-        top: 15px;
-        left: 3px;
-      }
+    .party-color-LIB {
+      background: #B02229;
+    }
 
-      .party-vote-share {
-        font-weight: 800;
-        font-size: 75px;
-        position: relative;
-      }
+    .party-color-NDP {
+      background: #E87504;
+    }
 
-      .percent {
-        position: relative;
-        top: -15px;
-        font-size: 50px;
-      }
+    .party-color-GRN {
+      background: #3D9B35;
+    }
 
-      .title {
-        position: absolute;
-        top: -26px;
-        width: 800px;
-      }
+    .party-color-IND {
+      background: #6D777E;
+    }
 
-      .title h1 {
-        text-align: center;
-        color: white;
-        font-size: 32px;
-      }
+    .party-name {
+      font-weight: 500;
+      font-size: 30px;
+      text-transform: uppercase;
+      position: relative;
+      top: 15px;
+      left: 3px;
+    }
 
-      /* Background */
-      .container-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 800px;
-        height: 160px;
-        background: #282a32;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        z-index: 1;
-      }
+    .party-vote-share {
+      font-weight: 800;
+      font-size: 75px;
+      position: relative;
+    }
 
-      .wordmark {
-        max-height: 140px;
-      }
+    .percent {
+      position: relative;
+      top: -15px;
+      font-size: 50px;
+    }
 
-      @keyframes float {
-        0%, 100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-30px);
-        }
-      }
+    /* Background Container */
+    .container-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 800px;
+      height: 160px;
+      background: #282a32;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      z-index: 1;
+    }
 
-      @keyframes float-alt {
-        0%, 100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-      }
+    .wordmark {
+      max-height: 140px;
+    }
 
-      .shape-1 {
-        height: 150px;
-        width: 60px;
-        position: absolute;
-        left: 60px;
-        bottom: -40px;
-        animation: float 7s ease-in infinite;
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
       }
+      50% {
+        transform: translateY(-30px);
+      }
+    }
 
-      .shape-2 {
-        height: 140px;
-        width: 60px;
-        position: absolute;
-        right: 40px;
-        top: -20px;
-        animation: float 9s ease-in-out infinite; 
+    @keyframes float-alt {
+      0%, 100% {
+        transform: translateY(0);
       }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
 
-      .shape-3 {
-        height: 100px;
-        width: 40px;
-        position: absolute;
-        right: 130px;
-        top: -30px;
-        animation: float-alt 5s ease-in-out infinite;
-      }
+    .shape-1 {
+      height: 150px;
+      width: 60px;
+      position: absolute;
+      left: 60px;
+      bottom: -40px;
+      animation: float 7s ease-in infinite;
+    }
 
-      /* Controls */
-      .controls-container {
-        position: absolute;
-        top: 250px;
-        left: 10px;
-      }
-    </style>
+    .shape-2 {
+      height: 140px;
+      width: 60px;
+      position: absolute;
+      right: 40px;
+      top: -20px;
+      animation: float 9s ease-in-out infinite; 
+    }
+
+    .shape-3 {
+      height: 100px;
+      width: 40px;
+      position: absolute;
+      right: 130px;
+      top: -30px;
+      animation: float-alt 5s ease-in-out infinite;
+    }
+
+    /* Controls */
+    .controls-container {
+      position: absolute;
+      top: 250px;
+      left: 10px;
+    }
+  </style>
 </head>
 <body>
   <div id="wrapper">
+    <!-- Background -->
     <div class="container-background">
       <img src="/img/images/NS_VOTES.png" alt="Nova Scotia Votes" class="wordmark">
       <div class="party-color-PC shape-1"></div>
@@ -183,6 +203,7 @@
       <div class="party-color-NDP shape-3"></div>
     </div>
 
+    <!-- Vote Share -->
     <div class="container">
       <div class="title">
         <h1>Share of Vote</h1>
@@ -202,32 +223,34 @@
     </div>
   </div>
 
+  <!-- Controls -->
   <div class="controls-container">
     <button type="button" id="voteShareBtn">Vote Share</button>
     <button type="button" id="defaultBtn">Default</button>
   </div>
 
+  <!-- Script -->
   <script>
     const voteShareBtn = document.getElementById('voteShareBtn');
     const defaultBtn = document.getElementById('defaultBtn');
     const voteShareContainer = document.querySelector('.container');
     const defaultContainer = document.querySelector('.container-background');
-    const title = document.querySelector('.title');
-    const party1 = document.querySelector('.party-color-PC');
-    const party2 = document.querySelector('.party-color-LIB');
-    const party3 = document.querySelector('.party-color-NDP');
 
-    voteShareBtn.addEventListener('click', () => {
-      voteShareContainer.style.opacity = "1";
-      defaultContainer.style.opacity = "0";
-    });
+    // Show Vote Share Container
+    function showVoteShare() {
+      voteShareContainer.classList.remove('active');
+    }
 
-    defaultBtn.addEventListener('click', () => {
-      voteShareContainer.style.opacity = "0";
-      defaultContainer.style.opacity = "1";
-    });
+    // Hide Vote Share Container
+    function hideVoteShare() {
+      voteShareContainer.classList.add('active');
+    }
 
-    // Change to IP address on-site
+    // Event Listeners for Buttons
+    voteShareBtn.addEventListener('click', showVoteShare);
+    defaultBtn.addEventListener('click', hideVoteShare);
+
+    // WebSocket Connection ------------------ Change to IP address on-site
     const socket = new WebSocket('ws://localhost:8081');
 
     socket.addEventListener('open', function (event) {
@@ -239,6 +262,7 @@
       updateHTML(data);
     });
 
+    // Update HTML Based on WebSocket Data
     function updateHTML(data) {
       console.log(data);
 
@@ -251,6 +275,7 @@
       const partyContainer = document.querySelector('.container'); // Select the container to append parties
       partyContainer.textContent = ''; // Clear previous entries
 
+      // Create and Append Title
       const titleElement = document.createElement('div');
       titleElement.className = 'title';
       const headerElement = document.createElement('h1');
@@ -258,7 +283,8 @@
       titleElement.appendChild(headerElement);
       partyContainer.appendChild(titleElement);
 
-      selectedParties.forEach(party => {
+      // Create and Append Party Elements
+      selectedParties.forEach((party) => {
         const totalVotesPercentage = calculateTotalVotesPercentage(party, partyStandings.CurrentTotalVotes);
 
         // Create the party element
@@ -286,8 +312,17 @@
         // Append the party element to the container
         partyContainer.appendChild(partyElement);
       });
+
+      // If the container is active, re-trigger animations for new content
+      if (voteShareContainer.classList.contains('active')) {
+        // Force reflow to restart CSS animations
+        voteShareContainer.classList.remove('active');
+        void voteShareContainer.offsetWidth; // Trigger reflow
+        voteShareContainer.classList.add('active');
+      }
     }
 
+    // Calculate Vote Percentage
     function calculateTotalVotesPercentage(party, currentTotalVotes) {
       if (currentTotalVotes > 0) {
         return (party.CurrentVotes / currentTotalVotes) * 100; // Calculate percentage
