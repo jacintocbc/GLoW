@@ -187,6 +187,7 @@
 
     /* Controls */
     .controls-container {
+      opacity: 0;
       position: absolute;
       top: 250px;
       left: 10px;
@@ -259,7 +260,12 @@
 
     socket.addEventListener('message', function (event) {
       const data = JSON.parse(event.data);
-      updateHTML(data);
+      if (data.PartyNumber === 0) {
+        hideVoteShare();
+      } else {
+        updateHTML(data);
+        showVoteShare();
+      }
     });
 
     // Update HTML Based on WebSocket Data
