@@ -1744,11 +1744,12 @@ function previewItem(itemrow = '') {
     data.datafile = document.getElementById('datafile').value;
     data.epoch = itemrow.getAttribute('data-spx-epoch') || 0;
     data.command = 'preview'; // added in 1.1.0
-    working('Sending ' + data.command + ' request.');
-    ajaxpost('/gc/playout', data);
-    heartbeat(308); // identifier
-
-
+    // Need to get correct ID for countdown / confetti
+    if (data.epoch !== "84592" && data.epoch !== "11814") {
+        working('Sending ' + data.command + ' request.');
+        ajaxpost('/gc/playout', data);
+        heartbeat(308); // identifier
+    }
 } // previewItem
 
 function projectSettings() {
