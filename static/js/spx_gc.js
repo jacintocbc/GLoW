@@ -849,6 +849,14 @@ function clearUsedChannels(ServerName = '') {
     data.server = ServerName;
     data.foldername = document.getElementById('foldername').value;
     data.datafile = document.getElementById('datafile').value;
+    let ITEMS = document.querySelectorAll('.itemrow');
+    ITEMS.forEach(function (templateItem, itemNro) {
+        setTimeout(function () {
+            // continueUpdateStop('stop', templateItem); // slower
+            playItem(templateItem, 'stop');
+            // setItemButtonStates(templateItem, 'stop') // just the UI
+        }, (itemNro * 40)); // 20, 40, 60, 80ms etc...
+    });
     working('Clearing ALL graphic channels used by program [' + data.foldername + ']...');
     ajaxpost('/gc/clearPlayouts', data);
 } //clearUsedChannels
