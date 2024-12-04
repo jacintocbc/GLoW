@@ -1042,92 +1042,93 @@ function notifyMultipleControllers() {
     let data = {};
     data.spxcmd = 'notifyMultipleControllers'
     data.count = count
-    io.emit('SPXMessage2Client', data);    
+    io.emit('SPXMessage2Client', data);
   }, 100); // small delay
 }
 
-// iNews Related Logic ------------------------------------------------------------- //
-// const accessTokenUrl = 'https://as.cbcrc.ca/connect/token';
-// const scope = 'inews-api.cbcrc.ca';
-// const clientId = 'maestro.cbcrc.ca';
-// const clientSecret = '8c15e6e8-8557-4c5d-bc2b-ec6189919dad';
+// Maestro Data Logic  --------------------------------------------------------- //
+// const wss = new WebSocket.Server({ port: 8081 });
 
-// // // Get Token
-// app.post('/get-token', async (req, res) => {
-//   const body = new URLSearchParams();
-//   body.append('grant_type', 'client_credentials');
-//   body.append('scope', scope);
-//   body.append('client_id', clientId);
-//   body.append('client_secret', clientSecret);
+// // Middleware to parse JSON bodies
+// app.use(bodyParser.json());
 
-//   try {
-//     const response = await axios.post(accessTokenUrl, body.toString(), {
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//       }
-//     });
+// // Endpoint to receive data from the desktop app
+// app.post('/update', (req, res) => {
+//   const data = req.body;
+//   console.log('Received data:', data);
 
-//     const responseData = response.data;
-//     const accessToken = responseData.access_token;
-//     const expiresIn = responseData.expires_in;
+//   // Broadcast the data to all connected WebSocket clients
+//   wss.clients.forEach(client => {
+//     if (client.readyState === WebSocket.OPEN) {
+//       client.send(JSON.stringify(data));
+//     }
+//   });
 
-//     // Send token back to client
-//     res.json({ accessToken, expiresIn });
-
-//   } catch (error) {
-//     console.error('Error fetching access token:', error);
-//     res.status(500).json({ error: 'Failed to fetch access token' });
-//   }
-// });
-
-// app.get('/fetch-data', async (req, res) => {
-//   const token = req.query.token;
-//   const server = req.query.server;
-//   const lineup = req.query.lineup;
-//   try {
-//     const response = await axios.get(`https://cbcrc.azure-api.net/it/inews/api/v2/nsmlstories/${server}/${lineup}?clientId=api-maestro-prod`, {
-//       headers: { 'Authorization': `Bearer ${token}` }
-//     });
-//     res.json(response.data);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Failed to fetch data from API' });
-//   }
+//   res.status(200).send('Data received');
 // });
 
 // app.listen(altPort, () => {
-//   console.log(`API Server is running on http://localhost:${altPort}`);
+//   console.log(`HTTP server is running on http://localhost:${altPort}`);
 // });
 
-const wss = new WebSocket.Server({ port: 8081 });
+// wss.on('connection', ws => {
+//   console.log('Client connected');
 
-// Middleware to parse JSON bodies
-app.use(bodyParser.json());
+//   ws.on('close', () => {
+//     console.log('Client disconnected');
+//   });
+// });
 
-// Endpoint to receive data from the desktop app
-app.post('/update', (req, res) => {
-  const data = req.body;
-  console.log('Received data:', data);
+// console.log('WebSocket server is running on ws://localhost:8081');
 
-  // Broadcast the data to all connected WebSocket clients
-  wss.clients.forEach(client => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(data));
-    }
-  });
+// iNews Related Logic ------------------------------------------------------------- //
+const accessTokenUrl = 'https://as.cbcrc.ca/connect/token';
+const scope = 'inews-api.cbcrc.ca';
+const clientId = 'maestro.cbcrc.ca';
+const clientSecret = '8c15e6e8-8557-4c5d-bc2b-ec6189919dad';
 
-  res.status(200).send('Data received');
+// Get Token
+app.post('/get-token', async (req, res) => {
+  const body = new URLSearchParams();
+  body.append('grant_type', 'client_credentials');
+  body.append('scope', scope);
+  body.append('client_id', clientId);
+  body.append('client_secret', clientSecret);
+
+  try {
+    const response = await axios.post(accessTokenUrl, body.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+
+    const responseData = response.data;
+    const accessToken = responseData.access_token;
+    const expiresIn = responseData.expires_in;
+
+    // Send token back to client
+    res.json({ accessToken, expiresIn });
+
+  } catch (error) {
+    console.error('Error fetching access token:', error);
+    res.status(500).json({ error: 'Failed to fetch access token' });
+  }
+});
+
+app.get('/fetch-data', async (req, res) => {
+  const token = req.query.token;
+  const server = req.query.server;
+  const lineup = req.query.lineup;
+  try {
+    const response = await axios.get(`https://cbcrc.azure-api.net/it/inews/api/v2/nsmlstories/${server}/${lineup}?clientId=api-maestro-prod`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch data from API' });
+  }
 });
 
 app.listen(altPort, () => {
-  console.log(`HTTP server is running on http://localhost:${altPort}`);
+  console.log(`API Server is running on http://localhost:${altPort}`);
 });
-
-wss.on('connection', ws => {
-  console.log('Client connected');
-
-  ws.on('close', () => {
-    console.log('Client disconnected');
-  });
-});
-
-console.log('WebSocket server is running on ws://localhost:8081');
