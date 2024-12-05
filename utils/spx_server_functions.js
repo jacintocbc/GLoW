@@ -51,11 +51,12 @@ module.exports = {
     // Send a http POST to an endpoint on the SPX server.
     // console.log('httpPost received', endPoint, JSONdata);
     let JSONdata2 = JSON.stringify(JSONdata);
+    const byteLength = Buffer.byteLength(JSONdata2, 'utf8');
     try {
       //JSONdata = JSON.stringify(JSONdata);
       const options = { port: port, path: endPoint, method: 'POST', headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': JSONdata2.length
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Length': byteLength
         }
       }
       const httpreq = http.request(options, result => {
