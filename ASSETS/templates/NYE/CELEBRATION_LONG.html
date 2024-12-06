@@ -1,0 +1,121 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebration - Long</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./CELEBRATION_LONG/CELEBRATION_LONG.css">
+    <script>
+        function runTemplateUpdate() {
+        }
+
+        function runAnimationIN() {
+        }
+
+        function runAnimationOUT() {
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Celebration (30s)",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "20",
+            "webplayout": "20",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "5",
+            "DataFields": [
+                {
+                    "ftype" : "instruction",
+                    "value" : "This graphic has no inputs, it will display countdown & confetti in full-frame"
+                },
+                {
+                    "ftype": "spacer"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <canvas id="animationCanvasConfetti" width="1920" height="1080"></canvas>
+    <script>
+        const totalFrames = 1800; // Total number of frames
+        const canvas = document.getElementById('animationCanvasConfetti');
+        const ctx = canvas.getContext('2d');
+        const images = []; // Array to store preloaded images
+        let currentFrame = 0; // Starting frame
+
+        // Format the frame file name
+        function getFrameName(index) {
+            return `GEM-CONFETTI-25s-v01-${index.toString().padStart(4, '0')}.png`;
+        }
+
+        // Preload all frames
+        function preloadImages() {
+            for (let i = 0; i < totalFrames; i++) {
+                const img = new Image();
+                img.src = `./CELEBRATION_LONG/frames/${getFrameName(i)}`;
+                images.push(img);
+            }
+        }
+
+        // Animation function
+        function animate() {
+            if (currentFrame >= totalFrames) return; // Stop when animation completes
+
+            const img = images[currentFrame]; // Use preloaded image
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous frame
+            ctx.drawImage(img, 0, 0); // Draw the new frame
+
+            currentFrame++; // Move to the next frame
+            requestAnimationFrame(animate); // Continue the animation
+        }
+
+        // Start preloading and animation
+        preloadImages();
+        images[totalFrames - 1].onload = () => { // Ensure the last image is loaded
+            requestAnimationFrame(animate);
+        };
+    </script>
+    <!-- <script>
+         const totalFrames = 1800; // Total number of frames in the sequence
+        const canvas = document.getElementById('animationCanvasConfetti');
+        const ctx = canvas.getContext('2d');
+        let currentFrame = 0; // Starting frame
+
+        function getFrameName(index) {
+            // Format the file name based on the sequence
+            const paddedIndex = index.toString().padStart(4, '0'); // Ensures 4-digit padding
+            return GEM-CONFETTI-25s-v01-${paddedIndex}.png;
+        }
+
+        function loadFrame(index) {
+            const img = new Image();
+            img.src = ./CELEBRATION_LONG/images/${getFrameName(index)}; // Ensure the path matches your structure
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous frame
+                ctx.drawImage(img, 0, 0); // Draw the new frame
+            };
+        }
+
+        function animate() {
+            if (currentFrame > totalFrames) {
+                return; // Stop the animation when all frames are played
+            }
+
+            loadFrame(currentFrame);
+            currentFrame++; // Move to the next frame
+            requestAnimationFrame(animate); // Continue the animation
+        }
+
+        requestAnimationFrame(animate); // Start the animation
+    </script> -->
+</body>
+
+</html>
