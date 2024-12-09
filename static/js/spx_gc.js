@@ -3885,17 +3885,119 @@ async function fetchData(isUpdate) {
             const parsedData = parseNsmlData(nsmlData);
             iNewsArray.push(parsedData);
         });
-        isUpdate ? getRundownForiNews(iNewsArray) : populateRundownForiNews(iNewsArray);
+        // isUpdate ? getRundownForiNews(iNewsArray) : populateRundownForiNews(iNewsArray);
+        if (!isUpdate) populateRundownTable(iNewsArray);
     } catch (error) {
         console.error('Error fetching data from API:', error);
     }
 }
 
+let tableData = [];
+
+function populateRundownTable(data) {
+    let selectedCount = 0; // Track the number of selected checkboxes
+    tableData = data;
+    const tableElement = document.querySelector("#rundownTable");
+    const tableBody = document.querySelector("#rundownTable tbody");
+    tableBody.innerHTML = ""; // Clear existing rows
+
+    // Create a div to display the selected count
+    const countDisplay = document.getElementById("selectedCount") || document.createElement("div");
+    countDisplay.id = "selectedCount";
+    countDisplay.classList.add("selected-count");
+    countDisplay.textContent = `Selected: ${selectedCount}`;
+    tableElement.parentNode.insertBefore(countDisplay, tableElement);
+
+    data.forEach((row, index) => {
+        const tr = document.createElement("tr");
+        tr.setAttribute("data-index", index);
+
+        // Add a checkbox for selection
+        const checkboxTd = document.createElement("td");
+        const checkbox = document.createElement("input");
+        checkboxTd.classList.add("select-column");
+        checkbox.type = "checkbox";
+        checkbox.classList.add("row-select");
+
+        // Add an event listener to the checkbox
+        checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+                selectedCount++;
+            } else {
+                selectedCount--;
+            }
+
+            const rundownButton = document.getElementById('rundownItemBtn');
+            if (selectedCount > 0) {
+                rundownButton.disabled = false;
+                rundownButton.className = 'btn bg_green';
+            } else {
+                rundownButton.disabled = true;
+                rundownButton.className = 'btn button_disabled'; 
+            }
+
+            countDisplay.textContent = `Selected: ${selectedCount}`;
+
+            // Disable all checkboxes if 10 are selected
+            const allCheckboxes = document.querySelectorAll(".row-select");
+            allCheckboxes.forEach(cb => {
+                if (selectedCount >= 10) {
+                    if (!cb.checked) {
+                        cb.disabled = true;
+                    }
+                } else {
+                    cb.disabled = false;
+                }
+            });
+        });
+
+        checkboxTd.appendChild(checkbox);
+        tr.appendChild(checkboxTd);
+
+        // Add data columns (e.g., name and title)
+        const columns = ["name", "title"];
+        columns.forEach(key => {
+            const td = document.createElement("td");
+            td.textContent = row[key] || ""; // Add a fallback for empty values
+            tr.appendChild(td);
+        });
+
+        tableBody.appendChild(tr);
+    });
+
+    tableElement.style.opacity = "1";
+}
+
+function getSelectedRows() {
+    const selectedRows = [];
+    const checkboxes = document.querySelectorAll(".row-select:checked");
+
+    checkboxes.forEach(checkbox => {
+        const row = checkbox.closest("tr");
+        const rowIndex = parseInt(row.getAttribute("data-index"), 10); // Read the assigned index
+        selectedRows.push(tableData[rowIndex]); // Use tableData to fetch the corresponding object
+    });
+
+    return selectedRows;
+}
+
+function createRundownItem() {
+    const selectedRows = getSelectedRows();
+
+    if (!selectedRows.length) {
+        alert("No rows selected.");
+        return;
+    }
+
+    getRundownForiNews(selectedRows);
+}
+
+
 // Parse NSML
 function parseNsmlData(nsmlString) {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(nsmlString, 'application/xml');
-    
+
     const nameNode = xmlDoc.querySelector('string[id="name"]');
     const titleNode = xmlDoc.querySelector('string[id="title"]');
 
@@ -3920,75 +4022,90 @@ function getRundownForiNews(iNewsArray) {
 // Update Rundown
 function updateRundownForiNews(existingRundown, iNewsArray) {
     const data = {
-        project: "Test",
-        file: "Test",
+        project: "Demo",
+        file: "Demo",
         content: existingRundown
     };
 
     let templateCount = 0;
     if (existingRundown.templates.length) templateCount = (existingRundown.templates.length + 1);
 
-    iNewsArray.forEach((item) => {
-        const template = {
-            defversion: "1",
-            description: "News Test",
-            playserver: "OVERLAY",
-            playchannel: "1",
-            playlayer: "10",
-            webplayout: "10",
-            out: "manual",
-            dataformat: "json",
-            uicolor: "0",
-            DataFields: [
+    let currentID = Math.floor(Math.random() * 90000) + 10000;
+    itemID = currentID.toString();
+
+    const template = {
+        defversion: "1",
+        description: "Ticker Loop",
+        playserver: "OVERLAY",
+        playchannel: "1",
+        playlayer: "18",
+        webplayout: "18",
+        out: "manual",
+        dataformat: "json",
+        uicolor: "0",
+        DataFields: [
+            {
+                field: "f81",
+                ftype: "textfield",
+                title: "Transition (s)",
+                value: "5"
+            },
+            ...Array.from({ length: 10 }, (_, i) => ({
+                ftype: "caption",
+                value: `Item ${i + 1}`
+            })).flatMap((caption, i) => [
+                caption,
                 {
-                    field: "f1",
+                    field: `f${2 + i * 6}`, // Adjust field number dynamically
                     ftype: "textfield",
-                    title: "Header",
-                    value: "Financial Institutions can now offer tax-free home savings accounts"
+                    title: "Name",
+                    value: iNewsArray[i]?.name ?? "" // Safe access with a default value
                 },
                 {
-                    field: "f2",
+                    field: `f${3 + i * 6}`, // Adjust field number dynamically
                     ftype: "textfield",
                     title: "Title",
-                    value: item.name
+                    value: iNewsArray[i]?.title ?? "" // Safe access with a default value
                 },
                 {
-                    field: "f3",
-                    ftype: "textfield",
-                    title: "Sub-Title",
-                    value: item.title
-                },
-                {
-                    field: "f4",
-                    ftype: "textfield",
-                    title: "Footer",
-                    value: "Over 32% of eligible Islanders vote in advance polls for PEI election"
+                    ftype: "divider"
                 }
-            ],
-            onair: "false",
-            imported: Date.now().toString(),
-            relpath: "/news/NEWS_TEST.html",
-            itemID: (templateCount).toString().padStart(5, '0')
-        };
-        templateCount++;
+            ]),
+            {
+                field: "f67",
+                ftype: "hidden",
+                title: "Total Out",
+                value: "manual"
+            },
+            {
+                field: "f68",
+                ftype: "checkbox",
+                title: "Loop Graphic",
+                value: "1"
+            }
+        ],
+        onair: "false",
+        imported: Date.now().toString(),
+        relpath: "/news/TICKER_LOOP.html",
+        itemID: itemID
+    };
 
-        data.content.templates.push(template);
-    });
+    data.content.templates.push(template);
 
     axios.post('http://localhost:5656/api/v1/rundown/json', data)
-    .then(response => {
-        console.log('populate rundown', response.data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => {
+            console.log('populate rundown', response.data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 // Populate Rundown
 function populateRundownForiNews(iNewsArray) {
     const data = {
-        project: "Test",
-        file: "Test",
+        project: "Demo",
+        file: "Demo",
         content: {
             comment: "Sent from iNews",
             templates: []
@@ -4042,12 +4159,12 @@ function populateRundownForiNews(iNewsArray) {
     });
 
     axios.post('http://localhost:5656/api/v1/rundown/json', data)
-    .then(response => {
-        console.log('populate rundown', response.data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => {
+            console.log('populate rundown', response.data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 // End of iNews Related Logic ----------------------------------------------------------------- //
@@ -4164,45 +4281,45 @@ function playAllControl() {
 // Focus First
 function focusFirstControl() {
     axios.get('http://localhost:5656/api/v1/rundown/focusFirst')
-    .then(response => {
-        console.log('Focus First');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => {
+            console.log('Focus First');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 // Focus Next
 function focusNextControl() {
     axios.get('http://localhost:5656/api/v1/rundown/focusNext')
-    .then(response => {
-        console.log('Focus Next');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => {
+            console.log('Focus Next');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 // Play Focused
 function playFocused() {
     axios.get('http://localhost:5656/api/v1/item/play')
-    .then(response => {
-        console.log('Play Focused');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => {
+            console.log('Play Focused');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 // Stop Focused
 function stopFocused() {
     axios.get('http://localhost:5656/api/v1/item/stop')
-    .then(response => {
-        console.log('Stop Focused');
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => {
+            console.log('Stop Focused');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 // Flags Reference List

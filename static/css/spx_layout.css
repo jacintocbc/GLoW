@@ -1198,6 +1198,35 @@ table.footerTable, td.footerTable, tr.footerTable, span.statusbar div.footerTabl
     position: relative;
   }
 
+  /* iNews */
+  #lineupOptionsCollapsible {
+    max-height: 40vh !important;
+    overflow: auto;
+  }
+
+  #rundownTable {
+    font-size: 12px;
+  }
+
+  .select-column {
+    text-align: center;
+  }
+
+  .selected-count {
+    position: absolute;
+    top: 141px;
+  }
+
+  .button_disabled {
+    background: grey;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+  }
+
+  .button_disabled:hover {
+    border-bottom: none;
+  }
+
   .RDoptionsText {
     color: white;
     border: 2px solid transparent;

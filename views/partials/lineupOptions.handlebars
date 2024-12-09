@@ -21,9 +21,25 @@
       </table>
 
       <div class="button-container">
-        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData(true)">Update Rundown</button>
-        <button type="button" class="btn bg_green" onclick="fetchData(false)">Populate Rundown</button>
+        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData(false)">Populate Data</button>
+        <button type="button" class="btn button_disabled" onclick="createRundownItem()" id="rundownItemBtn">Create Rundown Item</button>
+        {{!-- <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData(true)">Update Rundown</button>
+        <button type="button" class="btn bg_green" onclick="fetchData(false)">Populate Rundown</button>     --}}
       </div>
+
+      <!-- Placeholder for the Dynamic Table -->
+      <table id="rundownTable" style="width: 100%; margin-top: 25px; opacity: 0;" border="1">
+        <thead>
+          <tr>
+            <th style="width: 80px">Select</th>
+            <th>Name</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be added dynamically here -->
+        </tbody>
+      </table>
 
     </div>
   </div>
