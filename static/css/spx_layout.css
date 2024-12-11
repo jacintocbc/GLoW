@@ -1436,11 +1436,10 @@ iframe {
 
 .preview-title {
     position: absolute;
-    bottom: 6px;
+    top: 6px;
     right: 10px;
     z-index: 9;
     font-size: 18px;
-    display: none;
 }
 
 @media screen and (min-height: 1000px) {
