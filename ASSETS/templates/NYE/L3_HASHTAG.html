@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L3 Hashtag</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./L3_HASHTAG/L3_HASHTAG.css">
+    <script>
+        function runTemplateUpdate() {
+        }
+
+        function runAnimationIN() {
+        }
+
+        function runAnimationOUT() {
+            const tealBox = document.querySelector('.teal-box');
+            tealBox.style.animation = 'slideDown 0.5s ease-in forwards';
+            const text = document.querySelector('.main-text');
+            text.style.animation = 'fadeOut 0.5s ease-out forwards';
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                const words = document.querySelectorAll(".word");
+                const email = document.querySelector(".email");
+                
+                // Animate each word
+                words.forEach((word, index) => {
+                    if (index === 0) word.style.animationDelay = '1s'
+                    word.style.animationDelay = `${index * 0.75}s`;
+                });
+
+                // Animate each letter in the email span
+                const emailText = email.textContent;
+                email.textContent = ""; // Clear the original content
+                emailText.split("").forEach((letter, index) => {
+                    const span = document.createElement("span");
+                    span.textContent = letter;
+                    span.style.animationDelay = `${(words.length * 0.5) + (index * 0.1)}s`;
+                    email.appendChild(span);
+                });
+            }, 1000);
+        });
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Lower Third Hashtag",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "3",
+            "webplayout": "3",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "1",
+            "DataFields": [
+                {
+                    "ftype" : "instruction",
+                    "value" : "This graphic has no inputs, it is the lower third hashtag"
+                },
+                {
+                    "ftype": "spacer"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="teal-box">
+            <h1 class="cbcnye-text">#CBCNYE</h1>
+        </div>
+        <div class="text-box">
+            <p class="main-text">
+                <span class="word">Send</span>
+                <span class="word">your</span><br>
+                <span class="word">NYE</span>
+                <span class="word">wishes!</span><br>
+                <span class="email">ask@cbc.ca</span>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

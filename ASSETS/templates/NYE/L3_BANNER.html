@@ -1,0 +1,53 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L3 Banner</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./L3_BANNER/L3_BANNER.css">
+    <script>
+        function runTemplateUpdate() {
+        }
+
+        function runAnimationIN() {
+            // const banner = document.querySelector('.banner');
+            // banner.style.animation = 'slideUp 1s ease-out forwards';
+        }
+
+        function runAnimationOUT() {
+            const banner = document.querySelector('.banner');
+            banner.style.animation = 'slideDown 1s ease-in forwards';
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Lower Third Banner",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "2",
+            "webplayout": "2",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "0",
+            "DataFields": [
+                {
+                    "ftype" : "instruction",
+                    "value" : "This graphic has no inputs, it is the lower third background"
+                },
+                {
+                    "ftype": "spacer"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <img src="./L3_BANNER/BANNER.png" alt="Banner Canada Live" class="banner">
+</body>
+
+</html>
