@@ -120,7 +120,7 @@
         const canvas = document.getElementById('animationCanvasConfetti');
         const ctx = canvas.getContext('2d');
         const totalFrames = 900; // Total number of frames in the sequence
-        const fps = 45; // Target frames per second
+        const fps = 32; // Target frames per second
         const frameDuration = 1000 / fps; // Frame duration in milliseconds
         let currentFrame = 0; // Starting frame
     
@@ -130,7 +130,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous frame
                 ctx.drawImage(img, 0, 0); // Draw the new frame
             };
-            img.src = `./CELEBRATION_SHORT/frames/GEM-CONFETTI-2510s-v01-${String(index).padStart(3, '0')}.png`;
+            img.src = `./CELEBRATION_SHORT/frames/GEM-CONFETTI-10s-v01-${String(index).padStart(3, '0')}.png`;
         }
     
         function animate() {
