@@ -1,0 +1,97 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L3 Left Gem</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./L3_LEFT_GEM/L3_LEFT_GEM.css">
+    <script>
+        let animationInterval;
+
+        function runTemplateUpdate() {
+        }
+
+        function runAnimationIN() {
+            const img1 = document.querySelector('.img-1');
+            img1.style.left = '-100px';
+            img1.style.animation = 'slideInLeft 0.7s ease-out forwards 0.3s';
+            const img2 = document.querySelector('.img-2');
+            img2.style.left = '-150px';
+            img2.style.animation = 'slideInMiddle 0.7s ease-out forwards 0.2s';
+            const img3 = document.querySelector('.img-3');
+            img3.style.left = '-100px';
+            img3.style.animation = 'slideInRight 0.7s ease-out forwards';
+        }
+
+        function runAnimationOUT() {
+            clearInterval(animationInterval);
+            outAnimations();
+        }
+
+        function outAnimations() {
+            const img1 = document.querySelector('.img-1');
+            img1.style.left = '42px';
+            img1.style.animation = 'fadeOut 0.7s ease-in forwards';
+            const img2 = document.querySelector('.img-2');
+            img2.style.left = '38px';
+            img2.style.animation = 'fadeOut 0.7s ease-out forwards 0.2s';
+            const img3 = document.querySelector('.img-3');
+            img3.style.left = '34px';
+            img3.style.animation = 'fadeOut 0.7s ease-out forwards 0.3s';
+        }
+
+        // Trigger animations every 10 seconds
+        animationInterval = setInterval(() => {
+            // Run fade-out animations first
+            outAnimations();
+
+            // After a 1-second delay, run the slide-in animations
+            setTimeout(() => {
+                runAnimationIN();
+            }, 1000);  // 1 second delay
+        }, 10000);  // Repeat every 10 seconds
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Lower Third Left Gem",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "5",
+            "webplayout": "5",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "5",
+            "DataFields": [
+                {
+                    "ftype" : "instruction",
+                    "value" : "This graphic has no inputs, it is the lower third left gem"
+                },
+                {
+                    "ftype": "spacer"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="gem">
+            <svg class="img-1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 70 125.17">
+                <path d="M0,125.17c34.52,0,70-28.07,70-62.59S34.52,0,0,0v125.17Z" fill="currentColor" />
+            </svg>
+            <svg class="img-2" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 34.5 125.17">
+                <path d="M0,125.17c18.71-12.49,34.5-35.84,34.5-62.59S18.71,12.49,0,0v125.17Z" fill="currentColor" />
+            </svg>
+            <svg class="img-3" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 34.5 125.17">
+                <path d="M0,125.17c18.71-12.49,34.5-35.84,34.5-62.59S18.71,12.49,0,0v125.17Z" fill="currentColor" />
+            </svg>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Radio-Canada', sans-serif;
+}
+
+.container {
+    position: absolute;
+    bottom: 110px;
+    left: 0;
+    height: 118px;
+    width: 150px;
+    z-index: 4;
+}
+
+.gem svg {
+    max-height: 90px;
+}
+
+.img-1,
+.img-2,
+.img-3 {
+    position: relative;
+    top: 14px;
+}
+
+/* Slide in animations */
+.img-1 {
+    left: -100px;
+    color: #f3342f;
+    animation: slideInLeft 0.7s ease-out forwards 0.3s;
+}
+
+.img-2 {
+    left: -150px;
+    color: #f9f9f9;
+    animation: slideInMiddle 0.7s ease-out forwards 0.2s;
+}
+
+.img-3 {
+    left: -100px;
+    color: #f9f9f9;
+    animation: slideInRight 0.7s ease-out forwards;
+}
+
+/* Keyframes for sliding in */
+@keyframes slideInRight {
+    from {
+        left: -100px;
+    }
+
+    to {
+        left: 34px;
+    }
+}
+
+@keyframes slideInMiddle {
+    from {
+        left: -150px;
+    }
+
+    to {
+        left: 38px;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        left: -100px;
+    }
+
+    to {
+        left: 42px;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

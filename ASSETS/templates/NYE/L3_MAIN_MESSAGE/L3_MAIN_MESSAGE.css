@@ -1,0 +1,116 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Radio-Canada', sans-serif;
+}
+
+.container {
+    position: absolute;
+    bottom: 104px;
+    left: 390px;
+    height: 176px;
+    width: 1500px;
+    padding-right: 30px;
+    z-index: 4;
+    display: flex;
+}
+
+h1 {
+    font-size: 65px;
+    position: relative;
+    top: 10px;
+    left: 39px;
+}
+
+.main-title {
+    color: #ffcb12;
+}
+
+.countdown {
+    color: #f7f7f7;
+    letter-spacing: -1.6px;
+}
+
+.main-title span, .countdown span {
+    display: inline-block;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.new-year {
+    color: #f7f7f7;
+    display: none;
+}
+
+.new-year span {
+    display: inline-block;
+    opacity: 0;
+}
+
+.new-year-animation {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.location {
+    color: #f7f7f7;
+    font-size: 45px;
+    font-weight: 500;
+    position: relative;
+    left: 25px;
+    display: none;
+}
+  
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}
+
+@keyframes fadeOutUp {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    30% {
+        opacity: 0;
+    }
+    100% {
+      transform: translateY(-50%);
+      opacity: 0;
+    }
+}
+
+.banner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.clean {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}

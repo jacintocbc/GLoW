@@ -1,0 +1,301 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Radio-Canada', sans-serif;
+}
+
+.container {
+    position: absolute;
+    bottom: 110px;
+    right: 0;
+    height: 118px;
+    width: 200px;
+    z-index: 4;
+}
+
+/* Intro Animation Gem Pieces */
+.pre-gem {
+    position: relative;
+    width: 435px;
+    left: -285px;
+    top: 10px;
+}
+
+.pre-gem svg {
+    max-height: 97px;
+    margin-right: -3.5px;
+}
+
+.pre-img-1 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards;
+}
+
+.pre-img-2 {
+    color: #ffcb12;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.1s;
+}
+
+.pre-img-3 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.2s;
+}
+
+.pre-img-4 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.3s;
+}
+
+.pre-img-5 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.4s;
+}
+
+.pre-img-6 {
+    color: #19c8d1;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.5s;
+}
+
+.pre-img-7 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.6s;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Final Gem Pieces */
+.gem {
+    position: relative;
+    top: -100px;
+}
+
+.gem svg {
+    max-height: 97px;
+}
+
+.img-1,
+.img-2,
+.img-3 {
+    transform: rotate(270deg);
+    position: relative;
+    left: 38px;
+}
+
+.img-1 {
+    top: -6.5px;
+    color: #19c8d1;
+    opacity: 0;
+    z-index: 10;
+}
+
+.animate-1 {
+    animation: up3 0.75s forwards ease-in 1.5s;
+}
+
+.img-2 {
+    color: #f9f9f9;
+    left: -4px;
+    top: -45px;
+    opacity: 0;
+    z-index: 9;
+}
+
+.animate-2 {
+    animation: up4 0.5s forwards ease-in 2.1s;
+}
+
+.img-3 {
+    color: #f9f9f9;
+    left: -33px;
+    top: -70px;
+    opacity: 0;
+    z-index: 8;
+}
+
+.animate-3 {
+    animation: up5 0.5s forwards ease-in 2.5s;
+}
+
+.img-4 {
+    color: #ffcb12;
+    height: 50px;
+    position: relative;
+    left: 0;
+    top: -39px;
+    opacity: 0;
+}
+
+.animate-4 {
+    animation: flash 1s forwards 1s, up1 0.75s forwards ease-in 1.5s;
+}
+
+.img-5 {
+    color: whitesmoke;
+    height: 50px;
+    position: relative;
+    left: 112px;
+    top: -43px;
+    opacity: 0;
+}
+
+.animate-5 {
+    animation: fadeIn 1s forwards 0.75s, up2 0.75s forwards ease-in 1.5s;
+}
+
+@keyframes up1 {
+    from {
+        top: -39px;
+    }
+    to {
+        top: -80px;
+    }
+}
+
+@keyframes up2 {
+    from {
+        top: -43px;
+    }
+    to {
+        top: -84px;
+    }
+}
+
+@keyframes up3 {
+    from {
+        opacity: 0;
+        top: 43px;
+    }
+    to {
+        opacity: 1;
+        top: -6.5px;
+    }
+}
+
+@keyframes up4 {
+    from {
+        opacity: 0;
+        top: -23px;
+    }
+    to {
+        opacity: 1;
+        top: -45px;
+    }
+}
+
+@keyframes up5 {
+    from {
+        opacity: 0;
+        top: -48px;
+    }
+    to {
+        opacity: 1;
+        top: -70px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes longFlash {
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    20% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 0;
+    }
+    70% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

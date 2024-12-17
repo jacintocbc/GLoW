@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L3 Live</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./L3_LIVE/L3_LIVE.css">
+    <script>
+        function runTemplateUpdate() {
+        }
+
+        function runAnimationIN() {
+        }
+
+        function runAnimationOUT() {
+            const liveBox = document.querySelector('.live-box');
+            liveBox.style.animation = 'clipOut 0.5s ease-in forwards';
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Lower Third Live",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "4",
+            "webplayout": "4",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "2",
+            "DataFields": [
+                {
+                    "ftype" : "instruction",
+                    "value" : "This graphic has no inputs, it is the lower third live"
+                },
+                {
+                    "ftype": "spacer"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="live-box">
+            <div class="yellow-box"></div>
+            <h1 class="live-text">Live</h1>
+        </div>
+    </div>
+</body>
+
+</html>
