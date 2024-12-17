@@ -1,0 +1,231 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L3 Countdown</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./L3_COUNTDOWN/L3_COUNTDOWN.css">
+    <!-- <script>
+        function runTemplateUpdate() {
+            const locatorSpan = document.getElementById('f1_gfx');
+            const customLocatorSpan = document.getElementById('f2_gfx');
+            // Custom Locator
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            const customLocator = htmlDecode(e('f2').innerHTML);
+            if (customLocator.length > 0) {
+                locatorSpan.classList.add('hide');
+                customLocatorSpan.classList.remove('hide');
+            } else {
+                locatorSpan.classList.remove('hide');
+                customLocatorSpan.classList.add('hide');
+            }
+            // Show / Hide Time Tab
+            const timeSpan = document.getElementById('time-span');
+            let timeStatus = document.getElementById('f3').innerText;
+            if (timeStatus == "Hide") {
+                timeSpan.style.display = "none";
+            } else {
+                timeSpan.style.display = "initial";
+            }
+            // Update time display
+            const timeCode = document.getElementById('f4').innerText;
+            updateTime(timeCode);
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+        }
+
+        function runAnimationOUT() {
+            const whiteBox = document.querySelector('.white-box');
+            whiteBox.style.animation = 'clipOut 0.5s ease-in forwards';
+        }
+
+        let timeInterval;
+
+        function updateTime(timeCode) {
+            if (timeInterval) clearInterval(timeInterval); // Clear any existing interval
+
+            displayTime(timeCode); // Display the time immediately
+
+            // Update the time every second
+            timeInterval = setInterval(() => {
+                displayTime(timeCode);
+            }, 1000);
+        }
+
+        function displayTime(timeCode) {
+            const timeElement = document.getElementById('time');
+            const timeZones = {
+                NT: 'America/St_Johns',
+                AT: 'America/Halifax',
+                ET: 'America/New_York',
+                CT: 'America/Chicago',
+                MT: 'America/Denver',
+                PT: 'America/Los_Angeles'
+            };
+
+            // Map timeCode to an IANA timezone string
+            const ianaTimeZone = timeZones[timeCode];
+
+            if (!ianaTimeZone) {
+                timeElement.textContent = 'Invalid Time Zone';
+                return;
+            }
+
+            // Get the current time in the specified timezone
+            const now = new Date();
+            const options = {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true,
+                timeZone: ianaTimeZone
+            };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            const formattedTime = formatter.format(now);
+
+            // Update the span with the formatted time and timezone code
+            timeElement.textContent = `${formattedTime} ${timeCode}`;
+        }
+    </script> -->
+    <script>
+        function runTemplateUpdate() {
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerText);
+            startCountdown();
+        }
+
+        function runAnimationIN() {
+        }
+
+        function runAnimationOUT() {
+            const container = document.querySelector('.container');
+            container.style.animation = 'fadeOut 0.5s ease-in-out forwards';
+        }
+
+        window.onload = function () {
+            setTimeout(() => {
+                startCountdown();
+            }, 10);
+        }
+
+        function startCountdown() {
+            const dateTimeValue = htmlDecode(e('f1').innerText);
+            const countdownElement = document.getElementById('countdown');
+            const targetTime = new Date(dateTimeValue).getTime();
+
+            if (isNaN(targetTime)) {
+                countdownElement.innerHTML = 'Invalid date';
+                return;
+            }
+
+            const interval = setInterval(() => {
+                const currentTime = new Date().getTime();
+                const timeRemaining = targetTime - currentTime;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(interval);
+                    countdownElement.innerHTML = 'Happening Now!';
+                    return;
+                }
+
+                // Calculate real minutes and seconds
+                const mins = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60)); // Get minutes left in the hour
+                const secs = Math.floor((timeRemaining % (1000 * 60)) / 1000); // Get seconds left in the minute
+
+                // Display the countdown as MM:SS
+                countdownElement.innerHTML = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                // Trigger `runAnimationOUT` when the countdown reaches 30 seconds
+                if (timeRemaining <= 30000) {
+                    runAnimationOUT();
+                }
+            }, 1000);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Lower Third Countdown",
+            "playserver": "OVERLAY",
+            "playchannel": "2",
+            "playlayer": "11",
+            "webplayout": "11",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "4",
+            "DataFields": [
+                {
+                    "field": "f1",
+                    "ftype": "datetime",
+                    "title": "Date Time",
+                    "value": "2025-01-01T00:00"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "dropdown",
+                    "title": "Time Zone",
+                    "value": "Eastern Countdown",
+                    "items": [
+                        {
+                            "text": "Newfoundland Countdown",
+                            "value": "Newfoundland Countdown"
+                        },
+                        {
+                            "text": "Atlantic Countdown",
+                            "value": "Atlantic Countdown"
+                        },
+                        {
+                            "text": "Eastern Countdown",
+                            "value": "Eastern Countdown"
+                        },
+                        {
+                            "text": "Central Countdown",
+                            "value": "Central Countdown"
+                        },
+                        {
+                            "text": "Mountain/Yukon Countdown",
+                            "value": "Mountain/Yukon Countdown"
+                        },
+                        {
+                            "text": "Pacific Countdown",
+                            "value": "Pacific Countdown"
+                        }
+                    ]
+                },
+                {
+                    "ftype": "spacer"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="countdown" id="countdown"></h1>
+        <h2 class="timezone" id="f2_gfx"></h2>
+
+        <div style="display:none;"  id="f1"></div>
+        <div style="display:none;"  id="f2"></div>
+    </div>
+</body>
+
+</html>

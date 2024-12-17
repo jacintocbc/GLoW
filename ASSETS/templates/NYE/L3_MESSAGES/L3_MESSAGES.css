@@ -1,0 +1,108 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Radio-Canada', sans-serif;
+}
+
+.container {
+    position: absolute;
+    bottom: 93px;
+    left: 390px;
+    height: 118px;
+    width: 1500px;
+    padding-right: 30px;
+    z-index: 4;
+    display: flex;
+}
+
+.page {
+    display: flex;
+    transform: translateY(200%);
+}
+
+h1 {
+    position: relative;
+    top: -20px;
+    left: 39px;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+}
+
+.name {
+    font-size: 30px;
+    color: #19c8d1;
+    position: relative;
+    top: -5px;
+}
+
+.message {
+    font-size: 40px;
+    color: #f7f7f7;
+}
+
+/* Animation classes */
+.fade-in {
+    animation: inAnimation 0.5s forwards;
+}
+
+.fade-out {
+    animation: outAnimation 0.25s forwards;
+}
+
+@keyframes inAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes outAnimation {
+    0% {
+        opacity: 1;
+        /* transform: translateY(0); */
+    }
+    100% {
+        /* transform: translateY(-100%); */
+        opacity: 0;
+    }
+}
+  
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+}

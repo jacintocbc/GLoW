@@ -3955,7 +3955,7 @@ function populateRundownTable(data) {
         tr.appendChild(checkboxTd);
 
         // Add data columns (e.g., name and title)
-        const columns = ["name", "title"];
+        const columns = ["name", "message"];
         columns.forEach(key => {
             const td = document.createElement("td");
             td.textContent = row[key] || ""; // Add a fallback for empty values
@@ -3999,12 +3999,12 @@ function parseNsmlData(nsmlString) {
     const xmlDoc = parser.parseFromString(nsmlString, 'application/xml');
 
     const nameNode = xmlDoc.querySelector('string[id="name"]');
-    const titleNode = xmlDoc.querySelector('string[id="title"]');
+    const messageNode = xmlDoc.querySelector('string[id="messages"]');
 
     const name = nameNode ? nameNode.textContent : '';
-    const title = titleNode ? titleNode.textContent : '';
+    const message = messageNode ? messageNode.textContent : '';
 
-    return { name, title };
+    return { name, message };
 }
 
 // Get Rundown
@@ -4035,11 +4035,11 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
 
     const template = {
         defversion: "1",
-        description: "Ticker Loop",
+        description: "Lower Third Messages",
         playserver: "OVERLAY",
         playchannel: "1",
-        playlayer: "18",
-        webplayout: "18",
+        playlayer: "9",
+        webplayout: "9",
         out: "manual",
         dataformat: "json",
         uicolor: "0",
@@ -4064,8 +4064,8 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
                 {
                     field: `f${3 + i * 6}`, // Adjust field number dynamically
                     ftype: "textfield",
-                    title: "Title",
-                    value: iNewsArray[i]?.title ?? "" // Safe access with a default value
+                    title: "Message",
+                    value: iNewsArray[i]?.message ?? "" // Safe access with a default value
                 },
                 {
                     ftype: "divider"
@@ -4086,7 +4086,7 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
         ],
         onair: "false",
         imported: Date.now().toString(),
-        relpath: "/news/TICKER_LOOP.html",
+        relpath: "/NYE/L3_MESSAGES.html",
         itemID: itemID
     };
 
