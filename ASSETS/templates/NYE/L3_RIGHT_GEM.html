@@ -41,6 +41,10 @@
             img5.style.top = '-83.5px';
             img5.style.animation = 'fadeOut 0.25s ease-in forwards 0.5s';
 
+            setTimeout(() => {
+                const container = document.querySelector('.container');
+                container.style.display = 'none';
+            }, 750);
         }
 
         function flashAnimations() {
@@ -101,9 +105,9 @@
             "defversion": "1",
             "description": "Lower Third Right Gem",
             "playserver": "OVERLAY",
-            "playchannel": "1",
-            "playlayer": "6",
-            "webplayout": "6",
+            "playchannel": "2",
+            "playlayer": "19",
+            "webplayout": "19",
             "out": "manual",
             "dataformat": "json",
             "uicolor": "6",

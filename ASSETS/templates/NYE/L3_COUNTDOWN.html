@@ -109,6 +109,14 @@
     <script>
         function runTemplateUpdate() {
             e('f2_gfx').innerText = htmlDecode(e('f2').innerText);
+            const timezone = htmlDecode(e('f2').innerText);
+            const timezoneContainer = document.querySelector('.timezone');
+            if (timezone.includes('Mountain')) {
+                timezoneContainer.style.fontSize = '21px';
+            }
+            if (timezone.includes('Newfoundland')) {
+                timezoneContainer.style.fontSize = '23px';
+            }
             startCountdown();
         }
 

@@ -1,7 +1,7 @@
   <div id="lineupOptionsCollapsible">
     <div style="padding: 1.0rem; font-size: 0.9rem;">
 
-      <table style="width: 100%;" cellspacing="12" border="0">
+      <table style="width: 100%; display: none" cellspacing="12" border="0">
         <tr>
           <td width="20%" style="vertical-align: top;">
             <span class="spxConfigHead">iNews Server</span>
@@ -12,16 +12,25 @@
         </tr>
         <tr>
           <td width="20%" style="vertical-align: top;">
-            <span class="spxConfigHead">iNews Lineup</span>
+            <span class="spxConfigHead">iNews Messages</span>
           </td>
           <td>
-            <input type="text" class="wide bg_grey15 RDoptionsText" id="iNewsLineup" value="NETWORK-PROG.NEW-YEARS-SPECIAL.MESSAGES" />
+            <input type="text" class="wide bg_grey15 RDoptionsText" id="iNewsLineup1" value="NETWORK-PROG.NEW-YEARS-SPECIAL.MESSAGES" />
+          </td>
+        </tr>
+        <tr>
+          <td width="20%" style="vertical-align: top;">
+            <span class="spxConfigHead">iNews Slideshow</span>
+          </td>
+          <td>
+            <input type="text" class="wide bg_grey15 RDoptionsText" id="iNewsLineup2" value="NETWORK-PROG.NEW-YEARS-SPECIAL.SLIDESHOW" />
           </td>
         </tr>
       </table>
 
       <div class="button-container">
-        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData(false)">Populate Data</button>
+        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData('lineup1')">Populate Messages</button>
+        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData('lineup2')">Populate Slideshow</button>
         <button type="button" class="btn button_disabled" onclick="createRundownItem()" id="rundownItemBtn">Create Rundown Item</button>
         {{!-- <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData(true)">Update Rundown</button>
         <button type="button" class="btn bg_green" onclick="fetchData(false)">Populate Rundown</button>     --}}
@@ -34,6 +43,7 @@
             <th style="width: 80px">Select</th>
             <th>Name</th>
             <th>Message</th>
+            <th id="pictureHeader">Picture</th>
           </tr>
         </thead>
         <tbody>

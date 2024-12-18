@@ -3856,13 +3856,20 @@ async function getAccessToken() {
     }
 }
 
+let lineupChoiceGlobal = '';
+
 // Fetch Data from iNews API
-async function fetchData(isUpdate) {
+async function fetchData(lineupChoice) {
     const token = await getAccessToken();
     const serverInput = document.getElementById('iNewsServer');
-    const lineupInput = document.getElementById('iNewsLineup');
+    const lineupInput1 = document.getElementById('iNewsLineup1');
+    const lineupInput2 = document.getElementById('iNewsLineup2');
     const server = serverInput.value;
-    const lineup = lineupInput.value;
+    const lineup1 = lineupInput1.value;
+    const lineup2 = lineupInput2.value;
+    let lineup = '';
+    lineupChoiceGlobal = lineupChoice;
+    lineup = lineupChoice == 'lineup1' ? lineup1 : lineup2;
     if (!token) {
         console.log('No valid access token available');
         return;
@@ -3886,7 +3893,7 @@ async function fetchData(isUpdate) {
             iNewsArray.push(parsedData);
         });
         // isUpdate ? getRundownForiNews(iNewsArray) : populateRundownForiNews(iNewsArray);
-        if (!isUpdate) populateRundownTable(iNewsArray);
+        populateRundownTable(iNewsArray);
     } catch (error) {
         console.error('Error fetching data from API:', error);
     }
@@ -3898,6 +3905,8 @@ function populateRundownTable(data) {
     let selectedCount = 0; // Track the number of selected checkboxes
     tableData = data;
     const tableElement = document.querySelector("#rundownTable");
+    const pictureHeader = document.getElementById('pictureHeader');
+    pictureHeader.style.display = lineupChoiceGlobal == 'lineup1' ? 'none' : 'table-cell';
     const tableBody = document.querySelector("#rundownTable tbody");
     tableBody.innerHTML = ""; // Clear existing rows
 
@@ -3954,8 +3963,9 @@ function populateRundownTable(data) {
         checkboxTd.appendChild(checkbox);
         tr.appendChild(checkboxTd);
 
-        // Add data columns (e.g., name and title)
-        const columns = ["name", "message"];
+        // Add data columns
+        let columns = [];
+        columns = lineupChoiceGlobal == 'lineup1' ? ["name", "message"] : ["name", "message", "picture"];
         columns.forEach(key => {
             const td = document.createElement("td");
             td.textContent = row[key] || ""; // Add a fallback for empty values
@@ -4000,11 +4010,13 @@ function parseNsmlData(nsmlString) {
 
     const nameNode = xmlDoc.querySelector('string[id="name"]');
     const messageNode = xmlDoc.querySelector('string[id="messages"]');
+    const pictureNode = xmlDoc.querySelector('string[id="slideshow"]');
 
     const name = nameNode ? nameNode.textContent : '';
     const message = messageNode ? messageNode.textContent : '';
+    const picture = pictureNode ? pictureNode.textContent : '';
 
-    return { name, message };
+    return { name, message, picture };
 }
 
 // Get Rundown
@@ -4033,16 +4045,16 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
     let currentID = Math.floor(Math.random() * 90000) + 10000;
     itemID = currentID.toString();
 
-    const template = {
+    const templateMessages = {
         defversion: "1",
         description: "Lower Third Messages",
         playserver: "OVERLAY",
-        playchannel: "1",
+        playchannel: "2",
         playlayer: "9",
         webplayout: "9",
         out: "manual",
         dataformat: "json",
-        uicolor: "0",
+        uicolor: "1",
         DataFields: [
             {
                 field: "f81",
@@ -4081,7 +4093,7 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
                 field: "f68",
                 ftype: "checkbox",
                 title: "Loop Graphic",
-                value: "1"
+                value: "0"
             }
         ],
         onair: "false",
@@ -4090,6 +4102,71 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
         itemID: itemID
     };
 
+    const templateSlideshow = {
+        defversion: "1",
+        description: "Lower Third Slideshow",
+        playserver: "OVERLAY",
+        playchannel: "2",
+        playlayer: "18",
+        webplayout: "18",
+        out: "manual",
+        dataformat: "json",
+        uicolor: "5",
+        DataFields: [
+            {
+                field: "f81",
+                ftype: "textfield",
+                title: "Transition (s)",
+                value: "5"
+            },
+            ...Array.from({ length: 10 }, (_, i) => ({
+                ftype: "caption",
+                value: `Item ${i + 1}`
+            })).flatMap((caption, i) => [
+                caption,
+                {
+                    field: `f${2 + i * 6}`, // Adjust field number dynamically
+                    ftype: "textfield",
+                    title: "Name",
+                    value: iNewsArray[i]?.name ?? "" // Safe access with a default value
+                },
+                {
+                    field: `f${3 + i * 6}`, // Adjust field number dynamically
+                    ftype: "textfield",
+                    title: "Message",
+                    value: iNewsArray[i]?.message ?? "" // Safe access with a default value
+                },
+                {
+                    field: `f${4 + i * 6}`, // Adjust field number dynamically
+                    ftype: "textfield",
+                    title: "Picture",
+                    value: iNewsArray[i]?.picture ?? "" // Safe access with a default value
+                },
+                {
+                    ftype: "divider"
+                }
+            ]),
+            {
+                field: "f67",
+                ftype: "hidden",
+                title: "Total Out",
+                value: "manual"
+            },
+            {
+                field: "f68",
+                ftype: "checkbox",
+                title: "Loop Graphic",
+                value: "0"
+            }
+        ],
+        onair: "false",
+        imported: Date.now().toString(),
+        relpath: "/NYE/L3_SLIDESHOW.html",
+        itemID: itemID
+    };
+
+    let template;
+    template = lineupChoiceGlobal == 'lineup1' ? templateMessages : templateSlideshow;
     data.content.templates.push(template);
 
     axios.post('http://localhost:5656/api/v1/rundown/json', data)
