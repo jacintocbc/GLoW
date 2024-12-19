@@ -1,0 +1,109 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Score</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./QUIZ_SCORE/QUIZ_SCORE.css">
+    <script>
+        function runTemplateUpdate() {
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            // Bottom / Left / Width Property 
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+            wrapper.style.left = `${htmlDecode(e('f98').innerText)}px`;
+            wrapper.style.width = `${htmlDecode(e('f99').innerText)}vw`;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+        }
+
+        function runAnimationOUT() {
+            const container = document.querySelector('.container');
+            container.style.animation = 'fadeOut 0.5s ease-in forwards';
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Quiz Score",
+            "playserver": "OVERLAY",
+            "playchannel": "2",
+            "playlayer": "15",
+            "webplayout": "15",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "2",
+            "DataFields": [
+                {
+                    "field": "f1",
+                    "ftype": "number",
+                    "title": "Score Left",
+                    "value": "0",
+                },
+                {
+                    "field": "f2",
+                    "ftype": "number",
+                    "title": "Score Right",
+                    "value": "0",
+                },
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f98",
+                    "ftype": "number",
+                    "title": "Main X-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f99",
+                    "ftype": "number",
+                    "title": "Width",
+                    "value": "70"
+                },
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <div id="custom-container">
+                <h1 id="f1_gfx">0</h1>
+                <h1 id="f2_gfx">0</h1>
+            </div>
+    
+            <div style="display:none;"  id="f1"></div>
+            <div style="display:none;"  id="f2"></div>
+            <div style="opacity:0;" id="f97"></div>
+            <div style="opacity:0;" id="f98"></div>
+            <div style="opacity:0;" id="f99"></div>
+        </div>
+    </div>
+</body>
+
+</html>

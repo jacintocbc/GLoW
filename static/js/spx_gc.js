@@ -2953,6 +2953,10 @@ function updatePreview(itemrow) {
                     if (fieldNumber == 98) {
                         wrapper.style.left = `${fieldData.value}px`;
                     }
+                    // Width for Quiz Score
+                    if (fieldNumber == 99) {
+                        wrapper.style.width = `${fieldData.value}vw`;
+                    }
                     // Olympics Results Individual Template --------------------------
                     if (relpath.includes('RESULTS_INDIVIDUAL')) {
                         if (fieldNumber == 70) {

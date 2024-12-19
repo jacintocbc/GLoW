@@ -1,0 +1,229 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Radio-Canada', sans-serif;
+}
+
+.container {
+    position: absolute;
+    bottom: 250px;
+    left: 212.5px;
+    height: 118px;
+    z-index: 4;
+}
+
+h1 {
+    font-size: 45px;
+    font-weight: 900;
+    margin-left: 17px;
+    margin-right: 17px;
+    position: relative;
+    top: -22px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.name-bar {
+    width: max-content;
+    max-width: 90vw;
+    display: inline-block;
+    height: 70px;
+    background: rgba(230, 230, 230, 0.9);
+    opacity: 0;
+    animation: fadeWipeIn 0.7s ease-in-out forwards 0.4s;
+    clip-path: inset(0 100% 0 0);
+    position: relative;
+    top: 8px;
+}
+
+.host-1-alt {
+    position: relative;
+    left: -95px;
+}
+
+.host-2 {
+    position: relative;
+    left: 618px;
+}
+
+.host-3 {
+    position: relative;
+    left: -95px;
+}
+
+.host-4 {
+    position: relative;
+    left: 648px;
+}
+
+.hide {
+    display: none;
+}
+
+@keyframes fadeWipeIn {
+    0% {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+
+    }
+    100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* Intro Animation Gem Pieces */
+.pre-gem {
+    position: absolute;
+    width: 435px;
+    left: 0;
+    top: 8px;
+    z-index: 10;
+}
+
+.shift-left {
+    animation: shiftLeft 0.3s linear forwards 0.7s;
+}
+
+.shift-left-alt {
+    left: 270px;
+    animation: shiftLeftAlt 0.7s linear forwards 0.9s;
+}
+
+@keyframes shiftLeft {
+    from {
+        left: 0;
+    }
+    to {
+        left: 180px;
+    }
+}
+
+@keyframes shiftLeftAlt {
+    from {
+        left: 270px;
+    }
+    to {
+        left: 780px;
+    }
+}
+
+.pre-gem svg {
+    max-height: 70px;
+    margin-right: -3.5px;
+}
+
+.pre-img-1 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.0s;
+}
+
+.pre-img-2 {
+    color: #ffcb12;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.1s;
+}
+
+.pre-img-3 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.2s;
+}
+
+.pre-img-4 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.3s;
+}
+
+.pre-img-5 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.4s;
+}
+
+.pre-img-6 {
+    color: #19c8d1;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.5s;
+}
+
+.pre-img-7 {
+    color: #f9f9f9;
+    opacity: 0;
+    animation: fadeInOut 1.1s linear forwards 0.6s;
+}
+
+.delay-1 {
+    animation-delay: 0.9s;
+}
+
+.delay-2 {
+    animation-delay: 1s;
+}
+
+.delay-3 {
+    animation-delay: 1.1s;
+}
+
+.delay-4 {
+    animation-delay: 1.2s;
+}
+
+.delay-5 {
+    animation-delay: 1.3s;
+}
+
+.delay-6 {
+    animation-delay: 1.4s;
+}
+
+.delay-7 {
+    animation-delay: 1.5s;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

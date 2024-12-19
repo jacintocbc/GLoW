@@ -140,7 +140,7 @@
             const targetTime = new Date(dateTimeValue).getTime();
 
             if (isNaN(targetTime)) {
-                countdownElement.innerHTML = 'Invalid date';
+                countdownElement.innerHTML = '00:00';
                 return;
             }
 
@@ -150,7 +150,7 @@
 
                 if (timeRemaining <= 0) {
                     clearInterval(interval);
-                    countdownElement.innerHTML = 'Happening Now!';
+                    countdownElement.innerHTML = '00:00';
                     return;
                 }
 
