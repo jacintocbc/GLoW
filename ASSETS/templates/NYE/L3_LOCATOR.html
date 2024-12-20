@@ -25,6 +25,7 @@
                 locatorSpan.classList.remove('hide');
                 customLocatorSpan.classList.add('hide');
             }
+
             // Show / Hide Time Tab
             const timeSpan = document.getElementById('time-span');
             let timeStatus = document.getElementById('f3').innerText;
@@ -33,8 +34,39 @@
             } else {
                 timeSpan.style.display = "initial";
             }
+
             // Update time display
-            const timeCode = document.getElementById('f4').innerText;
+            const customLocation = document.getElementById('f2').innerHTML.trim();
+            const selectedLocation = document.getElementById('f1').innerHTML.trim();
+            const f4Value = document.getElementById('f4').innerText.trim();
+
+            // Mapping locations to time zones
+            const locationTimeCodeMap = {
+                "St. John’s": "NT",
+                "Saint John, New Brunswick": "AT",
+                "Charlottetown": "AT",
+                "Halifax": "AT",
+                "Montreal": "ET",
+                "Ottawa": "ET",
+                "Toronto": "ET",
+                "Iqaluit": "ET",
+                "Winnipeg": "CT",
+                "Inglis, Manitoba": "CT",
+                "Edmonton": "MT",
+                "Calgary": "MT",
+                "Vancouver": "PT",
+                "Yellowknife": "MT",
+                "Whitehorse": "PT",
+                "Regina": "CT"
+            };
+
+            let timeCode;
+            if (customLocation.length > 0) {
+                timeCode = f4Value; // Use f4 value if custom location is populated
+            } else {
+                timeCode = locationTimeCodeMap[selectedLocation] || 'Invalid';
+            }
+
             updateTime(timeCode);
         }
 
@@ -111,7 +143,7 @@
             "defversion": "1",
             "description": "Lower Third Locator",
             "playserver": "OVERLAY",
-            "playchannel": "1",
+            "playchannel": "2",
             "playlayer": "7",
             "webplayout": "7",
             "out": "manual",
@@ -157,6 +189,14 @@
                             "value": "Iqaluit"
                         },
                         {
+                            "text": "Winnipeg",
+                            "value": "Winnipeg"
+                        },
+                        {
+                            "text": "Inglis, Manitoba",
+                            "value": "Inglis, Manitoba"
+                        },
+                        {
                             "text": "Edmonton",
                             "value": "Edmonton"
                         },
@@ -183,12 +223,6 @@
                     ]
                 },
                 {
-                    "field": "f2",
-                    "ftype": "textfield",
-                    "title": "Custom Location",
-                    "value": ""
-                },
-                {
                     "field": "f3",
                     "ftype": "dropdown",
                     "title": "Show / Hide",
@@ -205,9 +239,15 @@
                     ]
                 },
                 {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Custom *",
+                    "value": ""
+                },
+                {
                     "field": "f4",
                     "ftype": "dropdown",
-                    "title": "Time Zone",
+                    "title": "Time Zone *",
                     "value": "ET",
                     "items": [
                         {
