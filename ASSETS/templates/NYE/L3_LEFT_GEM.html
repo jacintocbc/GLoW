@@ -43,7 +43,7 @@
             img3.style.animation = 'fadeOut 0.7s ease-out forwards 0.3s';
         }
 
-        // Trigger animations every 10 seconds
+        // Trigger animations every 60 seconds
         animationInterval = setInterval(() => {
             // Run fade-out animations first
             outAnimations();
@@ -52,14 +52,14 @@
             setTimeout(() => {
                 runAnimationIN();
             }, 1000);  // 1 second delay
-        }, 10000);  // Repeat every 10 seconds
+        }, 60000);  // Repeat every 60 seconds
     </script>
     <script type="text/javascript">
         window.SPXGCTemplateDefinition = {
             "defversion": "1",
             "description": "Lower Third Left Gem",
             "playserver": "OVERLAY",
-            "playchannel": "1",
+            "playchannel": "2",
             "playlayer": "5",
             "webplayout": "5",
             "out": "manual",
