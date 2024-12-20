@@ -10,10 +10,32 @@
     <link rel="stylesheet" href="./L3_SUPER/L3_SUPER.css">
     <script>
         function runTemplateUpdate() {
-            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
             e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
-            processElement('f1_gfx');
+            e('f3_gfx').innerText = htmlDecode(e('f3').innerHTML);
             processElement('f2_gfx');
+            processElement('f3_gfx');
+            const defaultNameEl = document.getElementById('f1_gfx');
+            const defaultTitleEl = document.getElementById('f1_alt_gfx');
+            const customNameEl = document.getElementById('f2_gfx');
+            const customTitleEl = document.getElementById('f3_gfx');
+            const nameTitle = htmlDecode(e('f1').innerHTML);
+            const [name, title] = nameTitle.split('|').map(part => part.trim());
+            defaultNameEl.innerText = name;
+            defaultTitleEl.innerText = title;
+            // Custom Name & Title
+            const customName = htmlDecode(e('f2').innerHTML);
+            const customTitle = htmlDecode(e('f3').innerHTML);
+            if (customName.length > 0 && customTitle.length > 0) {
+                defaultNameEl.classList.add('hide');
+                defaultTitleEl.classList.add('hide');
+                customNameEl.classList.remove('hide');
+                customTitleEl.classList.remove('hide');
+            } else {
+                defaultNameEl.classList.remove('hide');
+                defaultTitleEl.classList.remove('hide');
+                customNameEl.classList.add('hide');
+                customTitleEl.classList.add('hide');
+            }
             // Bottom / Left Property 
             const wrapper = document.getElementById('custom-container');
             wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
@@ -34,14 +56,14 @@
         }
 
         function runAnimationIN() {
-            const row = document.querySelector('.row');
-            const divider = document.querySelector('.divider');
-            const wipe = document.querySelector('.wipe');
-            const font = document.querySelector('.font');
-            row.style.animation = 'fade-in 0.5s ease-in-out forwards';
-            divider.style.animation = 'fade-in 0.1s ease forwards 0.4s';
-            wipe.style.animation = 'wipe-expand 0.5s ease-in-out forwards 0.6s, wipe-clip 0.5s ease-in-out 1s forwards';
-            font.style.animation = 'fade-in 0.5s ease forwards 1s';
+            // const row = document.querySelector('.row');
+            // const divider = document.querySelector('.divider');
+            // const wipe = document.querySelector('.wipe');
+            // const font = document.querySelector('.font');
+            // row.style.animation = 'fade-in 0.5s ease-in-out forwards';
+            // divider.style.animation = 'fade-in 0.1s ease forwards 0.4s';
+            // wipe.style.animation = 'wipe-expand 0.5s ease-in-out forwards 0.6s, wipe-clip 0.5s ease-in-out 1s forwards';
+            // font.style.animation = 'fade-in 0.5s ease forwards 1s';
         }
 
         function runAnimationOUT() {
@@ -55,7 +77,7 @@
             "defversion": "1",
             "description": "Lower Third Super",
             "playserver": "OVERLAY",
-            "playchannel": "1",
+            "playchannel": "2",
             "playlayer": "8",
             "webplayout": "8",
             "out": "manual",
@@ -64,27 +86,83 @@
             "DataFields": [
                 {
                     "field": "f1",
-                    "ftype": "textfield",
-                    "title": "Name",
-                    "value": "Michael Alsayegh"
+                    "ftype": "dropdown",
+                    "title": "Supers",
+                    "value": "David Common | CBC News, Toronto",
+                    "items": [
+                        {
+                            "text": "Krissy Holmes | CBC News, St. John’s",
+                            "value": "Krissy Holmes | CBC News, St. John’s"
+                        },
+                        {
+                            "text": "Clare MacKenzie | CBC News, Saint John, New Brunswick",
+                            "value": "Clare MacKenzie | CBC News, Saint John, New Brunswick"
+                        },
+                        {
+                            "text": "Sheehan Desjardins | CBC News, Charlottetown",
+                            "value": "Sheehan Desjardins | CBC News, Charlottetown"
+                        },
+                        {
+                            "text": "Amy Smith | CBC News, Halifax",
+                            "value": "Amy Smith | CBC News, Halifax"
+                        },
+                        {
+                            "text": "Kwabena Oduro | CBC News, Montreal",
+                            "value": "Kwabena Oduro | CBC News, Montreal"
+                        },
+                        {
+                            "text": "Rachelle Elsiufi | CBC News, Ottawa",
+                            "value": "Rachelle Elsiufi | CBC News, Ottawa"
+                        },
+                        {
+                            "text": "David Common | CBC News, Toronto",
+                            "value": "David Common | CBC News, Toronto"
+                        },
+                        {
+                            "text": "Faith Fundal | CBC News, Winnipeg",
+                            "value": "Faith Fundal | CBC News, Winnipeg"
+                        },
+                        {
+                            "text": "Candice Lipski | CBC News, Inglis, Manitoba",
+                            "value": "Candice Lipski | CBC News, Inglis, Manitoba"
+                        },
+                        {
+                            "text": "Nancy Carlson | CBC News, Edmonton",
+                            "value": "Nancy Carlson | CBC News, Edmonton"
+                        },
+                        {
+                            "text": "Jo Horwood | CBC News, Calgary",
+                            "value": "Jo Horwood | CBC News, Calgary"
+                        },
+                        {
+                            "text": "Baneet Braich | CBC News, Vancouver",
+                            "value": "Baneet Braich | CBC News, Vancouver"
+                        },
+                        {
+                            "text": "Dan Burritt | CBC News, Vancouver (TBC)",
+                            "value": "Dan Burritt | CBC News, Vancouver (TBC)"
+                        },
+                        {
+                            "text": "Shannon Scott | CBC News, Yellowknife",
+                            "value": "Shannon Scott | CBC News, Yellowknife"
+                        },
+                        {
+                            "text": "Virginie Ann | CBC News, Whitehorse",
+                            "value": "Virginie Ann | CBC News, Whitehorse"
+                        }
+                    ]
                 },
                 {
                     "field": "f2",
                     "ftype": "textfield",
-                    "title": "Title",
-                    "value": "Quebec Order of Chemists President"
+                    "title": "Custom Name",
+                    "value": ""
                 },
                 {
-                    "field": "f97",
-                    "ftype": "number",
-                    "title": "Main Y-Axis",
-                    "value": "0"
-                },
-                {
-                    "field": "f98",
-                    "ftype": "number",
-                    "title": "Main X-Axis",
-                    "value": "0"
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Custom Title",
+                    "value": ""
                 }
             ]
         };
@@ -98,14 +176,21 @@
                 <div class="row">
                     <div class="name-bar">
                         <h1 id="f1_gfx">Michael Alsayegh</h1>
+                        <h1 id="f2_gfx" class="hide">Michael Alsayegh</h1>
                     </div>
                     <div class="title-bar">
-                        <h1><span class="divider"></span><span class="wipe"></span><span id="f2_gfx" class="font">Quebec Order of Chemists President</span></h1>
+                        <h1>
+                            <span class="divider"></span>
+                            <span class="wipe"></span>
+                            <span id="f1_alt_gfx" class="font">Quebec Order of Chemists President</span>
+                            <span id="f3_gfx" class="font hide">Quebec Order of Chemists President</span>
+                        </h1>
                     </div>
                 </div>
     
                 <div style="display:none;" id="f1"></div>
                 <div style="display:none;" id="f2"></div>
+                <div style="display:none;" id="f3"></div>
                 <div style="opacity:0;" id="f97"></div>
                 <div style="opacity:0;" id="f98"></div>
             </div>

@@ -26,7 +26,7 @@ body {
 
 .container {
     position: absolute;
-    bottom: 250px;
+    bottom: 291.5px;
     left: 118px;
 }
 
@@ -39,10 +39,10 @@ body {
 h1 {
     font-size: 45px;
     font-weight: 900;
-    margin-left: 10px;
+    margin-left: 15px;
     margin-right: 10px;
     position: relative;
-    top: -25px;
+    top: -22px;
 }
 
 .row {
@@ -57,7 +57,7 @@ h1 {
     width: max-content;
     max-width: 90vw;
     display: inline-block;
-    height: 65px;
+    height: 70.5px;
 }
 
 .title-bar {
@@ -68,7 +68,7 @@ h1 {
 }
 
 .divider {
-    background-color: #f3c223;
+    background-color: #ffcb12;
     height: 55px;
     width: 5px;
     position: absolute;
@@ -79,7 +79,7 @@ h1 {
 }
 
 .wipe {
-    background-color: #f3c223;
+    background-color: #ffcb12;
     height: 55px;
     width: 0;
     position: absolute;
@@ -95,6 +95,12 @@ h1 {
     z-index: 1;
     opacity: 0;
     animation: fade-in 0.5s ease forwards 1s;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.hide {
+    display: none;
 }
 
 @keyframes wipe-expand {
