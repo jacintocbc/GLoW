@@ -47,31 +47,86 @@
                         return null;
                     }
 
+                    // Split logic based on preferences
+                    let splitIndex = 0;
+                    let isSpaceSplit = false;
+
+                    // First, try to find a period or exclamation mark within the first 40 characters
+                    const firstSplit = titleText.indexOf('.', 0);
+                    const firstExclamation = titleText.indexOf('!', 0);
+                    if (firstSplit !== -1 && firstSplit <= 40) {
+                        splitIndex = firstSplit + 1; // Split after the period
+                    } else if (firstExclamation !== -1 && firstExclamation <= 40) {
+                        splitIndex = firstExclamation + 1; // Split after the exclamation mark
+                    }
+
+                    // If no period or exclamation within 40 characters, check between 40 and 55 characters
+                    if (splitIndex === 0) {
+                        const secondSplit = titleText.indexOf('.', 40);
+                        const secondExclamation = titleText.indexOf('!', 40);
+                        if (secondSplit !== -1 && secondSplit <= 55) {
+                            splitIndex = secondSplit + 1; // Split after the period
+                        } else if (secondExclamation !== -1 && secondExclamation <= 55) {
+                            splitIndex = secondExclamation + 1; // Split after the exclamation mark
+                        }
+                    }
+
+                    // If no punctuation was found, split on the last space before 55 characters
+                    if (splitIndex === 0) {
+                        const spaceBefore55 = titleText.lastIndexOf(' ', 55);
+                        if (spaceBefore55 !== -1 && spaceBefore55 > 40) {
+                            splitIndex = spaceBefore55;
+                            isSpaceSplit = true; // Flag that we split on a space
+                        } else {
+                            splitIndex = 55; // If no space found, split at 55 characters
+                        }
+                    }
+
+                    // Split the titleText into two parts
+                    const messagePart1 = titleText.slice(0, splitIndex).trim();
+                    const messagePart2 = titleText.slice(splitIndex).trim();
+
+                    // Add "..." if we split on a space
+                    const finalMessagePart1 = isSpaceSplit ? messagePart1 + '...' : messagePart1;
+
                     // Page
                     const page = document.createElement('div');
                     page.className = 'page';
                     page.id = `page${index}`;
 
-                    // Name / Title -----------------------------------------------
+                    // Name / Title
                     const headerElement = document.createElement('h1');
                     const nameSpan = document.createElement('span');
                     const messageSpan = document.createElement('span');
+                    const part2Span = document.createElement('span');
 
                     nameSpan.id = `f${index * 6 - 4}_gfx`;
                     nameSpan.className = 'name';
                     nameSpan.innerHTML = nameText;
 
                     messageSpan.id = `f${index * 6 - 3}_gfx`;
-                    messageSpan.className = 'message';
-                    messageSpan.innerHTML = titleText;
+                    messageSpan.className = 'message'; // No fade-out initially
+                    messageSpan.innerHTML = finalMessagePart1;
+
+                    if (messagePart2) {
+                        part2Span.className = 'message part-2'; // No fade-out initially
+                        part2Span.innerHTML = messagePart2;
+                        part2Span.style.opacity = '0'; // Initially hidden
+                    }
+
+                    // If messagePart2 length is greater than 50, add 'small message' class
+                    if (messagePart2.length > 50) {
+                        part2Span.classList.add('small-message');
+                    }
 
                     headerElement.appendChild(nameSpan);
                     headerElement.appendChild(messageSpan);
+                    headerElement.appendChild(part2Span);
 
                     page.appendChild(headerElement);
 
                     return page;
-                }
+                };
 
                 const pages = [];
 
@@ -84,45 +139,59 @@
 
                 const displayPages = () => {
                     let currentPageIndex = 0;
-                    const totalDuration = transitionDurationNumber * (pages.length + 3) + 2000;
 
                     const showPage = (page) => {
-                        page.classList.add('fade-in');
-                        page.style.display = 'flex';
+                        const messageSpan = page.querySelector('.message');
+                        const part2Span = page.querySelector('.part-2');
+
+                        // Show messagePart1 and part2
                         pagesContainer.appendChild(page);
+                        page.style.display = 'flex';
+                        page.classList.add('fade-in');
 
+                        // Animate `part-2` after showing `messageSpan`
                         setTimeout(() => {
-                            page.classList.remove('fade-in');
-                            page.classList.add('fade-out');
+                            // Animate messagePart2 into view
+                            if (part2Span) {
+                                part2Span.style.transition = 'opacity 0.5s';
+                                part2Span.style.opacity = '1';
+                            }
 
+                            // Now, just before fading in messagePart2, add `hide` class to messageSpan
+                            if (part2Span) messageSpan.classList.add('hide');
+
+                            // After `messagePart2` fades in, fade out `messagePart1`
                             setTimeout(() => {
-                                page.style.display = 'none';
-                                page.classList.remove('fade-out');
+                                if (part2Span) messageSpan.classList.add('fade-out'); // Add fade-out to messagePart1
 
-                                // Move to the next page or handle end of loop
-                                currentPageIndex++;
-                                if (currentPageIndex < pages.length) {
-                                    // Show the next page
-                                    showPage(pages[currentPageIndex]);
-                                } else if (isLooping) {
-                                    // Reset index for looping
-                                    currentPageIndex = 0;
-                                    showPage(pages[currentPageIndex]);
-                                } else {
-                                    // End animation sequence
-                                    runAnimationOUT();
-                                }
-                            }, 250); // Duration of fade-out animation
-                        }, transitionDurationNumber); // Duration to stay on screen
+                                // Wait for `part-2` animation before fading out the page
+                                setTimeout(() => {
+                                    page.classList.remove('fade-in');
+                                    page.classList.add('fade-out');
+
+                                    setTimeout(() => {
+                                        page.style.display = 'none';
+                                        page.classList.remove('fade-out');
+
+                                        // Move to the next page or handle end of loop
+                                        currentPageIndex++;
+                                        if (currentPageIndex < pages.length) {
+                                            showPage(pages[currentPageIndex]);
+                                        } else if (isLooping) {
+                                            currentPageIndex = 0;
+                                            showPage(pages[currentPageIndex]);
+                                        } else {
+                                            runAnimationOUT();
+                                        }
+                                    }, 250); // Fade-out duration
+                                }, transitionDurationNumber - 250); // Time after `part-2` fades in
+                            }, 500); // Delay before fading out the first part (messageSpan)
+                        }, transitionDurationNumber);
                     };
 
                     if (pages.length > 0) {
                         showPage(pages[0]); // Start the animation
                     }
-
-                    // Update Total Out Value
-                    const totalOutElement = e('f67');
-                    totalOutElement.innerText = totalDuration;
                 };
 
                 // Start the animation sequence
@@ -362,6 +431,7 @@
                 <h1>
                     <span class="name">Name Goes Here</span>
                     <span class="message">Message Goes Here</span>
+                    <span class="message part-2">Longer part of message here</span>
                 </h1>
             </div>
         </div>

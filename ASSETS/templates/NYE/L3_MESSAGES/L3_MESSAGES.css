@@ -47,24 +47,34 @@ h1 {
     font-size: 30px;
     color: #19c8d1;
     position: relative;
-    top: -5px;
+    top: -2px;
 }
 
 .message {
-    font-size: 40px;
+    font-size: 35px;
     color: #f7f7f7;
+    position: relative;
+    top: 7px;
+}
+
+.small-message {
+    font-size: 30px;
+}
+
+.hide {
+    display: none;
 }
 
 /* Animation classes */
 .fade-in {
-    animation: inAnimation 0.5s forwards;
+    animation: fadeIn 0.5s forwards;
 }
 
 .fade-out {
-    animation: outAnimation 0.25s forwards;
+    animation: fadeOut 0.25s forwards;
 }
 
-@keyframes inAnimation {
+@keyframes fadeIn {
     0% {
         opacity: 0;
         transform: translateY(50px);
@@ -78,31 +88,11 @@ h1 {
     }
 }
 
-@keyframes outAnimation {
-    0% {
-        opacity: 1;
-        /* transform: translateY(0); */
-    }
-    100% {
-        /* transform: translateY(-100%); */
-        opacity: 0;
-    }
-}
-  
-@keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-}
-
 @keyframes fadeOut {
     0% {
-      opacity: 1;
+        opacity: 1;
     }
     100% {
-      opacity: 0;
+        opacity: 0;
     }
 }
