@@ -1037,10 +1037,10 @@ const apiHandler = require('../utils/api-handlers.js');
           if (!template.out) { template.out="manual" }
           if (!template.dataformat) { template.dataformat="json" }
           if (!template.uicolor) { template.uicolor="7" }
+          if (!template.onair) { template.onair="false" }
           if (!template.imported) { template.imported=String(startSeconds) }
           if (!template.relpath) { errors.push('relpath missing from template #' + index) }
           if (!template.DataFields || template.DataFields.length < 1) { errors.push('DataFields missing from template #' + index) }
-          template.onair="false";
         });
 
         if (errors.length > 0) {
