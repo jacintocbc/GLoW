@@ -24,7 +24,6 @@ body {
     right: 207px;
     height: 132px;
     width: 290px;
-    z-index: 4;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -66,9 +65,15 @@ h1, h2 {
 
 @keyframes fadeOut {
     0% {
-      opacity: 1;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 0.2;
+        transform: translateY(-10px);
     }
     100% {
-      opacity: 0;
+        opacity: 0;
+        transform: translateY(-15px);
     }
 }
