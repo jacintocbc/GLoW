@@ -4038,8 +4038,8 @@ function getRundownForiNews(iNewsArray) {
 // Update Rundown
 function updateRundownForiNews(existingRundown, iNewsArray) {
     const data = {
-        project: "Demo",
-        file: "Demo",
+        project: "NYE",
+        file: "NYE",
         content: existingRundown
     };
 
