@@ -45,7 +45,7 @@ h1 {
     max-width: 90vw;
     display: inline-block;
     height: 70px;
-    background: rgba(230, 230, 230, 0.9);
+    background: #f7f7f7;
     opacity: 0;
     animation: fadeWipeIn 0.7s ease-in-out forwards 0.4s;
     clip-path: inset(0 100% 0 0);

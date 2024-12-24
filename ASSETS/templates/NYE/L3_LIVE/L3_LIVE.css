@@ -53,7 +53,7 @@ body {
     left: 0px;
     top: -28px;
     font-size: 40px;
-    color: white;
+    color: #f7f7f7;
     animation: flashAndResize 1.25s ease-in-out forwards;
     z-index: 5;
 }
@@ -62,7 +62,7 @@ body {
 @keyframes flashAndResize {
     0% {
         font-size: 40px;
-        color: white;
+        color: #f7f7f7;
         left: 0px;
         top: -28px;
     }
@@ -70,7 +70,7 @@ body {
         color: transparent;
     }
     50% {
-        color: white;
+        color: #f7f7f7;
     }
     75% {
         color: transparent;
