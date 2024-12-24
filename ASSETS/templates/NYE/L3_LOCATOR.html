@@ -26,6 +26,11 @@
                 customLocatorSpan.classList.add('hide');
             }
 
+            // Get Location / Selected or Custom
+            const customLocation = document.getElementById('f2').innerHTML.trim();
+            const selectedLocation = document.getElementById('f1').innerHTML.trim();
+            const f4Value = document.getElementById('f4').innerText.trim();
+
             // Show / Hide Time Tab
             const timeSpan = document.getElementById('time-span');
             let timeStatus = document.getElementById('f3').innerText;
@@ -34,11 +39,6 @@
             } else {
                 timeSpan.style.display = "initial";
             }
-
-            // Update time display
-            const customLocation = document.getElementById('f2').innerHTML.trim();
-            const selectedLocation = document.getElementById('f1').innerHTML.trim();
-            const f4Value = document.getElementById('f4').innerText.trim();
 
             // Mapping locations to time zones
             const locationTimeCodeMap = {
@@ -56,7 +56,7 @@
                 "Calgary": "MT",
                 "Vancouver": "PT",
                 "Yellowknife": "MT",
-                "Whitehorse": "PT",
+                "Whitehorse": "YT",
                 "Regina": "CT"
             };
 
@@ -106,12 +106,14 @@
 
         function displayTime(timeCode) {
             const timeElement = document.getElementById('time');
+            const timeSpan = document.getElementById('time-span');
             const timeZones = {
                 NT: 'America/St_Johns',
                 AT: 'America/Halifax',
                 ET: 'America/New_York',
                 CT: 'America/Chicago',
                 MT: 'America/Denver',
+                YT: 'America/Denver',
                 PT: 'America/Los_Angeles'
             };
 
@@ -119,7 +121,8 @@
             const ianaTimeZone = timeZones[timeCode];
 
             if (!ianaTimeZone) {
-                timeElement.textContent = 'Invalid Time Zone';
+                timeSpan.style.display = 'none';
+                timeElement.textContent = '';
                 return;
             }
 
@@ -203,6 +206,10 @@
                         {
                             "text": "Calgary",
                             "value": "Calgary"
+                        },
+                        {
+                            "text": "Jasper, Alberta",
+                            "value": "Jasper, Alberta"
                         },
                         {
                             "text": "Vancouver",
