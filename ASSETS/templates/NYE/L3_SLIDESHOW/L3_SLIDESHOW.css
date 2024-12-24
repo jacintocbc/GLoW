@@ -45,6 +45,10 @@ body {
     height: 502px;
 }
 
+.page-name-only {
+    height: 560px;
+}
+
 h1 {
     position: relative;
     top: -10px;

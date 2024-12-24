@@ -50,33 +50,26 @@
 
                 const createPage = (index) => {
                     const nameText = document.getElementById(`f${index * 6 - 4}`).innerText.trim();
-                    const messageText = document.getElementById(`f${index * 6 - 3}`).innerText.trim();
                     const imgSource = document.getElementById(`f${index * 6 - 2}`).innerText.trim();
 
-                    if (!nameText || !messageText || !imgSource) {
+                    if (!nameText || !imgSource) {
                         return null;
                     }
 
                     // Page
                     const page = document.createElement('div');
-                    page.className = 'page';
+                    page.className = 'page page-name-only';
                     page.id = `page${index}`;
 
                     // Name / Message / Image -----------------------------------------------
                     const headerElement = document.createElement('h1');
                     const nameSpan = document.createElement('span');
-                    const messageSpan = document.createElement('span');
 
                     nameSpan.id = `f${index * 6 - 4}_gfx`;
                     nameSpan.className = 'name';
                     nameSpan.innerHTML = nameText;
 
-                    messageSpan.id = `f${index * 6 - 3}_gfx`;
-                    messageSpan.className = 'message';
-                    messageSpan.innerHTML = messageText;
-
                     headerElement.appendChild(nameSpan);
-                    headerElement.appendChild(messageSpan);
 
                     const imgContainer = document.createElement('div');
                     const imgElement = document.createElement('img');
@@ -109,11 +102,7 @@
                         pagesContainer.appendChild(page);
 
                         setTimeout(() => {
-                            // page.classList.add('fade-out');
-
                             setTimeout(() => {
-                                // page.classList.remove('fade-out');
-
                                 // Move to the next page or handle end of loop
                                 currentPageIndex++;
                                 if (currentPageIndex < pages.length) {
@@ -150,7 +139,7 @@
     <script type="text/javascript">
         window.SPXGCTemplateDefinition = {
             "defversion": "1",
-            "description": "Lower Third Slideshow",
+            "description": "Lower Third Slideshow Name Only",
             "playserver": "OVERLAY",
             "playchannel": "2",
             "playlayer": "18",
@@ -176,12 +165,6 @@
                     "value": "Name"
                 },
                 {
-                    "field": "f3",
-                    "ftype": "textfield",
-                    "title": "Message",
-                    "value": "Message"
-                },
-                {
                     "field": "f4",
                     "ftype": "textfield",
                     "title": "Image",
@@ -198,12 +181,6 @@
                     "field": "f8",
                     "ftype": "textfield",
                     "title": "Name",
-                    "value": ""
-                },
-                {
-                    "field": "f9",
-                    "ftype": "textfield",
-                    "title": "Message",
                     "value": ""
                 },
                 {
@@ -226,12 +203,6 @@
                     "value": ""
                 },
                 {
-                    "field": "f15",
-                    "ftype": "textfield",
-                    "title": "Message",
-                    "value": ""
-                },
-                {
                     "field": "f16",
                     "ftype": "textfield",
                     "title": "Image",
@@ -248,12 +219,6 @@
                     "field": "f20",
                     "ftype": "textfield",
                     "title": "Name",
-                    "value": ""
-                },
-                {
-                    "field": "f21",
-                    "ftype": "textfield",
-                    "title": "Message",
                     "value": ""
                 },
                 {
@@ -276,12 +241,6 @@
                     "value": ""
                 },
                 {
-                    "field": "f27",
-                    "ftype": "textfield",
-                    "title": "Message",
-                    "value": ""
-                },
-                {
                     "field": "f28",
                     "ftype": "textfield",
                     "title": "Image",
@@ -298,12 +257,6 @@
                     "field": "f32",
                     "ftype": "textfield",
                     "title": "Name",
-                    "value": ""
-                },
-                {
-                    "field": "f33",
-                    "ftype": "textfield",
-                    "title": "Message",
                     "value": ""
                 },
                 {
@@ -326,12 +279,6 @@
                     "value": ""
                 },
                 {
-                    "field": "f39",
-                    "ftype": "textfield",
-                    "title": "Message",
-                    "value": ""
-                },
-                {
                     "field": "f40",
                     "ftype": "textfield",
                     "title": "Image",
@@ -348,12 +295,6 @@
                     "field": "f44",
                     "ftype": "textfield",
                     "title": "Name",
-                    "value": ""
-                },
-                {
-                    "field": "f45",
-                    "ftype": "textfield",
-                    "title": "Message",
                     "value": ""
                 },
                 {
@@ -376,12 +317,6 @@
                     "value": ""
                 },
                 {
-                    "field": "f51",
-                    "ftype": "textfield",
-                    "title": "Message",
-                    "value": ""
-                },
-                {
                     "field": "f52",
                     "ftype": "textfield",
                     "title": "Image",
@@ -398,12 +333,6 @@
                     "field": "f56",
                     "ftype": "textfield",
                     "title": "Name",
-                    "value": ""
-                },
-                {
-                    "field": "f57",
-                    "ftype": "textfield",
-                    "title": "Message",
                     "value": ""
                 },
                 {
@@ -438,7 +367,6 @@
             <div class="page">
                 <h1>
                     <span class="name"></span>
-                    <span class="message"></span>
                 </h1>
                 <div class="img-container">
                     <img src="./L3_SLIDESHOW/img/picture-1.jpg" alt="Picture 1">

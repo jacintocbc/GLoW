@@ -3861,9 +3861,10 @@ async function getAccessToken() {
 }
 
 let lineupChoiceGlobal = '';
+let isNameOnlyGlobal = false;
 
 // Fetch Data from iNews API
-async function fetchData(lineupChoice) {
+async function fetchData(lineupChoice, isNameOnly) {
     const token = await getAccessToken();
     const serverInput = document.getElementById('iNewsServer');
     const lineupInput1 = document.getElementById('iNewsLineup1');
@@ -3873,6 +3874,7 @@ async function fetchData(lineupChoice) {
     const lineup2 = lineupInput2.value;
     let lineup = '';
     lineupChoiceGlobal = lineupChoice;
+    isNameOnlyGlobal = isNameOnly;
     lineup = lineupChoice == 'lineup1' ? lineup1 : lineup2;
     if (!token) {
         console.log('No valid access token available');
@@ -4064,7 +4066,7 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
                 field: "f81",
                 ftype: "textfield",
                 title: "Transition (s)",
-                value: "5"
+                value: "10"
             },
             ...Array.from({ length: 10 }, (_, i) => ({
                 ftype: "caption",
@@ -4121,7 +4123,7 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
                 field: "f81",
                 ftype: "textfield",
                 title: "Transition (s)",
-                value: "5"
+                value: "10"
             },
             ...Array.from({ length: 10 }, (_, i) => ({
                 ftype: "caption",
@@ -4169,8 +4171,71 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
         itemID: itemID
     };
 
+    const templateSlideshowNameOnly = {
+        defversion: "1",
+        description: "Lower Third Slideshow Name Only",
+        playserver: "OVERLAY",
+        playchannel: "2",
+        playlayer: "18",
+        webplayout: "18",
+        out: "manual",
+        dataformat: "json",
+        uicolor: "5",
+        DataFields: [
+            {
+                field: "f81",
+                ftype: "textfield",
+                title: "Transition (s)",
+                value: "10"
+            },
+            ...Array.from({ length: 10 }, (_, i) => ({
+                ftype: "caption",
+                value: `Item ${i + 1}`
+            })).flatMap((caption, i) => [
+                caption,
+                {
+                    field: `f${2 + i * 6}`, // Adjust field number dynamically
+                    ftype: "textfield",
+                    title: "Name",
+                    value: iNewsArray[i]?.name ?? "" // Safe access with a default value
+                },
+                {
+                    field: `f${4 + i * 6}`, // Adjust field number dynamically
+                    ftype: "textfield",
+                    title: "Picture",
+                    value: iNewsArray[i]?.picture ?? "" // Safe access with a default value
+                },
+                {
+                    ftype: "divider"
+                }
+            ]),
+            {
+                field: "f67",
+                ftype: "hidden",
+                title: "Total Out",
+                value: "manual"
+            },
+            {
+                field: "f68",
+                ftype: "checkbox",
+                title: "Loop Graphic",
+                value: "0"
+            }
+        ],
+        onair: "false",
+        imported: Date.now().toString(),
+        relpath: "/NYE/L3_SLIDESHOW_NAME_ONLY.html",
+        itemID: itemID
+    };
+
     let template;
-    template = lineupChoiceGlobal == 'lineup1' ? templateMessages : templateSlideshow;
+    if (lineupChoiceGlobal == 'lineup1') {
+        template = templateMessages;
+    } else if (isNameOnlyGlobal) {
+        template = templateSlideshowNameOnly;
+    } else {
+        template = templateSlideshow;
+    }
     data.content.templates.push(template);
 
     axios.post('http://localhost:5656/api/v1/rundown/json', data)

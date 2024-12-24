@@ -29,8 +29,9 @@
       </table>
 
       <div class="button-container">
-        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData('lineup1')">Populate Messages</button>
-        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData('lineup2')">Populate Slideshow</button>
+        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData('lineup1', false)">Populate Messages</button>
+        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData('lineup2', false)">Populate Slideshow</button>
+        <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData('lineup2', true)">Populate Slideshow (Name Only)</button>
         <button type="button" class="btn button_disabled" onclick="createRundownItem()" id="rundownItemBtn">Create Rundown Item</button>
         {{!-- <button type="button" class="btn bg_black" style="margin-right: 10px" onclick="fetchData(true)">Update Rundown</button>
         <button type="button" class="btn bg_green" onclick="fetchData(false)">Populate Rundown</button>     --}}
