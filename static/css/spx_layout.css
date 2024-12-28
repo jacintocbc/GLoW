@@ -1214,7 +1214,8 @@ table.footerTable, td.footerTable, tr.footerTable, span.statusbar div.footerTabl
 
   .selected-count {
     position: absolute;
-    top: 35px;
+    top: 67px;
+    font-size: 22px;
   }
 
   .button_disabled {
