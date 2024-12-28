@@ -67,7 +67,7 @@ h1 {
 
 /* Animation classes */
 .fade-in {
-    animation: fadeIn 0.5s forwards;
+    animation: fadeIn 0.4s forwards;
 }
 
 .fade-out {

@@ -52,11 +52,11 @@
                     let isSpaceSplit = false;
 
                     // First, try to find a period or exclamation mark within the first 40 characters
-                    const firstSplit = titleText.indexOf('.', 0);
-                    const firstExclamation = titleText.indexOf('!', 0);
-                    if (firstSplit !== -1 && firstSplit <= 40) {
+                    const firstSplit = titleText.indexOf('.', 30);
+                    const firstExclamation = titleText.indexOf('!', 30);
+                    if (firstSplit !== -1 && firstSplit <= 50) {
                         splitIndex = firstSplit + 1; // Split after the period
-                    } else if (firstExclamation !== -1 && firstExclamation <= 40) {
+                    } else if (firstExclamation !== -1 && firstExclamation <= 50) {
                         splitIndex = firstExclamation + 1; // Split after the exclamation mark
                     }
 
@@ -105,16 +105,15 @@
                     nameSpan.innerHTML = nameText;
 
                     messageSpan.id = `f${index * 6 - 3}_gfx`;
-                    messageSpan.className = 'message'; // No fade-out initially
+                    messageSpan.className = messagePart1.length > 40 ? 'message small-message' : 'message';
                     messageSpan.innerHTML = finalMessagePart1;
 
                     if (messagePart2) {
-                        part2Span.className = 'message part-2'; // No fade-out initially
+                        part2Span.className = 'message part-2';
                         part2Span.innerHTML = messagePart2;
-                        part2Span.style.opacity = '0'; // Initially hidden
+                        part2Span.style.opacity = '0';
                     }
 
-                    // If messagePart2 length is greater than 50, add 'small message' class
                     if (messagePart2.length > 50) {
                         part2Span.classList.add('small-message');
                     }
