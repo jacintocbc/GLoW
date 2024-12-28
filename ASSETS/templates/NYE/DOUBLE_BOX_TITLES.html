@@ -14,8 +14,8 @@
             e('f3_gfx').innerText = htmlDecode(e('f3').innerHTML);
             processElement('f2_gfx');
             processElement('f3_gfx');
-            const defaultLocationLeftEl = document.getElementById('f1_gfx');
-            const defaultLocationRightEl = document.getElementById('f1_gfx_alt');
+            const defaultLocationLeftEl = document.getElementById('f1_gfx_alt');
+            const defaultLocationRightEl = document.getElementById('f1_gfx_alt_2');
             const customLeftEl = document.getElementById('f2_gfx');
             const customRightEl = document.getElementById('f3_gfx');
             const location = htmlDecode(e('f1').innerHTML);
@@ -139,15 +139,15 @@
     <div id="wrapper">
         <div class="container">
             <div id="custom-container">
-                <h1 id="f1_gfx">Toronto</h1>
-                <h1 id="f1_gfx_alt">Montreal</h1>
+                <h1 id="f1_gfx_alt">Toronto</h1>
+                <h1 id="f1_gfx_alt_2">Montreal</h1>
                 <h1 id="f2_gfx" class="hide">Custom 1</h1>
                 <h1 id="f3_gfx" class="hide">Custom 2</h1>
             </div>
-    
-            <div style="display:none;"  id="f1"></div>
-            <div style="display:none;"  id="f2"></div>
-            <div style="display:none;"  id="f3"></div>
+
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="display:none;" id="f3"></div>
             <div style="opacity:0;" id="f97"></div>
             <div style="opacity:0;" id="f98"></div>
             <div style="opacity:0;" id="f99"></div>

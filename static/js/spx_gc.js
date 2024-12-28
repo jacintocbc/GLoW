@@ -2974,6 +2974,184 @@ function updatePreview(itemrow) {
                         }
                     }
 
+                    // NYE - Box Titles Template ------------------------------------
+                    if (relpath.includes('DOUBLE_BOX_TITLES')) {
+                        const defaultLocationLeftEl = layer1.contentDocument.getElementById('f1_gfx_alt');
+                        const defaultLocationRightEl = layer1.contentDocument.getElementById('f1_gfx_alt_2');
+                        const customLeftEl = layer1.contentDocument.getElementById('f2_gfx');
+                        const customRightEl = layer1.contentDocument.getElementById('f3_gfx');
+                        let location = undefined;
+                        let customLeft = undefined;
+                        let customRight = undefined;
+                        if (fieldNumber == 1) {
+                            location = fieldData.value;
+                        }
+                        if (fieldNumber == 2) {
+                            customLeft = fieldData.value;
+                        }
+                        if (fieldNumber == 3) {
+                            customRight = fieldData.value;
+                        }
+                        let left = undefined;
+                        let right = undefined;
+                        if (location !== undefined) {
+                            const parts = location.split('|').map(part => part.trim());
+                            left = parts[0];
+                            right = parts[1];
+                            defaultLocationLeftEl.innerText = left;
+                            defaultLocationRightEl.innerText = right;
+                            defaultLocationLeftEl.style.display = 'initial';
+                            customLeftEl.style.display = 'none';
+                            defaultLocationRightEl.style.display = 'initial';
+                            customRightEl.style.display = 'none';
+                        }
+                        // Custom Left & Right
+                        if (customLeft && customLeft.length > 0 || customRight && customRight.length > 0) {
+                            defaultLocationLeftEl.style.display = 'none';
+                            customLeftEl.style.display = 'initial';
+                            defaultLocationRightEl.style.display = 'none';
+                            customRightEl.style.display = 'initial';
+                        }
+                    }
+
+                    // NYE - Countdown Template -------------------------------------
+                    if (relpath.includes('L3_COUNTDOWN')) {
+                        let timezone = undefined;
+                        if (fieldNumber == 1) {
+                            timezone = fieldData.value;
+                        }
+                        const timezoneContainer = layer1.contentDocument.querySelector('.timezone');
+                        if (timezone && timezone.includes('Mountain')) {
+                            timezoneContainer.style.fontSize = '21px';
+                        }
+                        if (timezone && timezone.includes('Newfoundland')) {
+                            timezoneContainer.style.fontSize = '23px';
+                        }
+                    }
+
+                    // NYE - Host Key Template --------------------------------------
+                    if (relpath.includes('L3_HOST_KEY')) {
+                        if (fieldNumber == 1) {
+                            const hostChoice = fieldData.value;
+                            const elements = {
+                                host1: layer1.contentDocument.querySelector('.host-1'),
+                                host1Alt: layer1.contentDocument.querySelector('.host-1-alt'),
+                                host2: layer1.contentDocument.querySelector('.host-2'),
+                                host3: layer1.contentDocument.querySelector('.host-3'),
+                                host4: layer1.contentDocument.querySelector('.host-4'),
+                                group1: layer1.contentDocument.getElementById('group1'),
+                                group2: layer1.contentDocument.getElementById('group2'),
+                            };
+
+                            // Hide all elements by default
+                            Object.values(elements).forEach(element => {
+                                element.style.display = 'none';
+                            });
+
+                            // Show specific elements based on the hostChoice
+                            if (hostChoice == 'Adrienne') {
+                                elements.host1Alt.style.display = 'initial';
+                                elements.group1.style.display = 'initial';
+                            } else if (hostChoice == 'Adrienne / Jann') {
+                                elements.host1.style.display = 'initial';
+                                elements.host2.style.display = 'initial';
+                                elements.group2.style.display = 'initial';
+                            } else if (hostChoice == 'Ian') {
+                                elements.host3.style.display = 'initial';
+                                elements.group1.style.display = 'initial';
+                            } else if (hostChoice == 'Ian / Ali') {
+                                elements.host3.style.display = 'initial';
+                                elements.host4.style.display = 'initial';
+                                elements.group2.style.display = 'initial';
+                            }
+                        }
+                    }
+
+                    // NYE - Locator Template ---------------------------------------
+                    if (relpath.includes('L3_LOCATOR')) {
+                        // Show / Hide Time Tab
+                        const timeSpan = layer1.contentDocument.getElementById('time-span');
+                        if (fieldNumber == 3) {
+                            timeStatus = fieldData.value;
+                            if (timeStatus == "Hide") {
+                                timeSpan.style.display = "none";
+                            } else {
+                                timeSpan.style.display = "initial";
+                            }
+                        }
+                    }
+
+                    // NYE - Super Template ----------------------------------------
+                    if (relpath.includes('L3_SUPER')) {
+                        const defaultNameEl = layer1.contentDocument.getElementById('f1_gfx_alt');
+                        const defaultTitleEl = layer1.contentDocument.getElementById('f1_gfx_alt_2');
+                        const customNameEl = layer1.contentDocument.getElementById('f2_gfx');
+                        const customTitleEl = layer1.contentDocument.getElementById('f3_gfx');
+                        let nameTitle = undefined;
+                        let customName = undefined;
+                        let customTitle = undefined;
+                        if (fieldNumber == 1) {
+                            nameTitle = fieldData.value;
+                        }
+                        if (fieldNumber == 2) {
+                            customName = fieldData.value;
+                        }
+                        if (fieldNumber == 3) {
+                            customTitle = fieldData.value;
+                        }
+                        let name = undefined;
+                        let title = undefined;
+                        if (nameTitle !== undefined) {
+                            const parts = nameTitle.split('|').map(part => part.trim());
+                            name = parts[0];
+                            title = parts[1];
+                            defaultNameEl.innerText = name;
+                            defaultTitleEl.innerText = title;
+                            defaultNameEl.style.display = 'flex';
+                            customNameEl.style.display = 'none';
+                            defaultTitleEl.style.display = 'flex';
+                            customTitleEl.style.display = 'none';
+                        }
+                        // Custom Name & Title
+                        if (customName && customName.length > 0 || customTitle && customTitle.length > 0) {
+                            defaultNameEl.style.display = 'none';
+                            customNameEl.style.display = 'flex';
+                            defaultTitleEl.style.display = 'none';
+                            customTitleEl.style.display = 'flex';
+                        }
+                    }
+
+                    // NYE - QR Code Template ---------------------------------------
+                    if (relpath.includes('QR_CODE')) {
+                        let text1 = undefined;
+                        let text2 = undefined;
+                        if (fieldNumber == 1) {
+                            text1 = fieldData.value;
+                        }
+                        if (fieldNumber == 2) {
+                            text2 = fieldData.value;
+                        }
+                        const container = layer1.contentDocument.querySelector('.container');
+                        const text1El = layer1.contentDocument.getElementById('f1_gfx');
+                        const text2El = layer1.contentDocument.getElementById('f2_gfx');
+                        if (text1 !== undefined && text1.length == 0) {
+                            text1El.classList.add('hide');
+                        } else {
+                            text1El.classList.remove('hide');
+                        }
+                        if (text2 !== undefined && text2.length == 0) {
+                            text2El.classList.add('hide');
+                        } else {
+                            text2El.classList.remove('hide');
+                            text1El.style.display = 'block';
+                        }
+                        if (text1 !== undefined && text1.length == 0 || text2 !== undefined && text2.length == 0) {
+                            container.className = 'container alt-height';
+                        } else {
+                            container.className = 'container';
+                        }
+                    }
+
                     // Template 9000 ------------------------------
                     if (templateNumber == 9000) {
                         processElement('f68_gfx', layer1);
@@ -3948,7 +4126,7 @@ function populateRundownTable(data) {
                 rundownButton.className = 'btn bg_green';
             } else {
                 rundownButton.disabled = true;
-                rundownButton.className = 'btn button_disabled'; 
+                rundownButton.className = 'btn button_disabled';
             }
 
             countDisplay.textContent = `Selected: ${selectedCount}`;
