@@ -72,7 +72,7 @@
                     nameSpan.innerHTML = nameText;
 
                     messageSpan.id = `f${index * 6 - 3}_gfx`;
-                    messageSpan.className = 'message';
+                    messageSpan.className = messageText.length > 110 ? 'message small-message' : 'message';
                     messageSpan.innerHTML = messageText;
 
                     headerElement.appendChild(nameSpan);

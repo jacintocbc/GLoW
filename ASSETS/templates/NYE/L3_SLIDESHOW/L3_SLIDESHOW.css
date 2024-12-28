@@ -74,6 +74,10 @@ h1 {
     /* opacity: 0; */
 }
 
+.small-message {
+    font-size: 25px;
+}
+
 .img-container {
     background: #19c8d1;
     height: 500px;
