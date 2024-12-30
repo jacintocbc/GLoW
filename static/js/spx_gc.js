@@ -4277,7 +4277,7 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
                 field: "f68",
                 ftype: "checkbox",
                 title: "Loop Graphic",
-                value: "0"
+                value: "1"
             }
         ],
         onair: "false",
@@ -4340,7 +4340,7 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
                 field: "f68",
                 ftype: "checkbox",
                 title: "Loop Graphic",
-                value: "0"
+                value: "1"
             }
         ],
         onair: "false",
@@ -4397,7 +4397,7 @@ function updateRundownForiNews(existingRundown, iNewsArray) {
                 field: "f68",
                 ftype: "checkbox",
                 title: "Loop Graphic",
-                value: "0"
+                value: "1"
             }
         ],
         onair: "false",
