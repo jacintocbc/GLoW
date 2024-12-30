@@ -53,6 +53,11 @@ h1 {
     margin: 0;
 }
 
+.locator-text {
+    position: relative;
+    top: 2.5px;
+}
+
 .qr-code {
     max-height: 250px;
     filter: invert();
