@@ -20,8 +20,8 @@
             const customTitleEl = document.getElementById('f3_gfx');
             const nameTitle = htmlDecode(e('f1').innerHTML);
             const [name, title] = nameTitle.split('|').map(part => part.trim());
-            defaultNameEl.innerText = name;
-            defaultTitleEl.innerText = title;
+            defaultNameEl.innerHTML = name;
+            defaultTitleEl.innerHTML = title;
             // Custom Name & Title
             const customName = htmlDecode(e('f2').innerHTML);
             const customTitle = htmlDecode(e('f3').innerHTML);
@@ -163,8 +163,8 @@
                             "value": "Lauren Chan | Model"
                         },
                         {
-                            "text": "Stacey Aglok MacDonald & Alethea Arnaquq-Baril | \u201cNorth of North\u201d Co-Creators",
-                            "value": "Stacey Aglok MacDonald & Alethea Arnaquq-Baril | \u201cNorth of North\u201d Co-Creators"
+                            "text": "Stacey Aglok MacDonald \u0026 Alethea Arnaquq-Baril | \u201cNorth of North\u201d Co-Creators",
+                            "value": "Stacey Aglok MacDonald \u0026 Alethea Arnaquq-Baril | \u201cNorth of North\u201d Co-Creators"
                         },
                         {
                             "text": "Stacey Aglok MacDonald | \u201cNorth of North\u201d Co-Creator",
