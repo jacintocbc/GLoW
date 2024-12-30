@@ -86,12 +86,23 @@
                     return;
                 }
 
-                // Calculate minutes and seconds
+                // Calculate hours, minutes, and seconds
+                const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
                 const mins = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
                 const secs = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-                // Display the countdown as MM:SS
-                countdownElement.innerHTML = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                let displayText;
+
+                if (timezoneKey === "Newfoundland Countdown") {
+                    // Display the last digit of the hour, plus MM:SS
+                    const lastHourDigit = hours % 10;
+                    displayText = `${lastHourDigit}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                } else {
+                    // Display MM:SS for all other timezones
+                    displayText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+
+                countdownElement.innerHTML = displayText;
 
                 // Trigger `runAnimationOUT` when the countdown displays `00:30`
                 if (mins === 0 && secs === 30) {
