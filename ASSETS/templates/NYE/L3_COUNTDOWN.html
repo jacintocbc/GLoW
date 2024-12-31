@@ -46,11 +46,11 @@
             // Timezone mappings
             const timezones = {
                 "Newfoundland Countdown": -210, // UTC-3:30
-                "Atlantic Countdown": -240,    // UTC-4
-                "Eastern Countdown": -300,     // UTC-5
-                "Central Countdown": -360,     // UTC-6
-                "Mountain/Yukon Countdown": -420, // UTC-7
-                "Pacific Countdown": -480      // UTC-8
+                "Atlantic Countdown": -180,    // UTC-4
+                "Eastern Countdown": -120,     // UTC-5
+                "Central Countdown": -60,     // UTC-6
+                "Mountain/Yukon Countdown": 0, // UTC-7
+                "Pacific Countdown": 60      // UTC-8
             };
 
             // Get the selected timezone
@@ -71,14 +71,17 @@
             const targetTimestamp = targetUTC.getTime() + offsetMinutes * 60 * 1000;
 
             // Clear any existing interval before starting a new one
-            if (countdownInterval) {
+            if (typeof countdownInterval !== "undefined") {
                 clearInterval(countdownInterval);
             }
 
             countdownInterval = setInterval(() => {
                 // Get the current time and adjust it to the selected timezone
-                const currentUTC = new Date().getTime();
-                const timeRemaining = targetTimestamp - currentUTC;
+                const currentTimestamp = new Date().getTime(); // Current UTC time in milliseconds
+                const localOffset = new Date().getTimezoneOffset(); // Local timezone offset in minutes
+                const adjustedCurrentTimestamp = currentTimestamp - localOffset * 60 * 1000;
+
+                const timeRemaining = targetTimestamp - adjustedCurrentTimestamp;
 
                 if (timeRemaining <= 0) {
                     clearInterval(countdownInterval);
@@ -87,16 +90,19 @@
                 }
 
                 // Calculate hours, minutes, and seconds
-                const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
-                const mins = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const totalMinutesRemaining = Math.floor(timeRemaining / (1000 * 60));
+                let hours = Math.floor(totalMinutesRemaining / 60);
+                hours = hours + 2;
+                const mins = totalMinutesRemaining % 60;
                 const secs = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                console.log(timezoneKey, hours, mins, secs);
 
                 let displayText;
 
                 if (timezoneKey === "Newfoundland Countdown") {
-                    // Display the last digit of the hour, plus MM:SS
-                    const lastHourDigit = hours % 10;
-                    displayText = `${lastHourDigit}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    // Include hours for Newfoundland Countdown
+                    displayText = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                 } else {
                     // Display MM:SS for all other timezones
                     displayText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
