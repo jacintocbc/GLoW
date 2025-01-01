@@ -45,7 +45,7 @@
         function startCountdown() {
             // Timezone mappings
             const timezones = {
-                "Newfoundland Countdown": -210, // UTC-3:30
+                "Newfoundland Countdown": -90, // UTC-3:30
                 "Atlantic Countdown": -180,    // UTC-4
                 "Eastern Countdown": -120,     // UTC-5
                 "Central Countdown": -60,     // UTC-6
@@ -91,10 +91,11 @@
 
                 // Calculate hours, minutes, and seconds
                 const totalMinutesRemaining = Math.floor(timeRemaining / (1000 * 60));
-                let hours = Math.floor(totalMinutesRemaining / 60);
-                hours = hours + 2;
+                const hours = Math.floor(totalMinutesRemaining / 60);
                 const mins = totalMinutesRemaining % 60;
                 const secs = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                console.log(timezoneKey, hours, mins, secs);
 
                 let displayText;
 
