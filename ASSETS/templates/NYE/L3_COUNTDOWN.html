@@ -100,8 +100,12 @@
                 let displayText;
 
                 if (timezoneKey === "Newfoundland Countdown") {
-                    // Include hours for Newfoundland Countdown
-                    displayText = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    if (hours !== 0) {
+                        // Include hours for Newfoundland Countdown
+                        displayText = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    } else {
+                        displayText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    }
                 } else {
                     // Display MM:SS for all other timezones
                     displayText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
