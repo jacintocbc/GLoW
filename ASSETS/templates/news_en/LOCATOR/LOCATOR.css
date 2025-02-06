@@ -58,6 +58,16 @@ body {
     margin-right: 10px;
 }
 
+.divider {
+    position: relative;
+    top: -3px;
+    font-weight: 500;
+}
+
+.hide {
+    display: none;
+}
+
 /* Animate In */
 @keyframes slideIn {
     0% {

@@ -10,8 +10,63 @@
     <link rel="stylesheet" href="./LOCATOR/LOCATOR.css">
     <script>
         function runTemplateUpdate() {
+            const locatorSpan = document.getElementById('f1_gfx');
+            const customLocatorSpan = document.getElementById('f2_gfx');
+            // Custom Locator
             e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
             processElement('f1_gfx');
+            processElement('f2_gfx');
+            const customLocator = htmlDecode(e('f2').innerHTML);
+            if (customLocator.length > 0) {
+                locatorSpan.classList.add('hide');
+                customLocatorSpan.classList.remove('hide');
+            } else {
+                locatorSpan.classList.remove('hide');
+                customLocatorSpan.classList.add('hide');
+            }
+
+            // Get Location / Selected or Custom
+            const customLocation = document.getElementById('f2').innerHTML.trim();
+            const selectedLocation = document.getElementById('f1').innerHTML.trim();
+            const f4Value = document.getElementById('f4').innerText.trim();
+
+            // Show / Hide Time Tab
+            const timeSpan = document.getElementById('time-span');
+            let timeStatus = document.getElementById('f3').innerText;
+            if (timeStatus == "Hide") {
+                timeSpan.style.display = "none";
+            } else {
+                timeSpan.style.display = "initial";
+            }
+
+            // Mapping locations to time zones
+            const locationTimeCodeMap = {
+                "St. John’s": "NT",
+                "Saint John, New Brunswick": "AT",
+                "Charlottetown": "AT",
+                "Halifax": "AT",
+                "Montreal": "ET",
+                "Ottawa": "ET",
+                "Toronto": "ET",
+                "Iqaluit": "ET",
+                "Winnipeg": "CT",
+                "Edmonton": "MT",
+                "Calgary": "MT",
+                "Vancouver": "PT",
+                "Yellowknife": "MT",
+                "Whitehorse": "YT",
+                "Regina": "CT"
+            };
+
+            let timeCode;
+            if (customLocation.length > 0) {
+                timeCode = f4Value; // Use f4 value if custom location is populated
+            } else {
+                timeCode = locationTimeCodeMap[selectedLocation] || 'Invalid';
+            }
+
+            updateTime(timeCode);
             // Bottom / Left Property 
             const wrapper = document.getElementById('custom-container');
             wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
@@ -41,6 +96,56 @@
             titleBar.style.clipPath = "inset(0 0 0 0)";
             titleBar.style.animation = 'slideOut .4s ease-in-out forwards';
         }
+
+        let timeInterval;
+
+        function updateTime(timeCode) {
+            if (timeInterval) clearInterval(timeInterval); // Clear any existing interval
+
+            displayTime(timeCode); // Display the time immediately
+
+            // Update the time every second
+            timeInterval = setInterval(() => {
+                displayTime(timeCode);
+            }, 1000);
+        }
+
+        function displayTime(timeCode) {
+            const timeElement = document.getElementById('time');
+            const timeSpan = document.getElementById('time-span');
+            const timeZones = {
+                NT: 'America/St_Johns',
+                AT: 'America/Halifax',
+                ET: 'America/New_York',
+                CT: 'America/Chicago',
+                MT: 'America/Denver',
+                YT: 'America/Denver',
+                PT: 'America/Los_Angeles'
+            };
+
+            // Map timeCode to an IANA timezone string
+            const ianaTimeZone = timeZones[timeCode];
+
+            if (!ianaTimeZone) {
+                timeSpan.style.display = 'none';
+                timeElement.textContent = '';
+                return;
+            }
+
+            // Get the current time in the specified timezone
+            const now = new Date();
+            const options = {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true,
+                timeZone: ianaTimeZone
+            };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            const formattedTime = formatter.format(now);
+
+            // Update the span with the formatted time and timezone code
+            timeElement.textContent = `${formattedTime} ${timeCode}`;
+        }
     </script>
     <script type="text/javascript">
         window.SPXGCTemplateDefinition = {
@@ -52,13 +157,129 @@
             "webplayout": "6",
             "out": "manual",
             "dataformat": "json",
-            "uicolor": "1",
+            "uicolor": "7",
             "DataFields": [
                 {
                     "field": "f1",
+                    "ftype": "dropdown",
+                    "title": "Locations",
+                    "value": "Toronto",
+                    "items": [
+                        {
+                            "text": "St. John’s",
+                            "value": "St. John’s"
+                        },
+                        {
+                            "text": "Saint John, New Brunswick",
+                            "value": "Saint John, New Brunswick"
+                        },
+                        {
+                            "text": "Charlottetown",
+                            "value": "Charlottetown"
+                        },
+                        {
+                            "text": "Halifax",
+                            "value": "Halifax"
+                        },
+                        {
+                            "text": "Montreal",
+                            "value": "Montreal"
+                        },
+                        {
+                            "text": "Ottawa",
+                            "value": "Ottawa"
+                        },
+                        {
+                            "text": "Toronto",
+                            "value": "Toronto"
+                        },
+                        {
+                            "text": "Iqaluit",
+                            "value": "Iqaluit"
+                        },
+                        {
+                            "text": "Winnipeg",
+                            "value": "Winnipeg"
+                        },
+                        {
+                            "text": "Regina",
+                            "value": "Regina"
+                        },
+                        {
+                            "text": "Edmonton",
+                            "value": "Edmonton"
+                        },
+                        {
+                            "text": "Calgary",
+                            "value": "Calgary"
+                        },
+                        {
+                            "text": "Whitehorse",
+                            "value": "Whitehorse"
+                        },
+                        {
+                            "text": "Vancouver",
+                            "value": "Vancouver"
+                        },
+                        {
+                            "text": "Yellowknife",
+                            "value": "Yellowknife"
+                        }
+                    ]
+                },
+                {
+                    "field": "f3",
+                    "ftype": "dropdown",
+                    "title": "Show / Hide",
+                    "value": "Show Time",
+                    "items": [
+                        {
+                            "text": "Show Time",
+                            "value": "Show"
+                        },
+                        {
+                            "text": "Hide Time",
+                            "value": "Hide"
+                        }
+                    ]
+                },
+                {
+                    "field": "f2",
                     "ftype": "textfield",
-                    "title": "Locator",
-                    "value": "Charlottetown"
+                    "title": "Custom *",
+                    "value": ""
+                },
+                {
+                    "field": "f4",
+                    "ftype": "dropdown",
+                    "title": "Time Zone *",
+                    "value": "ET",
+                    "items": [
+                        {
+                            "text": "Newfoundland Time",
+                            "value": "NT"
+                        },
+                        {
+                            "text": "Atlantic Time",
+                            "value": "AT"
+                        },
+                        {
+                            "text": "Eastern Time",
+                            "value": "ET"
+                        },
+                        {
+                            "text": "Central Time",
+                            "value": "CT"
+                        },
+                        {
+                            "text": "Mountain Time",
+                            "value": "MT"
+                        },
+                        {
+                            "text": "Pacific Time",
+                            "value": "PT"
+                        }
+                    ]
                 },
                 {
                     "field": "f97",
@@ -80,15 +301,22 @@
 <body>
     <div id="wrapper">
         <div class="container">
-            <div id="custom-container">
+            <div class="locator-box" id="custom-container">
                 <div class="title-bar">
-                    <h1 id="f1_gfx">Charlottetown</h1>
+                    <h1 class="locator-text">
+                        <span id="f1_gfx">Toronto</span>
+                        <span id="f2_gfx" class="hide">Custom</span>
+                        <span id="time-span"><span class="divider">|</span> <span id="time">10:34 PM ET</span></span>
+                    </h1>
                 </div>
-    
-                <div style="display:none;" id="f1"></div>
-                <div style="opacity:0;" id="f97"></div>
-                <div style="opacity:0;" id="f98"></div>
             </div>
+    
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="opacity:0;" id="f3"></div>
+            <div style="opacity:0;" id="f4"></div>
+            <div style="opacity:0;" id="f97"></div>
+            <div style="opacity:0;" id="f98"></div>
         </div>
     </div>
 </body>
