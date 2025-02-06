@@ -1,0 +1,81 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Radio-Canada', sans-serif;
+}
+
+#wrapper {
+    width: 100vw;
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+    justify-content: flex-start;
+    color: white;
+}
+
+.container {
+    overflow: hidden;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
+    padding-left: 30px;
+    animation: slideUp 1s ease-out forwards;
+}
+
+h1, h2 {
+    margin: 10px 0;
+}
+
+.middle-row {
+    background: rgb(161, 18, 14);
+    color: white;
+    transform: translateY(300%);
+}
+
+.middle-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.square {
+    background: white;
+    height: 12px;
+    width: 11px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+@keyframes slideUp {
+    0% {
+      transform: translateY(300%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(300%);
+    }
+}
