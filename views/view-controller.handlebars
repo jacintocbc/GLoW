@@ -1156,10 +1156,11 @@
                 src="/renderer?preview=true"
               {{/ifValue}}
               class="renderer"
-              style="background-image: url('https://raw.githubusercontent.com/jacintocbc/GLoW/main/ASSETS/templates/NYE/L3_BANNER/BANNER.png'); background-size: 100% 100%; position: absolute; top: 0; left: 0;"      
-              {{!-- {{#if background}}
+              {{!-- If a custom background is needed, uncomment this --}}
+              {{!-- style="background-image: url('https://raw.githubusercontent.com/jacintocbc/GLoW/main/ASSETS/templates/NYE/L3_BANNER/BANNER.png'); background-size: 100% 100%; position: absolute; top: 0; left: 0;"       --}}
+              {{#if background}}
                 style="background-image: url('/{{background}}'); background-size: 100% 100%; position: absolute; top: 0; left: 0;"
-              {{/if}} --}}
+              {{/if}}
               onLoad="localRendererLoaded();"
             ></iframe>
             
