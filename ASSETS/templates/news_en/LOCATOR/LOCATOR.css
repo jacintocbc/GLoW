@@ -26,7 +26,7 @@ body {
 
 .container {
     position: absolute;
-    bottom: 340px;
+    bottom: 355px;
     left: 180px;
 }
 
@@ -43,6 +43,7 @@ body {
     position: absolute;
     top: 0;
     background: #f3c223;
+    color: black;
     height: 40px;
     clip-path: inset(0 100% 0 0);
     animation: slideIn .5s ease-in-out forwards .1s;
@@ -60,7 +61,7 @@ body {
 
 .divider {
     position: relative;
-    top: -3px;
+    top: -1px;
     font-weight: 500;
 }
 

@@ -12,6 +12,20 @@
         function runTemplateUpdate() {
             const locatorSpan = document.getElementById('f1_gfx');
             const customLocatorSpan = document.getElementById('f2_gfx');
+            // Color Change
+            const titleBar = document.querySelector('.title-bar');
+            let color = document.getElementById('f5').innerText;
+            if (color == 'Red') {
+                titleBar.style.background = 'rgb(161, 18, 14)';
+                titleBar.style.color = 'white';
+            } else if (color == 'White') {
+                titleBar.style.background = 'white';
+                titleBar.style.color = 'black';
+            } else {
+                titleBar.style.background = '#f3c223';
+                titleBar.style.color = 'black';
+            }
+
             // Custom Locator
             e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
             e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
@@ -244,6 +258,26 @@
                     ]
                 },
                 {
+                    "field": "f5",
+                    "ftype": "dropdown",
+                    "title": "Color",
+                    "value": "Yellow",
+                    "items": [
+                        {
+                            "text": "Yellow",
+                            "value": "Yellow"
+                        },
+                        {
+                            "text": "Red",
+                            "value": "Red"
+                        },
+                        {
+                            "text": "White",
+                            "value": "White"
+                        },
+                    ]
+                },
+                {
                     "field": "f2",
                     "ftype": "textfield",
                     "title": "Custom *",
@@ -315,6 +349,7 @@
             <div style="display:none;" id="f2"></div>
             <div style="opacity:0;" id="f3"></div>
             <div style="opacity:0;" id="f4"></div>
+            <div style="opacity:0;" id="f5"></div>
             <div style="opacity:0;" id="f97"></div>
             <div style="opacity:0;" id="f98"></div>
         </div>

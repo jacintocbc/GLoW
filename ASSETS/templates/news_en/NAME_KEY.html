@@ -14,6 +14,20 @@
             e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
             processElement('f1_gfx');
             processElement('f2_gfx');
+            // Color Change
+            const divider = document.getElementById('divider');
+            const wipe = document.getElementById('wipe');
+            let color = document.getElementById('f3').innerText;
+            if (color == 'Red') {
+                divider.style.backgroundColor = 'rgb(161, 18, 14)';
+                wipe.style.backgroundColor = 'rgb(161, 18, 14)';
+            } else if (color == 'Black') {
+                divider.style.backgroundColor = 'black';
+                wipe.style.backgroundColor = 'black';
+            } else {
+                divider.style.backgroundColor = '#f3c223';
+                wipe.style.backgroundColor = '#f3c223';
+            }
             // Bottom / Left Property 
             const wrapper = document.getElementById('custom-container');
             wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
@@ -85,7 +99,27 @@
                     "ftype": "number",
                     "title": "Main X-Axis",
                     "value": "0"
-                }
+                },
+                {
+                    "field": "f3",
+                    "ftype": "dropdown",
+                    "title": "Color",
+                    "value": "Yellow",
+                    "items": [
+                        {
+                            "text": "Yellow",
+                            "value": "Yellow"
+                        },
+                        {
+                            "text": "Red",
+                            "value": "Red"
+                        },
+                        {
+                            "text": "Black",
+                            "value": "Black"
+                        },
+                    ]
+                },
             ]
         };
     </script>
@@ -100,7 +134,7 @@
                         <h1 id="f1_gfx">Michael Alsayegh</h1>
                     </div>
                     <div class="title-bar">
-                        <h1><span class="divider"></span><span class="wipe"></span><span id="f2_gfx" class="font">Quebec Order of Chemists President</span></h1>
+                        <h1><span class="divider" id="divider"></span><span class="wipe" id="wipe"></span><span id="f2_gfx" class="font">Quebec Order of Chemists President</span></h1>
                     </div>
                 </div>
     
@@ -108,6 +142,7 @@
                 <div style="display:none;" id="f2"></div>
                 <div style="opacity:0;" id="f97"></div>
                 <div style="opacity:0;" id="f98"></div>
+                <div style="opacity:0;" id="f3"></div>
             </div>
         </div>
     </div>
