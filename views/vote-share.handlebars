@@ -80,24 +80,32 @@
       margin-left: 1px;
     }
 
-    .party-color-PC {
-      background: #1C4F80;
+    .party-color-CON {
+      background: #296299;
     }
 
     .party-color-LIB {
-      background: #B02229;
+      background: #a3272d;
     }
 
     .party-color-NDP {
-      background: #E87504;
+      background: #DB7A1A;
     }
 
     .party-color-GRN {
-      background: #3D9B35;
+      background: #468240;
     }
 
     .party-color-IND {
       background: #6D777E;
+    }
+
+    .party-color-BQ {
+      background: #009eb8;
+    }
+
+    .party-color-PPC {
+      background: #4A3389;
     }
 
     .party-name {
@@ -105,8 +113,8 @@
       font-size: 30px;
       text-transform: uppercase;
       position: relative;
-      top: 15px;
-      left: 3px;
+      top: 12.5px;
+      left: 0px;
     }
 
     .party-vote-share {
@@ -128,7 +136,7 @@
       left: 0;
       width: 800px;
       height: 160px;
-      background: #282a32;
+      background: #f7f7f7;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -160,7 +168,7 @@
 
     .shape-1 {
       height: 150px;
-      width: 60px;
+      width: 50px;
       position: absolute;
       left: 60px;
       bottom: -40px;
@@ -169,7 +177,7 @@
 
     .shape-2 {
       height: 140px;
-      width: 60px;
+      width: 50px;
       position: absolute;
       right: 40px;
       top: -20px;
@@ -180,14 +188,32 @@
       height: 100px;
       width: 40px;
       position: absolute;
-      right: 130px;
+      right: 100px;
       top: -30px;
       animation: float-alt 5s ease-in-out infinite;
     }
 
+    .shape-4 {
+      height: 80px;
+      width: 40px;
+      position: absolute;
+      left: 10px;
+      bottom: -30px;
+      animation: float-alt 3s ease-in-out infinite 2s;
+    }
+
+    .shape-5 {
+      height: 80px;
+      width: 40px;
+      position: absolute;
+      right: 150px;
+      top: -30px;
+      animation: float 6s ease-in-out infinite 1s;
+    }
+
     /* Controls */
     .controls-container {
-      opacity: 0;
+      opacity: 1;
       position: absolute;
       top: 250px;
       left: 10px;
@@ -198,11 +224,11 @@
   <div id="wrapper">
     <!-- Background -->
     <div class="container-background">
-      <img src="/img/images/NS_VOTES.png" alt="Nova Scotia Votes" class="wordmark">
-      <div class="party-color-PC shape-1"></div>
-      <div class="party-color-LIB shape-2"></div>
-      <div class="party-color-NDP shape-3"></div>
-      <div class="party-color-GRN shape-4"></div>
+      <img src="/img/images/canada_votes.png" alt="Canada Votes" class="wordmark">
+      <div class="party-color-LIB shape-1"></div>
+      <div class="party-color-CON shape-2"></div>
+      <div class="party-color-BQ shape-3"></div>
+      <div class="party-color-NDP shape-4"></div>
     </div>
 
     <!-- Vote Share -->
@@ -210,21 +236,21 @@
       <div class="title">
         <h1>Share of Vote</h1>
       </div>
-      <div class="party party-color-PC">
-        <div class="party-name pc">PC</div>
-        <div class="party-vote-share">0.0<span class="percent">%</span></div>
+      <div class="party party-color-LIB">
+        <div class="party-name">LIB</div>
+        <div class="party-vote-share">43.5<span class="percent">%</span></div>
+      </div>
+      <div class="party party-color-CON">
+        <div class="party-name">CON</div>
+        <div class="party-vote-share">34.8<span class="percent">%</span></div>
+      </div>
+      <div class="party party-color-BQ">
+        <div class="party-name">BQ</div>
+        <div class="party-vote-share">11.9<span class="percent">%</span></div>
       </div>
       <div class="party party-color-NDP">
         <div class="party-name">NDP</div>
-        <div class="party-vote-share">0.0<span class="percent">%</span></div>
-      </div>
-      <div class="party party-color-LIB">
-        <div class="party-name">LIB</div>
-        <div class="party-vote-share">0.0<span class="percent">%</span></div>
-      </div>
-      <div class="party party-color-GRN">
-        <div class="party-name">GRN</div>
-        <div class="party-vote-share">0.0<span class="percent">%</span></div>
+        <div class="party-vote-share">10.4<span class="percent">%</span></div>
       </div>
     </div>
   </div>
@@ -277,12 +303,22 @@
     function updateHTML(data) {
       console.log(data);
 
-      const partyStandings = data.PartyStandings; // Get PartyStandings object
-      const partyNumber = data.PartyNumber; // Get PartyNumber
+      const partyStandings = data.PartyStandings;
+      const allParties = partyStandings.Parties || [];
 
-      const parties = partyStandings.Parties || []; // Ensure you have the array
-      const selectedParties = parties.slice(0, partyNumber); // Take only the required number of parties
+      const majorCodes = ['LIB', 'CON', 'BQ', 'NDP'];
 
+      // Get only the 4 major parties
+      const majorParties = allParties.filter(p => majorCodes.includes(p.EnglishCode));
+
+      // Check if ALL major parties have 0 votes
+      const allZero = majorParties.every(p => p.CurrentVotes === 0);
+
+      // Now filter: if all zero, keep them all; otherwise only keep > 0
+      const selectedParties = allZero
+        ? majorParties
+        : majorParties.filter(p => p.CurrentVotes > 0);
+        
       const partyContainer = document.querySelector('.container'); // Select the container to append parties
       partyContainer.textContent = ''; // Clear previous entries
 
@@ -300,17 +336,17 @@
 
         // Create the party element
         const partyElement = document.createElement('div');
-        partyElement.classList.add('party', `party-color-${party.EnglishCode}`); // Replace with your color logic if needed
+        partyElement.classList.add('party', `party-color-${party.EnglishCode}`);
 
         // Create the party name element
         const partyNameElement = document.createElement('div');
         partyNameElement.classList.add('party-name');
-        partyNameElement.textContent = party.EnglishCode; // Set party name
+        partyNameElement.textContent = party.EnglishCode;
 
         // Create the party vote share element
         const partyVoteShareElement = document.createElement('div');
         partyVoteShareElement.classList.add('party-vote-share');
-        partyVoteShareElement.textContent = `${totalVotesPercentage.toFixed(1)}`; // Set vote percentage
+        partyVoteShareElement.textContent = `${totalVotesPercentage.toFixed(1)}`;
         const percentElement = document.createElement('span');
         percentElement.classList.add('percent');
         percentElement.textContent = '%';
@@ -326,9 +362,8 @@
 
       // If the container is active, re-trigger animations for new content
       if (voteShareContainer.classList.contains('active')) {
-        // Force reflow to restart CSS animations
         voteShareContainer.classList.remove('active');
-        void voteShareContainer.offsetWidth; // Trigger reflow
+        void voteShareContainer.offsetWidth;
         voteShareContainer.classList.add('active');
       }
     }
