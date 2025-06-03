@@ -70,48 +70,99 @@
         }
 
         function runAnimationIN() {
-            const goldBar = document.getElementById('gold-bar');
-            const blackBar = document.getElementById('black-bar');
+            const whiteBar = document.getElementById('white-bar');
             const logo = document.querySelector('.flag-container');
             const bottomBox = document.querySelector('.bottom-box');
             const topBox = document.querySelector('.top-box');
 
-            logo.style.animation = "revealLeft .5s linear forwards";
-            goldBar.style.animation = "slideIn .5s ease-in-out forwards .1s";
-            blackBar.style.animation = "slideIn .5s ease-in-out forwards .2s";
-            bottomBox.style.animation = "slideDownBottom .6s ease-in-out forwards .2s";
-            topBox.style.animation = "slideUpTop .5s ease-in forwards .2s";
+            logo.style.animation = "fadeIn 1s ease forwards";
+            whiteBar.style.animation = "wipeIn 0.7s ease-out forwards";
+            bottomBox.style.animation = "wipeIn 0.7s ease-out forwards";
+            topBox.style.animation = "slideUpContainer 0.6s ease forwards";
         }
 
         function runAnimationOUT() {
-            const goldBar = document.getElementById('gold-bar');
-            const blackBar = document.getElementById('black-bar');
+            const whiteBar = document.getElementById('white-bar');
             const logo = document.querySelector('.flag-container');
             const bottomBox = document.querySelector('.bottom-box');
             const topBox = document.querySelector('.top-box');
 
-            goldBar.style.clipPath = "polygon(15px 0, 100% 0, 100% 100%, 0% 100%)";
-            blackBar.style.clipPath = "polygon(15px 0, 100% 0, 100% 100%, 0% 100%)";
-            logo.style.clipPath = "none";
+            topBox.style.transform = 'translateY(-40px)';
+            bottomBox.style.clipPath = 'inset(0 0 0 0)';
+            whiteBar.style.clipPath = 'inset(0 0 0 0)';
 
-            logo.style.animation = "hideLeft .5s linear forwards";
-            blackBar.style.animation = "slideOut .4s ease-in-out forwards .2s";
-            goldBar.style.animation = "slideOut .4s ease-in-out forwards .3s";
-            bottomBox.style.animation = "slideUpBottom .3s ease-in forwards";
-            topBox.style.animation = "slideDownTop .3s ease-in forwards";
+            whiteBar.style.animation = "wipeDownOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.1s";
+            bottomBox.style.animation = "wipeDownOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s";
+            topBox.style.animation = "wipeDownOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards";
         }
 
         window.onload = function() {
             adjustBarWidth9000();
             observeTextLayer9000();
+
+            const subtitle = document.querySelector('#f2_gfx');
+            const text = subtitle.textContent;
+            console.log(text);
+            subtitle.textContent = '';
+
+            let firstCharFound = false;
+
+            [...text].forEach((char, i) => {
+            if (!firstCharFound && char === ' ') {
+                return; // skip leading spaces
+            }
+
+            firstCharFound = true;
+
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.style.opacity = 0;
+            span.style.display = 'inline-block';
+            span.style.animation = `fadeChar 0.2s ease forwards`;
+            span.style.animationDelay = `${i * 0.025}s`;
+            subtitle.appendChild(span);
+            });
+        }
+
+        function textExpand() {
+            adjustBarWidth9000();
+            observeTextLayer9000();
+        }
+
+        function toggleTriCode() {
+            const triCode = document.querySelector('.flag-name');
+            triCode.style.display = (triCode.style.display === 'none') ? '' : 'none';
+            textExpand();
+        }
+
+        function toggleFlag() {
+            const triCode = document.querySelector('.flag-name');
+            triCode.style.display = (triCode.style.display === 'none') ? '' : 'none';
+
+            const flag = document.querySelector('.flag-container');
+            flag.style.display = (flag.style.display === 'none') ? '' : 'none';
+            textExpand();
+        }
+
+        function toggleJersey() {
+            const jersey = document.querySelector('.jersey');
+            jersey.style.display = (jersey.style.display === 'none') ? '' : 'none';
+            textExpand();
         }
 
         function adjustBarWidth9000() {
             const textLayer = document.querySelector(".text-layer-9000");
             const bottomBoxText = document.querySelector(".bottom-box .subtitle-text");
-            const goldBar = document.querySelector("#gold-bar");
-            const blackBar = document.querySelector("#black-bar");
+            const whiteBar = document.querySelector("#white-bar");
             const bottomBar = document.querySelector(".bottom-box");
+
+            const triCode = document.querySelector('.flag-name');
+            const flag = document.querySelector('.flag-container');
+            const jersey = document.querySelector('.jersey');
+
+            const isTriCodeVisible = window.getComputedStyle(triCode).display !== 'none';
+            const isFlagVisible = window.getComputedStyle(flag).display !== 'none';
+            const isJerseyVisible = window.getComputedStyle(jersey).display !== 'none';
 
             const textLayerWidth = textLayer.offsetWidth;
             const bottomBoxTextWidth = bottomBoxText.offsetWidth;
@@ -119,14 +170,21 @@
             const textLayerStyle = window.getComputedStyle(textLayer);
             const marginLeft = parseFloat(textLayerStyle.getPropertyValue('margin-left'));
 
-            // Use the maximum width of the two texts
+            let extraPadding = 300; // default padding
+
+            // Reduce extraPadding if some elements are hidden
+            if (!isTriCodeVisible) extraPadding -= 86.5;
+            if (!isFlagVisible) extraPadding -= 122;
+            if (!isJerseyVisible) extraPadding -= 69.5;
+
+            // Set a minimum padding
+            if (extraPadding < 100) extraPadding = 0;
+
             const barWidth = Math.max(textLayerWidth, bottomBoxTextWidth) + marginLeft;
 
-            blackBar.style.width = barWidth + "px";
-            bottomBar.style.width = `${barWidth + 9}px`;
-            goldBar.style.width = (barWidth + 15) + "px";
+            whiteBar.style.width = `${barWidth + extraPadding}px`;
+            bottomBar.style.width = `${barWidth + extraPadding}px`;
         }
-
 
         function observeTextLayer9000() {
             const textLayer = document.querySelector(".text-layer-9000");
@@ -167,13 +225,19 @@
                     "field": "f2",
                     "ftype": "textfield",
                     "title": "Subtitle",
-                    "value": "HIGH PERFORMANCE DIRECTOR, SKATE CANADA"
+                    "value": "HERO NOTE - CAN BE QUITE LONG"
                 },
                 {
                     "field": "f3",
                     "ftype": "textfield",
                     "title": "Courtesy",
-                    "value": "UPPER TAB COURTESY GOES HERE"
+                    "value": "UPPER TAB INFO HERE"
+                },
+                {
+                    "field": "f4",
+                    "ftype": "textfield",
+                    "title": "Jersey",
+                    "value": "88"
                 },
                 {
                     "field": "f70",
@@ -203,7 +267,7 @@
                     "title": "Flag Reference",
                     "assetfolder" : "./9000/flags",
                     "extension" : "png",
-                    "value": "./9000/flags/CAN - Canada.png"
+                    "value": "./9000/flags/CAN.png"
                 }, 
                 {
                     "field": "f97",
@@ -228,36 +292,36 @@
 
             <div class="container">
                 <div id="custom-container">
-                    <div class="left-box">
-                        <img src="./9000/opacity.png" alt="Flag Image" class="flag-container">
+
+                    <div class="top-box-container">
+                        <div class="top-box">
+                            <!-- UPPER TAB INFO HERE -->
+                            <span id="f3_gfx" class="courtesy-text"></span>
+                        </div>
                     </div>
 
-                    <div class="gold-bar" id="gold-bar" style="width: 100px"></div>
                     <div class="bar-container">
-                        <div class="black-bar" id="black-bar">
+                        <div class="white-bar" id="white-bar">
                             <div id="f68_gfx" class="flag-name">CAN</div>
-                            <span class="text-layer-9000" id="f1_gfx">
-                                <!-- Firstname LASTNAME -->
-                            </span>
+                            <img src="./9000/flags/CAN.png" alt="Flag Image" class="flag-container">
+                            <div class="jersey">
+                                <span id="f4_gfx" class="jersey-text">88</span>
+                            </div>
+                            <!-- Firstname LASTNAME -->
+                            <span class="text-layer-9000" id="f1_gfx"></span>
                         </div>
                         <div class="bottom-box">
-                            <span id="f2_gfx" class="subtitle-text">
-                                <!-- HIGH PERFORMANCE DIRECTOR, SKATE CANADA -->
-                            </span>
-                        </div>
-                        <div class="top-box-container">
-                            <div class="top-box">
-                                <span id="f3_gfx" class="courtesy-text">
-                                    <!-- UPPER TAB COURTESY GOES HERE -->
-                                </span>
-                            </div>
+                            <!-- HERO NOTE - CAN BE QUITE LONG -->
+                            <span id="f2_gfx" class="subtitle-text"></span>
                         </div>
                     </div>
+
         
                     <div style="display:none;"  id="f68"></div>
                     <div style="display:none;"  id="f1"></div>
                     <div style="display:none;"  id="f2"></div>
                     <div style="display:none;"  id="f3"></div>
+                    <div style="display:none;"  id="f4"></div>
                     <div style="opacity:0;"  id="f70"></div>
                     <div style="opacity:0;"  id="f80"></div>
                     <div style="opacity:0;"  id="f97"></div>
