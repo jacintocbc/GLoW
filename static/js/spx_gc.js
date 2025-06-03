@@ -3158,10 +3158,39 @@ function updatePreview(itemrow) {
                         processElement('f1_gfx', layer1);
                         processElement('f2_gfx', layer1);
                         processElement('f3_gfx', layer1);
+                        processElement('f4_gfx', layer1);
                         const flagName = layer1.contentDocument.querySelector('.flag-name');
                         const flag = layer1.contentDocument.querySelector('.flag-container');
-                        const topBox = layer1.contentDocument.querySelector('.top-box');
-                        const courtesyText = layer1.contentDocument.querySelector('.courtesy-text');
+                        // Bottom Bar
+                        if (fieldNumber == 2) {
+                            const subtitleText = fieldData.value;
+                            const bottomBox = layer1.contentDocument.querySelector('.bottom-box');
+                            if (subtitleText.length > 0) {
+                                bottomBox.style.display = "initial";
+                            } else {
+                                bottomBox.style.display = "none";     
+                            }
+                        }
+                        // Upper Text
+                        if (fieldNumber == 3) {
+                            let upperText = fieldData.value;
+                            const upperTab = layer1.contentDocument.querySelector('.top-box-container');
+                            if (upperText.length > 0) {
+                                upperTab.style.display = "initial";
+                            } else {
+                                upperTab.style.display = "none";     
+                            }
+                        }
+                        // Jersey Text
+                        if (fieldNumber == 4) {
+                            let jerseyText = fieldData.value;
+                            const jerseyElement = layer1.contentDocument.querySelector('.jersey');
+                            if (jerseyText.length > 0) {
+                                jerseyElement.style.display = "flex";
+                            } else {
+                                jerseyElement.style.display = "none";     
+                            }
+                        }
                         // Flag Change
                         if (fieldNumber == 68) {
                             const fileList = flags;
@@ -3170,26 +3199,21 @@ function updatePreview(itemrow) {
                                 flag.src = selectedFlagFile;
                                 flagName.textContent = fieldData.value;
                                 flag.style.display = "initial";
-                                flagName.style.display = "initial";
-                                topBox.style.left = "22px";
-                                courtesyText.style.marginLeft = "48px";
+                                flagName.style.display = "inline-block";
                             } else {
                                 flag.style.display = "none";
                                 flagName.style.display = "none";
-                                topBox.style.left = "15px";
-                                courtesyText.style.marginLeft = "55px";
                             }
                         }
-                        // Upper Tab Show / Hide
-                        if (fieldNumber == 70) {
-                            const upperTab = layer1.contentDocument.querySelector('.top-box-container');
-                            let tabStatus = fieldData.value;
-                            if (tabStatus == "No Upper Tab" && upperTab) {
-                                upperTab.style.display = "none";
-                            } else {
-                                upperTab.style.display = "initial";
-                            }
-                        }
+                        // TriCode / No TriCode
+                        // if (fieldNumber == 70) {
+                        //     triCodeStatus = fieldData.value;
+                        //     if (triCodeStatus == "Hide" && flagName) {
+                        //         flagName.style.display = "none";
+                        //     } else {
+                        //         flagName.style.display = "inline-block";
+                        //     }
+                        // }
                     }
                     // Template 9002 -------------------------------
                     if (templateNumber == 9002) {

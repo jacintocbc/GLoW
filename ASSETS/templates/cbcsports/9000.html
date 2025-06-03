@@ -16,8 +16,6 @@
             const flagNameText = htmlDecode(e('f68').innerText);
             const flagName = document.querySelector('.flag-name');
             const flag = document.querySelector('.flag-container');
-            const topBox = document.querySelector('.top-box');
-            const courtesyText = document.querySelector('.courtesy-text');
             const fileList = flagList;
             const selectedFlagFile = fileList.find(flagItem => flagItem.slice(13, 16) == flagNameText);
             if (selectedFlagFile) {
@@ -25,31 +23,52 @@
                 flagName.textContent = htmlDecode(e('f68').innerText);
                 flag.style.display = "initial";
                 flagName.style.display = "initial";
-                topBox.style.left = "22px";
-                courtesyText.style.marginLeft = "48px";
             } else {
                 flag.style.display = "none";
                 flagName.style.display = "none";
-                topBox.style.left = "15px";
-                courtesyText.style.marginLeft = "55px";
             }          
-            // Title / Subtitle / Header
+            // Title / Subtitle / Header / Jersey
             e('f68_gfx').innerText = htmlDecode(e('f68').innerHTML);
             e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
             e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
             e('f3_gfx').innerText = htmlDecode(e('f3').innerHTML);
+            e('f4_gfx').innerText = htmlDecode(e('f4').innerHTML);
             processElement('f68_gfx');
             processElement('f1_gfx');
             processElement('f2_gfx');
             processElement('f3_gfx');
+            processElement('f4_gfx');
             // Upper Tab / No Upper Tab
+            const courtesyText = document.querySelector('.courtesy-text');
             const upperTab = document.querySelector('.top-box-container');
-            let tabStatus = document.getElementById('f70').innerText;
-            if (tabStatus == "No Upper Tab") {
+            if (courtesyText.textContent == "") {
                 upperTab.style.display = "none";
             } else {
                 upperTab.style.display = "initial";
             }
+            // Jersey Text
+            const jerseyText = document.querySelector('.jersey-text');
+            const jerseyElement = document.querySelector('.jersey');
+            if (jerseyText.length > 0) {
+                jerseyElement.style.display = "flex";
+            } else {
+                jerseyElement.style.display = "none";     
+            }
+            // Bottom Bar
+            const subtitleText = document.querySelector('.subtitle-text');
+            const bottomBox = document.querySelector('.bottom-box');
+            if (subtitleText.length > 0) {
+                bottomBox.style.display = "initial";
+            } else {
+                bottomBox.style.display = "none";     
+            }
+            // TriCode / No TriCode
+            // let triCodeStatus = document.getElementById('f70').innerText;
+            // if (triCodeStatus == "Hide") {
+            //     flagName.style.display = "none";
+            // } else {
+            //     flagName.style.display = "inline-block";
+            // }
             // Bottom / Left Property 
             const wrapper = document.getElementById('custom-container');
             wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
@@ -122,32 +141,6 @@
             span.style.animationDelay = `${i * 0.025}s`;
             subtitle.appendChild(span);
             });
-        }
-
-        function textExpand() {
-            adjustBarWidth9000();
-            observeTextLayer9000();
-        }
-
-        function toggleTriCode() {
-            const triCode = document.querySelector('.flag-name');
-            triCode.style.display = (triCode.style.display === 'none') ? '' : 'none';
-            textExpand();
-        }
-
-        function toggleFlag() {
-            const triCode = document.querySelector('.flag-name');
-            triCode.style.display = (triCode.style.display === 'none') ? '' : 'none';
-
-            const flag = document.querySelector('.flag-container');
-            flag.style.display = (flag.style.display === 'none') ? '' : 'none';
-            textExpand();
-        }
-
-        function toggleJersey() {
-            const jersey = document.querySelector('.jersey');
-            jersey.style.display = (jersey.style.display === 'none') ? '' : 'none';
-            textExpand();
         }
 
         function adjustBarWidth9000() {
@@ -242,16 +235,16 @@
                 {
                     "field": "f70",
                     "ftype": "dropdown",
-                    "title": "Upper Courtesy",
-                    "value": "Upper Tab",
+                    "title": "Hide Tricode",
+                    "value": "Hide",
                     "items": [
                         {
-                            "text": "No Upper Tab",
-                            "value": "No Upper Tab"
+                            "text": "Hide TriCode",
+                            "value": "Hide"
                         },
                         {
-                            "text": "Upper Tab",
-                            "value": "Upper Tab"
+                            "text": "Show TriCode",
+                            "value": "Show"
                         }
                     ]
                 },
@@ -302,17 +295,17 @@
 
                     <div class="bar-container">
                         <div class="white-bar" id="white-bar">
-                            <div id="f68_gfx" class="flag-name">CAN</div>
+                            <div id="f68_gfx" class="flag-name"></div>
                             <img src="./9000/flags/CAN.png" alt="Flag Image" class="flag-container">
                             <div class="jersey">
-                                <span id="f4_gfx" class="jersey-text">88</span>
+                                <span id="f4_gfx" class="jersey-text"></span>
                             </div>
                             <!-- Firstname LASTNAME -->
-                            <span class="text-layer-9000" id="f1_gfx"></span>
+                            <span class="text-layer-9000" id="f1_gfx">Firstname LASTNAME</span>
                         </div>
                         <div class="bottom-box">
                             <!-- HERO NOTE - CAN BE QUITE LONG -->
-                            <span id="f2_gfx" class="subtitle-text"></span>
+                            <span id="f2_gfx" class="subtitle-text">HERO NOTE - CAN BE QUITE LONG</span>
                         </div>
                     </div>
 
