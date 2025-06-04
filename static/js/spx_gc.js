@@ -3154,12 +3154,16 @@ function updatePreview(itemrow) {
 
                     // Template 9000 ------------------------------
                     if (templateNumber == 9000) {
+                        let flagNameShouldShow = null;
+                        let triCodeStatus = null;
+                        let flagNameText = null;
+
                         processElement('f68_gfx', layer1);
                         processElement('f1_gfx', layer1);
                         processElement('f2_gfx', layer1);
                         processElement('f3_gfx', layer1);
                         processElement('f4_gfx', layer1);
-                        const flagName = layer1.contentDocument.querySelector('.flag-name');
+                        // const flagName = layer1.contentDocument.querySelector('.flag-name');
                         const flag = layer1.contentDocument.querySelector('.flag-container');
                         // Bottom Bar
                         if (fieldNumber == 2) {
@@ -3193,27 +3197,35 @@ function updatePreview(itemrow) {
                         }
                         // Flag Change
                         if (fieldNumber == 68) {
-                            const fileList = flags;
-                            const selectedFlagFile = fileList.find(flagItem => flagItem.slice(13, 16) == fieldData.value);
+                            const selectedFlagFile = flags.find(f => f.slice(13, 16) == fieldData.value);
                             if (selectedFlagFile) {
                                 flag.src = selectedFlagFile;
-                                flagName.textContent = fieldData.value;
                                 flag.style.display = "initial";
-                                flagName.style.display = "inline-block";
+                                flagNameText = fieldData.value;
+                                flagNameShouldShow = true;
                             } else {
                                 flag.style.display = "none";
+                                flagNameShouldShow = false;
+                            }
+                        }
+
+                        if (fieldNumber == 70) {
+                            triCodeStatus = fieldData.value;
+                        }
+
+                        const flagName = layer1.contentDocument.querySelector('.flag-name');
+                        if (flagName) {
+                            if (triCodeStatus === "Hide") {
+                                flagName.style.display = "none";
+                            } else if (flagNameShouldShow) {
+                                flagName.textContent = flagNameText;
+                                flagName.style.display = "inline-block";
+                            } else {
                                 flagName.style.display = "none";
                             }
                         }
-                        // TriCode / No TriCode
-                        // if (fieldNumber == 70) {
-                        //     triCodeStatus = fieldData.value;
-                        //     if (triCodeStatus == "Hide" && flagName) {
-                        //         flagName.style.display = "none";
-                        //     } else {
-                        //         flagName.style.display = "inline-block";
-                        //     }
-                        // }
+                        // console.log('test', window.getComputedStyle(flagName).display);
+                        console.log(triCodeStatus, flagNameShouldShow);
                     }
                     // Template 9002 -------------------------------
                     if (templateNumber == 9002) {

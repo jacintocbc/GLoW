@@ -22,7 +22,7 @@
                 flag.src = selectedFlagFile;
                 flagName.textContent = htmlDecode(e('f68').innerText);
                 flag.style.display = "initial";
-                flagName.style.display = "initial";
+                flagName.style.display = "inline-block";
             } else {
                 flag.style.display = "none";
                 flagName.style.display = "none";
@@ -49,7 +49,7 @@
             // Jersey Text
             const jerseyText = document.querySelector('.jersey-text');
             const jerseyElement = document.querySelector('.jersey');
-            if (jerseyText.length > 0) {
+            if (jerseyText.innerText.length > 0) {
                 jerseyElement.style.display = "flex";
             } else {
                 jerseyElement.style.display = "none";     
@@ -57,18 +57,18 @@
             // Bottom Bar
             const subtitleText = document.querySelector('.subtitle-text');
             const bottomBox = document.querySelector('.bottom-box');
-            if (subtitleText.length > 0) {
+            if (subtitleText.innerText.length > 0) {
                 bottomBox.style.display = "initial";
             } else {
                 bottomBox.style.display = "none";     
             }
             // TriCode / No TriCode
-            // let triCodeStatus = document.getElementById('f70').innerText;
-            // if (triCodeStatus == "Hide") {
-            //     flagName.style.display = "none";
-            // } else {
-            //     flagName.style.display = "inline-block";
-            // }
+            let triCodeStatus = document.getElementById('f70').innerText;
+            if (triCodeStatus == "Hide") {
+                flagName.style.display = "none";
+            } else {
+                flagName.style.display = "inline-block";
+            }
             // Bottom / Left Property 
             const wrapper = document.getElementById('custom-container');
             wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
@@ -98,30 +98,10 @@
             whiteBar.style.animation = "wipeIn 0.7s ease-out forwards";
             bottomBox.style.animation = "wipeIn 0.7s ease-out forwards";
             topBox.style.animation = "slideUpContainer 0.6s ease forwards";
-        }
 
-        function runAnimationOUT() {
-            const whiteBar = document.getElementById('white-bar');
-            const logo = document.querySelector('.flag-container');
-            const bottomBox = document.querySelector('.bottom-box');
-            const topBox = document.querySelector('.top-box');
-
-            topBox.style.transform = 'translateY(-40px)';
-            bottomBox.style.clipPath = 'inset(0 0 0 0)';
-            whiteBar.style.clipPath = 'inset(0 0 0 0)';
-
-            whiteBar.style.animation = "wipeDownOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.1s";
-            bottomBox.style.animation = "wipeDownOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s";
-            topBox.style.animation = "wipeDownOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards";
-        }
-
-        window.onload = function() {
-            adjustBarWidth9000();
-            observeTextLayer9000();
-
-            const subtitle = document.querySelector('#f2_gfx');
+            const subtitle = document.querySelector('.subtitle-text');
             const text = subtitle.textContent;
-            console.log(text);
+            console.log('subtitle', text);
             subtitle.textContent = '';
 
             let firstCharFound = false;
@@ -143,6 +123,26 @@
             });
         }
 
+        function runAnimationOUT() {
+            const whiteBar = document.getElementById('white-bar');
+            const logo = document.querySelector('.flag-container');
+            const bottomBox = document.querySelector('.bottom-box');
+            const topBox = document.querySelector('.top-box');
+
+            topBox.style.transform = 'translateY(-40px)';
+            bottomBox.style.clipPath = 'inset(0 0 0 0)';
+            whiteBar.style.clipPath = 'inset(0 0 0 0)';
+
+            whiteBar.style.animation = "wipeDownOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.1s";
+            bottomBox.style.animation = "wipeDownOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s";
+            topBox.style.animation = "wipeDownOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+        }
+
+        window.onload = function() {
+            adjustBarWidth9000();
+            observeTextLayer9000();
+        }
+
         function adjustBarWidth9000() {
             const textLayer = document.querySelector(".text-layer-9000");
             const bottomBoxText = document.querySelector(".bottom-box .subtitle-text");
@@ -157,8 +157,8 @@
             const isFlagVisible = window.getComputedStyle(flag).display !== 'none';
             const isJerseyVisible = window.getComputedStyle(jersey).display !== 'none';
 
-            const textLayerWidth = textLayer.offsetWidth;
-            const bottomBoxTextWidth = bottomBoxText.offsetWidth;
+            const textLayerWidth = textLayer.scrollWidth;
+            const bottomBoxTextWidth = bottomBoxText.scrollWidth;
 
             const textLayerStyle = window.getComputedStyle(textLayer);
             const marginLeft = parseFloat(textLayerStyle.getPropertyValue('margin-left'));
@@ -171,7 +171,7 @@
             if (!isJerseyVisible) extraPadding -= 69.5;
 
             // Set a minimum padding
-            if (extraPadding < 100) extraPadding = 0;
+            if (extraPadding < 300) extraPadding = 0;
 
             const barWidth = Math.max(textLayerWidth, bottomBoxTextWidth) + marginLeft;
 
@@ -235,8 +235,8 @@
                 {
                     "field": "f70",
                     "ftype": "dropdown",
-                    "title": "Hide Tricode",
-                    "value": "Hide",
+                    "title": "Show Tricode",
+                    "value": "Show",
                     "items": [
                         {
                             "text": "Hide TriCode",
@@ -301,11 +301,11 @@
                                 <span id="f4_gfx" class="jersey-text"></span>
                             </div>
                             <!-- Firstname LASTNAME -->
-                            <span class="text-layer-9000" id="f1_gfx">Firstname LASTNAME</span>
+                            <span class="text-layer-9000" id="f1_gfx"></span>
                         </div>
                         <div class="bottom-box">
                             <!-- HERO NOTE - CAN BE QUITE LONG -->
-                            <span id="f2_gfx" class="subtitle-text">HERO NOTE - CAN BE QUITE LONG</span>
+                            <span id="f2_gfx" class="subtitle-text"></span>
                         </div>
                     </div>
 
