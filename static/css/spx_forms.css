@@ -185,11 +185,12 @@
     user-select: none;
 }
 
-.gccheckboxdiv {
+/* To move checkbox to right side */
+/* .gccheckboxdiv {
     position: absolute;
     top: 100px;
     right: -53px;
-}
+} */
 
 .gccheckboxdiv label {
     font-size: 1.1em;
