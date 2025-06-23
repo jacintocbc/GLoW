@@ -3999,8 +3999,8 @@ function sortRundown() {
 let mouseDownStatus = false;
 let oldX;
 const sensitivity = .5; // change this to make the input more or less sensitive
-const minVal = -800;
-const maxVal = 800;
+const minVal = -1600;
+const maxVal = 1600;
 let target;
 
 function mouseDown(e) {
