@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Name Lower Third</title>
+    <!-- Library for "Save to PNG" functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Radio+Canada:wght@400;500;600&display=swap');
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #111;
+            font-family: 'Radio Canada', sans-serif;
+            overflow: hidden;
+            color: #fff;
+        }
+        
+        /* --- UI CONTROLS --- */
+        .controls-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+        }
+        .control-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .controls-container label { font-size: 13px; margin-right: 5px; }
+        .controls-container input, .controls-container select, .controls-container button {
+            padding: 6px;
+            border: 1px solid #555;
+            background: #222;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: 'Radio Canada', sans-serif;
+        }
+        .controls-container button { cursor: pointer; background: #007bff; border: none; }
+        .controls-container button.save-btn { background: #28a745; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; background: #333; padding: 10px; border-radius: 5px;}
+
+        /* --- Main Graphic Styles --- */
+        .graphic-container {
+            position: absolute;
+            bottom: 80px;
+            left: 80px;
+        }
+        
+        .animating-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; 
+            overflow: hidden;
+            clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+        }
+        
+        .content-block {
+            display: flex;
+            align-items: stretch;
+        }
+        
+        .locator-tag, .blue-edge, .logo-box, .main-bar {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .locator-tag {
+            background-color: #e0e0e0;
+            color: #4d4d4d;
+            width: max-content;
+            box-sizing: border-box;
+            /* Changed: Using line-height equal to height for guaranteed vertical centering */
+            height: 40px;
+            line-height: 40px;
+            font-size: 32px;
+            padding: 0 24px;
+            font-weight: 400; 
+            margin-left: 161px;
+            margin-bottom: 0; /* Ensures no gap */
+        }
+        
+        .blue-edge {
+            width: 16px;
+            background-color: #4dabf7;
+        }
+
+        .logo-box {
+            position: relative;
+            width: 145px; 
+            background: linear-gradient(135deg, #FFC94A, #D4A237);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 700;
+            font-size: 36px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        
+        .logo-box .design-edge {
+           display: none; 
+        }
+
+        .main-bar {
+            background-color: #4f4f4f;
+            display: flex;
+            gap: 40px; 
+            height: 110px; 
+            padding: 0 40px;
+            align-items: center; 
+        }
+
+        .name-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .name-info {
+            color: #e7e7e7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .name-line {
+            line-height: 1.0; 
+        }
+        
+        .first-name, .last-name {
+            display: inline-block;
+            font-size: 50px; 
+            font-weight: 400; 
+        }
+        
+        .last-name {
+            font-weight: 500; 
+            margin-left: 15px; 
+        }
+
+        .social-handle {
+            display: flex;
+            align-items: center;
+            font-size: 30px;
+            font-weight: 400; 
+            color: #9ccf80; 
+            line-height: 1.0;
+            margin-top: 0; 
+        }
+        
+        .social-handle svg {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            fill: #9ccf80; 
+        }
+
+        /* --- Stacking Logic --- */
+        .stacked-layout .main-bar { align-items: center; }
+        .stacked-layout .name-block { align-items: flex-start; }
+        .stacked-layout .first-name, 
+        .stacked-layout .last-name {
+            display: block;
+            margin-left: 0;
+            font-size: 35px;
+        }
+        .stacked-layout .social-handle { 
+            font-size: 24px;
+        }
+        .stacked-layout .social-handle svg { 
+            width: 24px; 
+            height: 24px; 
+        }
+        
+        /* --- Animation --- */
+        .animate-in { animation: slideIn 0.6s ease-out forwards; }
+        .animate-out { animation: slideOut 0.4s ease-in forwards; }
+        
+        .animate-in .locator-tag,
+        .animate-in .blue-edge,
+        .animate-in .logo-box,
+        .animate-in .main-bar {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.1s; 
+        }
+
+        @keyframes slideIn { to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); } }
+        @keyframes slideOut { from { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); } to { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); } }
+
+    </style>
+</head>
+<body>
+    
+    <div class="controls-container">
+        <div class="control-row">
+            <button id="animateInBtn">Animate In</button>
+            <button id="animateOutBtn">Animate Out</button>
+            <button id="savePngBtn" class="save-btn">Save to PNG</button>
+        </div>
+        <div class="control-row">
+             <label for="locatorInput">Locator:</label>
+             <input type="text" id="locatorInput" value="LOCATOR">
+            <label for="nameCount">Number of Names:</label>
+            <select id="nameCount">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+            </select>
+            <label for="spacingInput">Space Between Names:</label>
+            <input type="range" id="spacingInput" min="0" max="500" value="40">
+            <span id="spacingValue">40px</span>
+        </div>
+        <div class="control-row" id="nameInputs"></div>
+    </div>
+
+    <div class="graphic-container" id="graphic">
+        <div class="animating-wrapper" id="animatingWrapper">
+            <div class="locator-tag" id="locatorGfx">LOCATOR</div>
+            <div class="content-block">
+                <!-- New Structure -->
+                <div class="blue-edge"></div>
+                <div class="logo-box" id="logoBox">
+                    CBC<br>SPORTS
+                </div>
+                <div class="main-bar" id="mainBar"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nameCountSelect = document.getElementById('nameCount');
+            const nameInputsContainer = document.getElementById('nameInputs');
+            const locatorInput = document.getElementById('locatorInput');
+            const mainBar = document.getElementById('mainBar');
+            const locatorGfx = document.getElementById('locatorGfx');
+            const animatingWrapper = document.getElementById('animatingWrapper');
+            const animateInBtn = document.getElementById('animateInBtn');
+            const animateOutBtn = document.getElementById('animateOutBtn');
+            const savePngBtn = document.getElementById('savePngBtn');
+            const spacingInput = document.getElementById('spacingInput');
+            const spacingValue = document.getElementById('spacingValue');
+
+            const icons = {
+                instagram: `<svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"></path></svg>`,
+                x: `<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>`,
+                tiktok: `<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.03-4.83-.95-6.43-2.98-1.55-2-2.31-4.51-2.31-7.07 0-2.58.77-5.09 2.34-7.06 1.59-1.99 3.93-3.01 6.36-2.96.09 1.54.63 3.09 1.75 4.17 1.12 1.08 2.7 1.61 4.24 1.77v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.83-.02 8.74-.08 1.4-.54 2.78-1.35 3.93-1.31 1.9-3.58 3.16-5.91 3.19-2.42.04-4.83-.96-6.43-2.98-1.55-2-2.31-4.51-2.31-7.07 0-2.58.77-5.09 2.34-7.06 1.59-1.99 3.93-3.01 6.36-2.96z"></path></svg>`,
+                facebook: `<svg viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06c0 5.52 4.5 10.02 10 10.02s10-4.5 10-10.02C22 6.53 17.5 2.04 12 2.04zM13.6 19v-6.57h2.24l.34-2.6h-2.58V8.13c0-.75.21-1.27 1.29-1.27h1.38V4.32c-.24-.03-.92-.08-2-.08-2.18 0-3.67 1.32-3.67 3.76v1.92H8.38v2.6h2.24V19h3z"></path></svg>`,
+                none: ''
+            };
+
+            const defaultData = [
+                { first: 'Andi', last: 'PETRILLO', social: '@andipetrillo33', icon: 'instagram' },
+                { first: 'Devin', last: 'BANERJEE', social: '@devin_banerjee', icon: 'x' },
+                { first: 'John', last: 'DOE', social: '@johndoe', icon: 'tiktok' },
+                { first: 'Jane', last: 'SMITH', social: '@janesmith', icon: 'facebook' },
+            ];
+
+            function setupInputs() {
+                nameInputsContainer.innerHTML = '';
+                for (let i = 0; i < 4; i++) {
+                    const group = document.createElement('div');
+                    group.classList.add('input-group');
+                    group.id = `inputGroup${i + 1}`;
+                    group.innerHTML = `
+                        <label>Person ${i + 1}</label>
+                        <input type="text" class="first-name-input" value="${defaultData[i].first}">
+                        <input type="text" class="last-name-input" value="${defaultData[i].last}">
+                        <input type="text" class="social-input" value="${defaultData[i].social}">
+                        <select class="social-icon-select">
+                            <option value="instagram">Instagram</option>
+                            <option value="x">X</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="none">None</option>
+                        </select>
+                    `;
+                    group.querySelector('.social-icon-select').value = defaultData[i].icon;
+                    group.addEventListener('input', updateGraphic);
+                    group.addEventListener('change', updateGraphic);
+                    nameInputsContainer.appendChild(group);
+                }
+            }
+
+            function updateGraphic() {
+                const nameCount = parseInt(nameCountSelect.value);
+                const spacing = spacingInput.value;
+
+                for (let i = 1; i <= 4; i++) {
+                    document.getElementById(`inputGroup${i}`).style.display = i <= nameCount ? 'flex' : 'none';
+                }
+
+                mainBar.classList.toggle('stacked-layout', nameCount === 4);
+                
+                const locatorText = locatorInput.value;
+                locatorGfx.textContent = locatorText;
+                locatorGfx.style.display = locatorText ? 'block' : 'none';
+                
+                mainBar.style.gap = `${spacing}px`;
+                spacingValue.textContent = `${spacing}px`;
+
+                mainBar.innerHTML = '';
+                for (let i = 0; i < nameCount; i++) {
+                    const group = document.getElementById(`inputGroup${i + 1}`);
+                    const first = group.querySelector('.first-name-input').value;
+                    const last = group.querySelector('.last-name-input').value;
+                    const social = group.querySelector('.social-input').value;
+                    const iconType = group.querySelector('.social-icon-select').value;
+                    
+                    const iconHTML = icons[iconType] || '';
+
+                    const block = document.createElement('div');
+                    block.classList.add('name-block');
+                    block.innerHTML = `
+                        <div class="name-info">
+                            <div class="name-line">
+                               <span class="first-name">${first}</span>
+                               <span class="last-name">${last}</span>
+                            </div>
+                            <div class="social-handle">${iconHTML}<span>${social}</span></div>
+                        </div>
+                    `;
+                    mainBar.appendChild(block);
+                }
+            }
+            
+            function animate() {
+                animatingWrapper.classList.remove('animate-out');
+                animatingWrapper.classList.add('animate-in');
+            }
+
+            function animateOut() {
+                animatingWrapper.classList.remove('animate-in');
+                animatingWrapper.classList.add('animate-out');
+            }
+            
+            function saveAsPng() {
+                const element = document.getElementById('graphic');
+                const controls = document.querySelector('.controls-container');
+                controls.style.display = 'none';
+
+                html2canvas(element, {
+                    backgroundColor: null,
+                    scale: 3 
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'graphic_capture.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    setTimeout(() => controls.style.display = 'block', 100);
+                });
+            }
+
+            nameCountSelect.addEventListener('change', updateGraphic);
+            locatorInput.addEventListener('input', updateGraphic);
+            spacingInput.addEventListener('input', updateGraphic);
+            animateInBtn.addEventListener('click', animate);
+            animateOutBtn.addEventListener('click', animateOut);
+            savePngBtn.addEventListener('click', saveAsPng);
+
+            setupInputs();
+            updateGraphic();
+        });
+    </script>
+</body>
+</html>

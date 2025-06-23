@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9008 (Revised with Clip-Path)</title>
+    <!-- SPX Interface - Assuming it provides e() and htmlDecode() -->
+    <script src="js/spx_interface.js"></script>
+    
+    <style>
+        /* All CSS is now embedded directly in the HTML file */
+        @import url('https://fonts.googleapis.com/css2?family=Radio+Canada:wght@400;500;600&display=swap');
+
+        body {
+            margin: 0;
+            background-color: transparent;
+            font-family: 'Radio Canada', sans-serif;
+            overflow: hidden;
+        }
+
+        /* --- Main Graphic Styles --- */
+        .graphic-container {
+            position: absolute;
+            left: 40px;
+            bottom: 40px; 
+        }
+
+        /* The wrapper now uses clip-path, just like the original file */
+        .white-bar-wrapper {
+            width: auto; /* Width will be set by JS */
+            background-color: #ffffff;
+            display: flex;
+            align-items: stretch;
+            /* CRITICAL: The bar is hidden by default using a zero-width clip-path */
+            clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+            animation: slideIn 0.7s ease-out forwards;
+        }
+
+        .blue-accent {
+            width: 10px;
+            background-color: #4dabf7;
+            flex-shrink: 0;
+        }
+
+        .text-content {
+            text-align: left;
+            white-space: nowrap;
+            padding: 5px 15px 5px 10px;
+        }
+
+        .placeholder-text {
+            font-weight: 500;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+            line-height: 1.0;
+            opacity: 0;
+            transform: translateX(-15px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        .placeholder-text.top { color: rgb(79, 79, 79); }
+        .placeholder-text.middle, .placeholder-text.bottom { color: rgb(36, 36, 36); }
+        .placeholder-text.middle { font-size: 1.2rem; font-weight: 600; }
+        
+        .text-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .hidden { display: none !important; }
+
+        /* --- Animation Keyframes (Mirrors original file's logic) --- */
+        @keyframes slideIn {
+            from { clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%); }
+            to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+        }
+        @keyframes slideOut {
+            from { clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+            to { clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%); }
+        }
+    </style>
+
+    <script type="text/javascript">
+        // Data definition for our new template
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "A customizable 3-line lower third graphic.",
+            "playserver": "OVERLAY", "playchannel": "1", "playlayer": "10", "webplayout": "10",
+            "out": "manual", "dataformat": "json", "uicolor": "4",
+            "DataFields": [
+                { "field": "f0", "ftype": "textfield", "title": "Top Line Text", "value": "TOP LINE TEXT" },
+                { "field": "f1", "ftype": "textfield", "title": "Middle Line Text", "value": "MIDDLE LINE IS LONGER" },
+                { "field": "f2", "ftype": "textfield", "title": "Bottom Line Text", "value": "BOTTOM LINE" },
+                { "field": "f70", "ftype": "dropdown", "title": "Show Top Line", "value": "On", "items": [{ "text": "On", "value": "On" }, { "text": "Off", "value": "Off" }] },
+                { "field": "f71", "ftype": "dropdown", "title": "Show Bottom Line", "value": "On", "items": [{ "text": "On", "value": "On" }, { "text": "Off", "value": "Off" }] },
+                { "field": "f97", "ftype": "number", "title": "Vertical Position (Y-Axis)", "value": "40" }
+            ]
+        };
+    </script>
+    <script>
+        // --- Functions called by SPX (Preserving the original file's proven logic) ---
+        
+        function runTemplateUpdate() {
+            const data = {
+                f0: e('f0').innerText,
+                f1: e('f1').innerText,
+                f2: e('f2').innerText,
+                showTop: e('f70').innerText,
+                showBottom: e('f71').innerText,
+                yPos: e('f97').innerText
+            };
+
+            const gfx = {
+                top: e('f0_gfx'),
+                middle: e('f1_gfx'),
+                bottom: e('f2_gfx'),
+                container: e('graphicContainer')
+            };
+            
+            gfx.top.innerHTML = htmlDecode(data.f0).replace(/ /g, '&nbsp;');
+            gfx.middle.innerHTML = htmlDecode(data.f1).replace(/ /g, '&nbsp;');
+            gfx.bottom.innerHTML = htmlDecode(data.f2).replace(/ /g, '&nbsp;');
+
+            data.showTop === 'Off' ? gfx.top.classList.add('hidden') : gfx.top.classList.remove('hidden');
+            data.showBottom === 'Off' ? gfx.bottom.classList.add('hidden') : gfx.bottom.classList.remove('hidden');
+
+            gfx.container.style.bottom = `${data.yPos}px`;
+        }
+
+        function runAnimationIN() {
+            
+        }
+
+        function runAnimationOUT() {
+            const whiteBarWrapper = e('whiteBarWrapper');
+            const allTextLines = Array.from(whiteBarWrapper.querySelectorAll('.placeholder-text'));
+            
+            allTextLines.forEach(line => line.classList.remove('text-visible'));
+            
+            // Apply animation directly
+            whiteBarWrapper.style.clipPath = "polygon(0 0, 100% 0, 100% 100%, 0% 100%)";
+            whiteBarWrapper.style.animation = "slideOut 0.35s ease-in forwards";
+        }
+
+        // --- Core Sizing Logic (Adapted from original) ---
+
+        let textIn = true;
+
+        function adjustBarWidth() {
+            const whiteBarWrapper = e('whiteBarWrapper');
+            
+            // Using the "clone and measure" technique to get the natural width
+            const clone = whiteBarWrapper.cloneNode(true);
+            clone.style.transition = 'none';
+            clone.style.animation = 'none'; 
+            clone.style.width = 'auto'; // Let it size to its content
+            clone.style.position = 'absolute';
+            clone.style.left = '-9999px';
+            clone.style.visibility = 'hidden';
+            document.body.appendChild(clone);
+            const measuredWidth = clone.offsetWidth;
+            document.body.removeChild(clone);
+
+            // Set the static width on the real element. The clip-path will now work correctly against this width.
+            whiteBarWrapper.style.width = `${Math.ceil(measuredWidth)}px`;
+            showText();
+        }
+        
+        function showText() {
+            if (textIn) {
+                const whiteBarWrapper = e('whiteBarWrapper');
+                const allTextLines = Array.from(whiteBarWrapper.querySelectorAll('.placeholder-text'));
+                
+                // Apply animation directly, as per original file's pattern
+                whiteBarWrapper.style.animation = "slideIn 0.7s ease-out forwards";
+                
+                setTimeout(() => {
+                    allTextLines.forEach(line => {
+                        if (!line.classList.contains('hidden')) {
+                            line.classList.add('text-visible');
+                        }
+                    });
+                }, 150);
+                textIn = false;
+            }
+        }
+
+        function setupObserver() {
+            // The MutationObserver automatically runs 'adjustBarWidth' whenever
+            // the text content changes, ensuring the bar's static width is always correct.
+            const textContentDiv = e('textContent');
+            const observer = new MutationObserver(adjustBarWidth);
+            const config = { childList: true, characterData: true, subtree: true, attributes: true };
+            observer.observe(textContentDiv, config);
+            
+            // Run once on load to set the initial size.
+            adjustBarWidth();
+        }
+
+        window.onload = setupObserver;
+    </script>
+</head>
+<body>
+    <!-- The new visual structure -->
+    <div class="graphic-container" id="graphicContainer">
+        <div class="white-bar-wrapper" id="whiteBarWrapper">
+            <div class="blue-accent"></div>
+            <div class="text-content" id="textContent">
+                <p class="placeholder-text top" id="f0_gfx"></p>
+                <p class="placeholder-text middle" id="f1_gfx"></p>
+                <p class="placeholder-text bottom" id="f2_gfx"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden divs where SPX controller places the data -->
+    <div style="display:none;" id="f0"></div>
+    <div style="display:none;" id="f1"></div>
+    <div style="display:none;" id="f2"></div>
+    <div style="display:none;" id="f70"></div>
+    <div style="display:none;" id="f71"></div>
+    <div style="display:none;" id="f97"></div>
+
+</body>
+</html>

@@ -1,0 +1,329 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9000</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./9000/9000.css">
+    <script src="./9000/flagpath.js"></script>
+    <script>
+        function runTemplateUpdate() {
+            // Flag Change
+            e('f68_gfx').innerText = htmlDecode(e('f68').innerText);
+            const flagNameText = htmlDecode(e('f68').innerText);
+            const flagName = document.querySelector('.flag-name');
+            const flag = document.querySelector('.flag-container');
+            const fileList = flagList;
+            const selectedFlagFile = fileList.find(flagItem => flagItem.slice(13, 16) == flagNameText);
+            if (selectedFlagFile) {
+                flag.src = selectedFlagFile;
+                flagName.textContent = htmlDecode(e('f68').innerText);
+                flag.style.display = "initial";
+                flagName.style.display = "inline-block";
+            } else {
+                flag.style.display = "none";
+                flagName.style.display = "none";
+            }          
+            // Title / Subtitle / Header / Jersey
+            e('f68_gfx').innerText = htmlDecode(e('f68').innerHTML);
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
+            e('f3_gfx').innerText = htmlDecode(e('f3').innerHTML);
+            e('f4_gfx').innerText = htmlDecode(e('f4').innerHTML);
+            processElement('f68_gfx');
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            processElement('f3_gfx');
+            processElement('f4_gfx');
+            // Upper Tab / No Upper Tab
+            const courtesyText = document.querySelector('.courtesy-text');
+            const upperTab = document.querySelector('.top-box-container');
+            if (courtesyText.textContent == "") {
+                upperTab.style.display = "none";
+            } else {
+                upperTab.style.display = "initial";
+            }
+            // Jersey Text
+            const jerseyText = document.querySelector('.jersey-text');
+            const jerseyElement = document.querySelector('.jersey');
+            if (jerseyText.innerText.length > 0) {
+                jerseyElement.style.display = "flex";
+            } else {
+                jerseyElement.style.display = "none";     
+            }
+            // Bottom Bar
+            const subtitleText = document.querySelector('.subtitle-text');
+            const bottomBox = document.querySelector('.bottom-box');
+            if (subtitleText.innerText.length > 0) {
+                bottomBox.style.display = "initial";
+            } else {
+                bottomBox.style.display = "none";     
+            }
+            // TriCode / No TriCode
+            let triCodeStatus = document.getElementById('f70').innerText;
+            if (triCodeStatus == "Hide") {
+                flagName.style.display = "none";
+            } else {
+                flagName.style.display = "inline-block";
+            }
+            // Bottom / Left Property 
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+            wrapper.style.left = `${htmlDecode(e('f98').innerText)}px`;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const whiteBar = document.getElementById('white-bar');
+            const logo = document.querySelector('.flag-container');
+            const bottomBox = document.querySelector('.bottom-box');
+            const topBox = document.querySelector('.top-box');
+
+            logo.style.animation = "fadeIn 1s ease forwards";
+            whiteBar.style.animation = "wipeIn 0.7s ease-out forwards";
+            bottomBox.style.animation = "wipeIn 0.7s ease-out forwards";
+            topBox.style.animation = "slideUpContainer 0.6s ease forwards";
+
+            const subtitle = document.querySelector('.subtitle-text');
+            const text = subtitle.textContent;
+            console.log('subtitle', text);
+            subtitle.textContent = '';
+
+            let firstCharFound = false;
+
+            [...text].forEach((char, i) => {
+            if (!firstCharFound && char === ' ') {
+                return; // skip leading spaces
+            }
+
+            firstCharFound = true;
+
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.style.opacity = 0;
+            span.style.display = 'inline-block';
+            span.style.animation = `fadeChar 0.2s ease forwards`;
+            span.style.animationDelay = `${i * 0.025}s`;
+            subtitle.appendChild(span);
+            });
+        }
+
+        function runAnimationOUT() {
+            const whiteBar = document.getElementById('white-bar');
+            const logo = document.querySelector('.flag-container');
+            const bottomBox = document.querySelector('.bottom-box');
+            const topBox = document.querySelector('.top-box');
+
+            topBox.style.transform = 'translateY(-40px)';
+            bottomBox.style.clipPath = 'inset(0 0 0 0)';
+            whiteBar.style.clipPath = 'inset(0 0 0 0)';
+
+            whiteBar.style.animation = "wipeDownOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.1s";
+            bottomBox.style.animation = "wipeDownOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s";
+            topBox.style.animation = "wipeDownOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+        }
+
+        window.onload = function() {
+            adjustBarWidth9000();
+            observeTextLayer9000();
+        }
+
+        function adjustBarWidth9000() {
+            const textLayer = document.querySelector(".text-layer-9000");
+            const bottomBoxText = document.querySelector(".bottom-box .subtitle-text");
+            const whiteBar = document.querySelector("#white-bar");
+            const bottomBar = document.querySelector(".bottom-box");
+
+            const triCode = document.querySelector('.flag-name');
+            const flag = document.querySelector('.flag-container');
+            const jersey = document.querySelector('.jersey');
+
+            const isTriCodeVisible = window.getComputedStyle(triCode).display !== 'none';
+            const isFlagVisible = window.getComputedStyle(flag).display !== 'none';
+            const isJerseyVisible = window.getComputedStyle(jersey).display !== 'none';
+
+            const textLayerWidth = textLayer.scrollWidth;
+            const bottomBoxTextWidth = bottomBoxText.scrollWidth;
+
+            const textLayerStyle = window.getComputedStyle(textLayer);
+            const marginLeft = parseFloat(textLayerStyle.getPropertyValue('margin-left'));
+
+            let extraPadding = 300; // default padding
+
+            // Reduce extraPadding if some elements are hidden
+            if (!isTriCodeVisible) extraPadding -= 86.5;
+            if (!isFlagVisible) extraPadding -= 122;
+            if (!isJerseyVisible) extraPadding -= 69.5;
+
+            // Set a minimum padding
+            if (extraPadding < 300) extraPadding = 0;
+
+            const barWidth = Math.max(textLayerWidth, bottomBoxTextWidth) + marginLeft;
+
+            whiteBar.style.width = `${barWidth + extraPadding}px`;
+            bottomBar.style.width = `${barWidth + extraPadding}px`;
+        }
+
+        function observeTextLayer9000() {
+            const textLayer = document.querySelector(".text-layer-9000");
+            const bottomBoxText = document.querySelector(".bottom-box .subtitle-text");
+
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === "characterData" || mutation.type === "childList") {
+                        adjustBarWidth9000();
+                    }
+                });
+            });
+
+            const config = { childList: true, characterData: true, subtree: true };
+            observer.observe(textLayer, config);
+            observer.observe(bottomBoxText, config);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9000",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "0",
+            "DataFields": [
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Name",
+                    "value": "Firstname LASTNAME"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Subtitle",
+                    "value": "HERO NOTE - CAN BE QUITE LONG"
+                },
+                {
+                    "field": "f3",
+                    "ftype": "textfield",
+                    "title": "Courtesy",
+                    "value": "UPPER TAB INFO HERE"
+                },
+                {
+                    "field": "f4",
+                    "ftype": "textfield",
+                    "title": "Jersey",
+                    "value": "88"
+                },
+                {
+                    "field": "f70",
+                    "ftype": "dropdown",
+                    "title": "Show Tricode",
+                    "value": "Show",
+                    "items": [
+                        {
+                            "text": "Hide TriCode",
+                            "value": "Hide"
+                        },
+                        {
+                            "text": "Show TriCode",
+                            "value": "Show"
+                        }
+                    ]
+                },
+                {
+                    "field": "f68",
+                    "ftype": "textfield",
+                    "title": "Flag",
+                    "value": "CAN"
+                },
+                {
+                    "field": "f80",
+                    "ftype": "filelist",
+                    "title": "Flag Reference",
+                    "assetfolder" : "./9000/flags",
+                    "extension" : "png",
+                    "value": "./9000/flags/CAN.png"
+                }, 
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f98",
+                    "ftype": "number",
+                    "title": "Main X-Axis",
+                    "value": "0"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="font-bg">
+
+            <div class="container">
+                <div id="custom-container">
+
+                    <div class="top-box-container">
+                        <div class="top-box">
+                            <!-- UPPER TAB INFO HERE -->
+                            <span id="f3_gfx" class="courtesy-text"></span>
+                        </div>
+                    </div>
+
+                    <div class="bar-container">
+                        <div class="white-bar" id="white-bar">
+                            <div id="f68_gfx" class="flag-name"></div>
+                            <img src="./9000/flags/CAN.png" alt="Flag Image" class="flag-container">
+                            <div class="jersey">
+                                <span id="f4_gfx" class="jersey-text"></span>
+                            </div>
+                            <!-- Firstname LASTNAME -->
+                            <span class="text-layer-9000" id="f1_gfx"></span>
+                        </div>
+                        <div class="bottom-box">
+                            <!-- HERO NOTE - CAN BE QUITE LONG -->
+                            <span id="f2_gfx" class="subtitle-text"></span>
+                        </div>
+                    </div>
+
+        
+                    <div style="display:none;"  id="f68"></div>
+                    <div style="display:none;"  id="f1"></div>
+                    <div style="display:none;"  id="f2"></div>
+                    <div style="display:none;"  id="f3"></div>
+                    <div style="display:none;"  id="f4"></div>
+                    <div style="opacity:0;"  id="f70"></div>
+                    <div style="opacity:0;"  id="f80"></div>
+                    <div style="opacity:0;"  id="f97"></div>
+                    <div style="opacity:0;"  id="f98"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

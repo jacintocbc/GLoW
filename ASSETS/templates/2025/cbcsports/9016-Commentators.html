@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9016 Commentator Board</title>
+    
+    <!-- SPX Interface -->
+    <script src="js/spx_interface.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Radio+Canada:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            background-color: transparent;
+            font-family: 'Radio Canada', sans-serif;
+            overflow: hidden;
+        }
+        
+        .graphic-container {
+            position: absolute;
+            bottom: 80px;
+            left: 80px;
+            width: 700px;
+        }
+        
+        .animating-wrapper {
+            position: relative;
+        }
+
+        .title-block, .commentator-row {
+            opacity: 0; /* Elements are hidden by default */
+            transform: translateY(15px);
+            will-change: transform, opacity, clip-path;
+        }
+        
+        .title-block {
+            clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .commentator-row {
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            display: flex;
+            height: 78px;
+            width: 100%;
+        }
+        
+        .upper-tab {
+            background-color: rgb(245, 245, 245);
+            color: rgb(79, 79, 79);
+            font-size: 29px;
+            font-weight: 400;
+            padding: 0 20px;
+            height: 39px;
+            line-height: 39px;
+            width: max-content; 
+        }
+
+        .title-bar {
+            background-color: rgb(79, 79, 79);
+            color: rgb(231, 231, 231);
+            font-size: 49px;
+            font-weight: 400;
+            padding: 0 20px;
+            height: 65px;
+            line-height: 65px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .design-bar {
+            height: 8px;
+            /* background: linear-gradient(90deg, #ffc107, #ff9800, #ff5722, #e91e63, #9c27b0); */
+            background: url('./9016-commentators/DESIGN-EDGE_2.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .commentator-rows {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .commentator-row:nth-child(odd) .name-bar { background-color: rgb(245, 245, 245); }
+        .commentator-row:nth-child(even) .name-bar { background-color: rgb(227, 227, 227); }
+        
+        .headshot {
+            width: 117px; 
+            height: 78px;
+            flex-shrink: 0;
+            transition: width 0.3s ease-out;
+            position: relative;
+            overflow: hidden; 
+            background-color: #ccc;
+        }
+        
+        .graphic-container.no-headshots .headshot {
+            width: 0;
+            overflow: hidden;
+        }
+        
+        .headshot img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: center center;
+        }
+        
+        .name-bar {
+            flex-grow: 1;
+            display: flex;
+            padding: 0 20px;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .name-info {
+            color: rgb(36, 36, 36);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0; 
+        }
+        
+        .name-bar.center-name .social-handle { display: none; }
+        .name-line { font-size: 35px; font-weight: 400; line-height: 1; white-space: nowrap; }
+        
+        .social-handle {
+            display: flex;
+            align-items: center;
+            font-size: 26px;
+            font-weight: 400;
+            color: rgb(153, 107, 0);
+            line-height: 1;
+            margin-top: 5px;
+        }
+        
+        .social-handle.no-icon .social-text { margin-left: 0; }
+        .social-handle svg { width: 26px; height: 26px; margin-right: 8px; fill: rgb(153, 107, 0); flex-shrink: 0; }
+        .text-scaler { display: inline-block; transform-origin: left center; }
+
+        /* --- Animation --- */
+        .animate-in { animation: slideInLeftToRight 0.4s ease-out forwards; }
+        .animate-in-row { animation: wipeDown 0.3s ease-in-out forwards; }
+        .animate-out { animation: wipeOutTopToBottom 0.5s ease-in forwards; }
+        
+        @keyframes slideInLeftToRight { to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 1; transform: translateY(0); } }
+        @keyframes wipeDown { to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 1; transform: translateY(0); } }
+        @keyframes wipeOutTopToBottom { from { transform: translateY(0); opacity: 1;} to { transform: translateY(15px); opacity: 0;} }
+    </style>
+
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1", "description": "Commentator Board",
+            "playserver": "OVERLAY", "playchannel": "1", "playlayer": "11", "webplayout": "11",
+            "out": "manual", "dataformat": "json", "uicolor": "5",
+            "DataFields": [
+                { "field": "f0", "ftype": "textfield", "title": "Upper Tab Text", "value": "EVENT" },
+                { "field": "f1", "ftype": "textfield", "title": "Title Text", "value": "COMMENTATORS" },
+                { "field": "f2", "ftype": "dropdown", "title": "# of Commentators", "value": "2", "items": [{"text":"1","value":"1"},{"text":"2","value":"2"},{"text":"3","value":"3"},{"text":"4","value":"4"}] },
+                { "field": "f3", "ftype": "checkbox", "title": "Show Headshots", "value": "true" },
+                { "field": "f10", "ftype": "textfield", "title": "C1: Name", "value": "Firstname LASTNAME 1" },
+                { "field": "f11", "ftype": "textfield", "title": "C1: Social Handle", "value": "@socialhandle1" },
+                { "field": "f12", "ftype": "dropdown", "title": "C1: Social Icon", "value": "instagram", "items": [{"text":"Instagram","value":"instagram"},{"text":"X (Twitter)","value":"x"},{"text":"TikTok","value":"tiktok"},{"text":"Facebook","value":"facebook"},{"text":"None","value":"none"}] },
+                { "field": "f13", "ftype": "filelist", "title": "C1: Headshot", "value": "ZZ_GENERIC.png", "assetfolder": "./images", "extension": "" },
+                { "field": "f14", "ftype": "number", "title": "C1: Head Scale", "value": "1" },
+                { "field": "f15", "ftype": "number", "title": "C1: Head X Pos", "value": "0" },
+                { "field": "f16", "ftype": "number", "title": "C1: Head Y Pos", "value": "0" },
+                { "field": "f20", "ftype": "textfield", "title": "C2: Name", "value": "Firstname LASTNAME 2" },
+                { "field": "f21", "ftype": "textfield", "title": "C2: Social Handle", "value": "@socialhandle2" },
+                { "field": "f22", "ftype": "dropdown", "title": "C2: Social Icon", "value": "x", "items": [{"text":"Instagram","value":"instagram"},{"text":"X (Twitter)","value":"x"},{"text":"TikTok","value":"tiktok"},{"text":"Facebook","value":"facebook"},{"text":"None","value":"none"}] },
+                { "field": "f23", "ftype": "filelist", "title": "C2: Headshot", "value": "ZZ_GENERIC.png", "assetfolder": "./images", "extension": "" },
+                { "field": "f24", "ftype": "number", "title": "C2: Head Scale", "value": "1" },
+                { "field": "f25", "ftype": "number", "title": "C2: Head X Pos", "value": "0" },
+                { "field": "f26", "ftype": "number", "title": "C2: Head Y Pos", "value": "0" },
+                { "field": "f30", "ftype": "textfield", "title": "C3: Name", "value": "Firstname LASTNAME 3" },
+                { "field": "f31", "ftype": "textfield", "title": "C3: Social Handle", "value": "@socialhandle3" },
+                { "field": "f32", "ftype": "dropdown", "title": "C3: Social Icon", "value": "tiktok", "items": [{"text":"Instagram","value":"instagram"},{"text":"X (Twitter)","value":"x"},{"text":"TikTok","value":"tiktok"},{"text":"Facebook","value":"facebook"},{"text":"None","value":"none"}] },
+                { "field": "f33", "ftype": "filelist", "title": "C3: Headshot", "value": "ZZ_GENERIC.png", "assetfolder": "./images", "extension": "" },
+                { "field": "f34", "ftype": "number", "title": "C3: Head Scale", "value": "1" },
+                { "field": "f35", "ftype": "number", "title": "C3: Head X Pos", "value": "0" },
+                { "field": "f36", "ftype": "number", "title": "C3: Head Y Pos", "value": "0" },
+                { "field": "f40", "ftype": "textfield", "title": "C4: Name", "value": "Firstname LASTNAME 4" },
+                { "field": "f41", "ftype": "textfield", "title": "C4: Social Handle", "value": "@socialhandle4" },
+                { "field": "f42", "ftype": "dropdown", "title": "C4: Social Icon", "value": "facebook", "items": [{"text":"Instagram","value":"instagram"},{"text":"X (Twitter)","value":"x"},{"text":"TikTok","value":"tiktok"},{"text":"Facebook","value":"facebook"},{"text":"None","value":"none"}] },
+                { "field": "f43", "ftype": "filelist", "title": "C4: Headshot", "value": "ZZ_GENERIC.png", "assetfolder": "./images", "extension": "" },
+                { "field": "f44", "ftype": "number", "title": "C4: Head Scale", "value": "1" },
+                { "field": "f45", "ftype": "number", "title": "C4: Head X Pos", "value": "0" },
+                { "field": "f46", "ftype": "number", "title": "C4: Head Y Pos", "value": "0" },
+                { "field": "f98", "ftype": "number", "title": "Graphic X Pos", "value": "80" }
+            ]
+        };
+    </script>
+    <script>
+        function e(id) { return document.getElementById(id); }
+
+        function htmlDecode(input) {
+            const doc = new DOMParser().parseFromString(input, "text/html");
+            return doc.documentElement.textContent;
+        }
+
+        const icons = {
+            instagram: `<svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"></path></svg>`,
+            x: `<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>`,
+            tiktok: `<svg viewBox="0 0 512 512"><path d="M412.19,118.66a109.27,109.27,0,0,1-9.45-5.5,132.87,132.87,0,0,1-24.27-20.62c-18.1-20.71-24.86-41.72-27.35-56.43h.1C349.14,23.9,350,16,350.13,16H267.69V334.78c0,4.28,0,8.51-.18,12.69,0,.52-.05,1-.08,1.56,0,.23,0,.47-.05.71,0,.06,0,.12,0,.18a70,70,0,0,1-35.22,55.56,68.8,68.8,0,0,1-34.11,9c-38.41,0-69.54-31.32-69.54-70s31.13-70,69.54-70a68.9,68.9,0,0,1,21.41,3.39l.1-83.94a153.14,153.14,0,0,0-118,34.52,161.79,161.79,0,0,0-35.3,43.53c-3.48,6-16.61,30.11-18.2,69.24-1,22.21,5.67,45.22,8.85,54.73v.2c2,5.6,9.75,24.71,22.38,40.82A167.53,167.53,0,0,0,115,470.66v-.2l.2.2C155.11,497.78,199.36,496,199.36,496c7.66-.31,33.32,0,62.46-13.81,32.32-15.31,50.72-38.12,50.72-38.12a158.46,158.46,0,0,0,27.64-45.93c7.46-19.61,9.95-43.13,9.95-52.53V176.49c1,.6,14.32,9.41,14.32,9.41s19.19,12.3,49.13,20.31c21.48,5.7,50.42,6.9,50.42,6.9V131.27C453.86,132.37,433.27,129.17,412.19,118.66Z"/></svg>`,
+            facebook: `<svg viewBox="0 0 24 24"><path d="M22,12c0-5.52-4.48-10-10-10S2,6.48,2,12c0,4.99,3.66,9.13,8.44,9.88v-7.03H7.88v-2.85h2.56V9.6c0-2.54,1.49-3.96,3.86-3.96,1.11,0,2.26,0.2,2.26,0.2v2.44h-1.28c-1.24,0-1.63,0.77-1.63,1.56v1.89h2.77l-0.45,2.85h-2.32V21.88C18.34,21.13,22,16.99,22,12z"></path></svg>`,
+            none: ''
+        };
+        
+        let graphicVisible = false;
+
+      function runTemplateUpdate() {
+    console.log("F3 Checkbox Value Received:", e('f3').innerText); // Add this line
+           // ... your existing code
+
+            const data = {
+                upperTab: e('f0').innerText,
+                title: e('f1').innerText,
+                commCount: parseInt(e('f2').innerText) || 0,
+                // FIX: Made the boolean check for the checkbox more robust
+                showHeadshots: e('f3').innerText.trim() === '1',
+                xPos: e('f98').innerText || '80',
+                commentators: []
+            };
+
+            for (let i = 1; i <= data.commCount; i++) {
+                data.commentators.push({
+                    name: htmlDecode(e(`f${i}0`).innerText),
+                    social: htmlDecode(e(`f${i}1`).innerText),
+                    icon: e(`f${i}2`).innerText,
+                    headshot: e(`f${i}3`).innerText,
+                    scale: e(`f${i}4`).innerText || 1,
+                    x: e(`f${i}5`).innerText || 0,
+                    y: e(`f${i}6`).innerText || 0,
+                });
+            }
+            
+            const upperTabGfx = e('upperTabGfx');
+            upperTabGfx.textContent = data.upperTab;
+            // Hides upper tab if the text field for it is empty
+            if (data.upperTab.trim() === '') {
+                upperTabGfx.style.display = 'none';
+            } else {
+                upperTabGfx.style.display = 'block';
+            }
+
+            e('graphic').style.left = data.xPos + 'px';
+            
+            const titleText = e('titleText');
+            titleText.textContent = data.title;
+            const titleBarGfx = e('titleBarGfx');
+            
+            setTimeout(() => {
+                const scale = Math.min(1, (titleBarGfx.clientWidth - 40) / titleText.scrollWidth);
+                titleText.style.transform = `scaleX(${scale})`;
+            }, 50);
+
+            const commRowsContainer = e('commRows');
+            commRowsContainer.innerHTML = '';
+            data.commentators.forEach(comm => {
+                const iconHTML = icons[comm.icon] || '';
+                const row = document.createElement('div');
+                row.className = 'commentator-row';
+                
+// FIND AND REPLACE THIS ENTIRE BLOCK IN YOUR runTemplateUpdate FUNCTION
+
+row.innerHTML = `
+    <div class="headshot">
+        <img src="${comm.headshot}" style="transform: translate(${comm.x}px, ${comm.y}px) scale(${comm.scale});" onerror="this.style.display='none'">
+    </div>
+    <div class="name-bar ${!comm.social ? 'center-name' : ''}">
+        <div class="name-info">
+            <div class="name-line text-scaler">${comm.name}</div>
+            <div class="social-handle ${!iconHTML ? 'no-icon' : ''} ${!comm.social ? 'd-none' : ''}">
+                ${iconHTML}<span class="social-text">${comm.social}</span>
+            </div>
+        </div>
+    </div>`;
+
+// THE REST OF YOUR FUNCTION (commRowsContainer.appendChild(row); etc.) STAYS THE SAME
+                commRowsContainer.appendChild(row);
+                
+                const nameLine = row.querySelector('.name-line');
+                const nameBar = row.querySelector('.name-bar');
+                 
+                setTimeout(() => {
+                    if (nameBar.clientWidth > 0) {
+                        const nameScale = Math.min(1, (nameBar.clientWidth - 40) / nameLine.scrollWidth);
+                        nameLine.style.transform = `scaleX(${nameScale})`;
+                    }
+                }, 50);
+            });
+            
+            e('graphic').classList.toggle('no-headshots', !data.showHeadshots);
+
+            setTimeout(() => {
+                showGraphic();
+            }, 0);
+        }
+
+        function runAnimationIN() {
+            // Intentionally empty. The update logic handles the animation.
+        }
+
+        function runAnimationOUT() {
+            if (!graphicVisible) return;
+            graphicVisible = false;
+
+            const animatingWrapper = e('animatingWrapper');
+            animatingWrapper.classList.add('animate-out');
+
+            setTimeout(() => {
+                animatingWrapper.classList.remove('animate-out');
+                const titleBlock = e('titleBlock');
+                const rows = e('commRows').querySelectorAll('.commentator-row');
+                titleBlock.classList.remove('animate-in');
+                rows.forEach(row => row.classList.remove('animate-in-row'));
+            }, 500); 
+        }
+
+        function showGraphic() {
+            if (graphicVisible) {
+                // To allow re-triggering animations on update, we quickly reset classes.
+                const titleBlock = e('titleBlock');
+                const rows = e('commRows').querySelectorAll('.commentator-row');
+                titleBlock.classList.remove('animate-in');
+                rows.forEach(row => row.classList.remove('animate-in-row'));
+            }
+            
+            graphicVisible = true;
+            
+            // Use a short timeout to ensure the browser has processed the class removal before adding it again.
+            setTimeout(() => {
+                const titleBlock = e('titleBlock');
+                titleBlock.classList.add('animate-in');
+            
+                const rows = e('commRows').querySelectorAll('.commentator-row');
+                rows.forEach((row, i) => {
+                    row.style.animationDelay = `${0.2 + (i * 0.15)}s`;
+                    row.classList.add('animate-in-row');
+                });
+            }, 50);
+        }
+        
+        window.onload = function() {
+            // FIX: Call runTemplateUpdate on load to set the initial state from default values.
+            runTemplateUpdate(); 
+            const dataContainer = document.getElementById('data-container');
+            if (dataContainer){
+                const observer = new MutationObserver(runTemplateUpdate);
+                observer.observe(dataContainer, { childList: true, subtree: true, characterData: true });
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div class="graphic-container" id="graphic">
+        <div class="animating-wrapper" id="animatingWrapper">
+            <div class="title-block" id="titleBlock">
+                <div class="upper-tab" id="upperTabGfx"></div>
+                <div class="title-bar" id="titleBarGfx">
+                   <span id="titleText" class="text-scaler"></span>
+                </div>
+                <div class="design-bar"></div>
+            </div>
+            <div class="commentator-rows" id="commRows"></div>
+        </div>
+    </div>
+
+    <!-- Hidden container for all SPX data fields. The observer watches this. -->
+    <div id="data-container" style="display:none;">
+        <div id="f0"></div> <div id="f1"></div>
+        <div id="f2"></div> <div id="f3"></div>
+        <div id="f10"></div> <div id="f11"></div>
+        <div id="f12"></div> <div id="f13"></div>
+        <div id="f14"></div> <div id="f15"></div>
+        <div id="f16"></div>
+        <div id="f20"></div> <div id="f21"></div>
+        <div id="f22"></div> <div id="f23"></div>
+        <div id="f24"></div> <div id="f25"></div>
+        <div id="f26"></div>
+        <div id="f30"></div> <div id="f31"></div>
+        <div id="f32"></div> <div id="f33"></div>
+        <div id="f34"></div> <div id="f35"></div>
+        <div id="f36"></div>
+        <div id="f40"></div> <div id="f41"></div>
+        <div id="f42"></div> <div id="f43"></div>
+        <div id="f44"></div> <div id="f45"></div>
+        <div id="f46"></div>
+        <div id="f98"></div>
+    </div>
+
+</body>
+</html>

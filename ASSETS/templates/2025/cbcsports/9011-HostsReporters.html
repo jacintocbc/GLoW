@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9011 Multi-Name Lower Third</title>
+    <!-- SPX Interface -->
+    <script src="js/spx_interface.js"></script>
+    
+    <style>
+        /* All CSS is now embedded directly in the HTML file */
+        @import url('https://fonts.googleapis.com/css2?family=Radio+Canada:wght@400;500;600&display=swap');
+
+        body {
+            margin: 0;
+            background-color: transparent;
+            font-family: 'Radio Canada', sans-serif;
+            overflow: hidden;
+        }
+
+        /* --- Main Graphic Styles --- */
+        .graphic-container {
+            position: absolute;
+            left: 80px;
+            bottom: 80px; 
+        }
+
+        .animating-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; 
+            width: auto; /* Width will be set by JS */
+            /* CRITICAL: The bar is hidden by default using a zero-width clip-path */
+            clip-path: polygon(0 0, 0 0, 0% 100%, 0% 100%);
+        }
+
+        .content-block {
+            display: flex;
+            align-items: stretch;
+            height: 110px; /* Fixed height for consistency */
+        }
+
+        .locator-tag {
+            background-color: #e0e0e0;
+            color: #4d4d4d;
+            height: 40px;
+            line-height: 40px;
+            font-size: 32px;
+            padding: 0 24px;
+            font-weight: 400; 
+            margin-left: 161px; /* Aligns with the start of the main bar */
+            white-space: nowrap;
+        }
+
+        .design-edge-vert {
+            width: 16px;
+            background-color: #4dabf7; /* Fallback color */
+            flex-shrink: 0;
+        }
+
+        .design-edge-vert img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-box {
+            position: relative;
+            width: 145px; 
+            background-color: #FFC94A; /* Fallback color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .logo-box .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .logo-box .logo-image {
+            position: relative;
+            z-index: 2;
+            width: 85%; /* Logo fills 85% of the container */
+            height: auto;
+        }
+
+
+        .main-bar {
+            background-color: #4f4f4f;
+            display: flex;
+            gap: 40px; 
+            padding: 0 40px;
+            align-items: center; 
+            box-sizing: border-box;
+            transition: gap 0.3s ease-out;
+        }
+
+        .name-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.4s ease-out;
+        }
+        
+        .name-block.visible {
+            opacity: 1;
+        }
+
+        .name-info {
+            color: #e7e7e7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .name-line {
+            line-height: 1.0; 
+        }
+        
+        .first-name, .last-name {
+            display: inline-block;
+            font-size: 50px; 
+            font-weight: 400; 
+        }
+        
+        .last-name {
+            font-weight: 500; 
+            margin-left: 15px; 
+        }
+
+        .social-handle {
+            display: flex;
+            align-items: center;
+            font-size: 34.5px; 
+            font-weight: 400; 
+            color: #9ccf80; 
+            line-height: 1.0;
+            margin-top: 0; 
+        }
+        
+        .social-handle svg {
+            width: 34.5px; 
+            height: 34.5px;
+            margin-right: 10px;
+            fill: #9ccf80; 
+        }
+        
+        .hidden { display: none !important; }
+
+        /* --- Layout Variations --- */
+        /* For 4 people, stacked layout */
+        .stacked-layout .main-bar { align-items: center; }
+        .stacked-layout .name-block { align-items: flex-start; }
+        .stacked-layout .first-name, 
+        .stacked-layout .last-name {
+            display: block;
+            margin-left: 0;
+            font-size: 35px;
+        }
+        .stacked-layout .social-handle { font-size: 27.6px; }
+        .stacked-layout .social-handle svg { width: 27.6px; height: 27.6px; }
+        
+        /* For 1-2 people, smaller fonts */
+        .one-two-names .first-name,
+        .one-two-names .last-name {
+            font-size: 42.5px;
+        }
+        .one-two-names .social-handle {
+            font-size: 29.3px;
+        }
+        .one-two-names .social-handle svg {
+            width: 29.3px;
+            height: 29.3px;
+        }
+        
+        /* For 3 people, apply an 80% font size */
+        .three-names .first-name,
+        .three-names .last-name {
+            font-size: 40px; /* 80% of 50px */
+        }
+        .three-names .social-handle {
+            font-size: 27.6px; /* 80% of 34.5px */
+        }
+        .three-names .social-handle svg {
+            width: 27.6px;
+            height: 27.6px;
+        }
+
+        /* --- Animation Keyframes --- */
+        @keyframes slideIn {
+            to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        }
+        @keyframes slideOut {
+            from { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            to { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+        }
+    </style>
+
+    <script type="text/javascript">
+        // Data definition for the multi-name template
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Multi-name lower third with locator and logo.",
+            "playserver": "OVERLAY", "playchannel": "1", "playlayer": "10", "webplayout": "10",
+            "out": "manual", "dataformat": "json", "uicolor": "4",
+            "DataFields": [
+                { "field": "f0", "ftype": "textfield", "title": "Locator Text", "value": "OLYMPICS" },
+                { "field": "f1", "ftype": "dropdown", "title": "# of Names", "value": "2", "items": [{"text":"1","value":"1"},{"text":"2","value":"2"},{"text":"3","value":"3"},{"text":"4","value":"4"}] },
+                { "field": "f2", "ftype": "number", "title": "Space Between", "value": "40" },
+
+                { "field": "f10", "ftype": "textfield", "title": "P1: First Name", "value": "Andi" },
+                { "field": "f11", "ftype": "textfield", "title": "P1: Last Name", "value": "PETRILLO" },
+                { "field": "f12", "ftype": "textfield", "title": "P1: Social Handle", "value": "@andipetrillo33" },
+                { "field": "f13", "ftype": "dropdown", "title": "P1: Social Icon", "value": "instagram", "items": [{"text":"Instagram","value":"instagram"},{"text":"X (Twitter)","value":"x"},{"text":"TikTok","value":"tiktok"},{"text":"Facebook","value":"facebook"},{"text":"None","value":"none"}] },
+
+                { "field": "f20", "ftype": "textfield", "title": "P2: First Name", "value": "Devin" },
+                { "field": "f21", "ftype": "textfield", "title": "P2: Last Name", "value": "BANERJEE" },
+                { "field": "f22", "ftype": "textfield", "title": "P2: Social Handle", "value": "@devin_banerjee" },
+                { "field": "f23", "ftype": "dropdown", "title": "P2: Social Icon", "value": "x", "items": [{"text":"Instagram","value":"instagram"},{"text":"X (Twitter)","value":"x"},{"text":"TikTok","value":"tiktok"},{"text":"Facebook","value":"facebook"},{"text":"None","value":"none"}] },
+
+                { "field": "f30", "ftype": "textfield", "title": "P3: First Name", "value": "John" },
+                { "field": "f31", "ftype": "textfield", "title": "P3: Last Name", "value": "DOE" },
+                { "field": "f32", "ftype": "textfield", "title": "P3: Social Handle", "value": "@johndoe" },
+                { "field": "f33", "ftype": "dropdown", "title": "P3: Social Icon", "value": "none", "items": [{"text":"Instagram","value":"instagram"},{"text":"X (Twitter)","value":"x"},{"text":"TikTok","value":"tiktok"},{"text":"Facebook","value":"facebook"},{"text":"None","value":"none"}] },
+                
+                { "field": "f40", "ftype": "textfield", "title": "P4: First Name", "value": "Jane" },
+                { "field": "f41", "ftype": "textfield", "title": "P4: Last Name", "value": "SMITH" },
+                { "field": "f42", "ftype": "textfield", "title": "P4: Social Handle", "value": "@janesmith" },
+                { "field": "f43", "ftype": "dropdown", "title": "P4: Social Icon", "value": "none", "items": [{"text":"Instagram","value":"instagram"},{"text":"X (Twitter)","value":"x"},{"text":"TikTok","value":"tiktok"},{"text":"Facebook","value":"facebook"},{"text":"None","value":"none"}] },
+
+                { "field": "f98", "ftype": "number", "title": "Horizontal Position (X-Axis)", "value": "80" }
+            ]
+        };
+    </script>
+    <script>
+        // --- SVG Icons for Social Media ---
+        const icons = {
+            instagram: `<svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"></path></svg>`,
+            x: `<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>`,
+            tiktok: `<svg viewBox="0 0 512 512"><path d="M412.19,118.66a109.27,109.27,0,0,1-9.45-5.5,132.87,132.87,0,0,1-24.27-20.62c-18.1-20.71-24.86-41.72-27.35-56.43h.1C349.14,23.9,350,16,350.13,16H267.69V334.78c0,4.28,0,8.51-.18,12.69,0,.52-.05,1-.08,1.56,0,.23,0,.47-.05.71,0,.06,0,.12,0,.18a70,70,0,0,1-35.22,55.56,68.8,68.8,0,0,1-34.11,9c-38.41,0-69.54-31.32-69.54-70s31.13-70,69.54-70a68.9,68.9,0,0,1,21.41,3.39l.1-83.94a153.14,153.14,0,0,0-118,34.52,161.79,161.79,0,0,0-35.3,43.53c-3.48,6-16.61,30.11-18.2,69.24-1,22.21,5.67,45.22,8.85,54.73v.2c2,5.6,9.75,24.71,22.38,40.82A167.53,167.53,0,0,0,115,470.66v-.2l.2.2C155.11,497.78,199.36,496,199.36,496c7.66-.31,33.32,0,62.46-13.81,32.32-15.31,50.72-38.12,50.72-38.12a158.46,158.46,0,0,0,27.64-45.93c7.46-19.61,9.95-43.13,9.95-52.53V176.49c1,.6,14.32,9.41,14.32,9.41s19.19,12.3,49.13,20.31c21.48,5.7,50.42,6.9,50.42,6.9V131.27C453.86,132.37,433.27,129.17,412.19,118.66Z"/></svg>`,
+            facebook: `<svg viewBox="0 0 24 24"><path d="M22,12c0-5.52-4.48-10-10-10S2,6.48,2,12c0,4.99,3.66,9.13,8.44,9.88v-7.03H7.88v-2.85h2.56V9.6c0-2.54,1.49-3.96,3.86-3.96,1.11,0,2.26,0.2,2.26,0.2v2.44h-1.28c-1.24,0-1.63,0.77-1.63,1.56v1.89h2.77l-0.45,2.85h-2.32V21.88C18.34,21.13,22,16.99,22,12z"></path></svg>`,
+            none: ''
+        };
+
+        // --- Functions called by SPX ---
+        
+        function runTemplateUpdate() {
+            // This function's only job is to update the DOM content.
+            const data = {
+                locator: e('f0').innerText,
+                nameCount: parseInt(e('f1').innerText, 10) || 0,
+                spacing: e('f2').innerText || '40',
+                xPos: e('f98').innerText || '80',
+                people: []
+            };
+            
+            for (let i = 1; i <= data.nameCount; i++) {
+                const p = {
+                    first: htmlDecode(e(`f${i}0`).innerText),
+                    last: htmlDecode(e(`f${i}1`).innerText),
+                    social: htmlDecode(e(`f${i}2`).innerText),
+                    icon: e(`f${i}3`).innerText
+                };
+                if (p.first || p.last) data.people.push(p);
+            }
+
+            const gfx = {
+                locator: e('locatorGfx'),
+                mainBar: e('mainBar'),
+                container: e('graphicContainer'),
+                wrapper: e('animatingWrapper')
+            };
+            
+            gfx.locator.textContent = data.locator;
+            gfx.locator.style.display = data.locator ? 'block' : 'none';
+            gfx.container.style.left = `${data.xPos}px`;
+            gfx.mainBar.style.gap = `${data.spacing}px`;
+
+            // Clear layout classes before applying new ones
+            gfx.wrapper.classList.remove('one-two-names', 'three-names', 'stacked-layout');
+            
+            if (data.people.length === 4) {
+                gfx.wrapper.classList.add('stacked-layout');
+            } else if (data.people.length === 3) {
+                gfx.wrapper.classList.add('three-names');
+            } else if (data.people.length > 0) {
+                gfx.wrapper.classList.add('one-two-names');
+            }
+
+            gfx.mainBar.innerHTML = '';
+            data.people.forEach(person => {
+                const iconHTML = icons[person.icon] || '';
+                const socialHTML = person.social ? `<div class="social-handle">${iconHTML}<span>${person.social}</span></div>` : '';
+                const block = document.createElement('div');
+                block.classList.add('name-block');
+
+                block.innerHTML = `
+                    <div class="name-info">
+                        <div class="name-line">
+                           <span class="first-name">${person.first}</span>
+                           <span class="last-name">${person.last}</span>
+                        </div>
+                        ${socialHTML}
+                    </div>
+                `;
+                gfx.mainBar.appendChild(block);
+            });
+        }
+
+        function runAnimationIN() {
+            // This function is intentionally left empty.
+            // The animation is triggered by the data update logic.
+        }
+
+        function runAnimationOUT() {
+            const wrapper = e('animatingWrapper');
+            const nameBlocks = Array.from(wrapper.querySelectorAll('.name-block'));
+            
+            // Hide text first
+            nameBlocks.forEach(block => block.classList.remove('visible'));
+            
+            // Then animate out the bar
+            wrapper.style.animation = "slideOut 0.4s ease-in forwards";
+
+            // Reset the state flag on out animation
+            graphicVisible = false; 
+        }
+
+        // --- Core Sizing & Animation Logic (Pattern from example) ---
+        let graphicVisible = false;
+
+        function adjustBarWidth() {
+            const wrapper = e('animatingWrapper');
+            
+            const clone = wrapper.cloneNode(true);
+            clone.style.animation = 'none'; 
+            clone.style.clipPath = 'none';
+            clone.style.width = 'auto'; 
+            clone.style.position = 'absolute';
+            clone.style.left = '-9999px';
+            clone.style.visibility = 'hidden';
+            document.body.appendChild(clone);
+            
+            // Make inner blocks visible in the clone for measurement
+            Array.from(clone.querySelectorAll('.name-block')).forEach(b => b.classList.add('visible'));
+
+            const measuredWidth = clone.offsetWidth;
+            document.body.removeChild(clone);
+
+            // Set static width so clip-path animation has a target
+            wrapper.style.width = `${Math.ceil(measuredWidth)}px`;
+            showGraphic();
+        }
+
+        function showGraphic() {
+             const wrapper = e('animatingWrapper');
+             const nameBlocks = Array.from(wrapper.querySelectorAll('.name-block'));
+
+            // This logic correctly handles making text visible on updates
+            // 1. Hide text elements to allow transition to re-trigger
+            nameBlocks.forEach(block => block.classList.remove('visible'));
+            
+            // 2. Use a short timeout to apply the visible class. This forces the browser
+            // to acknowledge the 'removed' state before re-adding it, making the transition play.
+             setTimeout(() => {
+                 nameBlocks.forEach(block => block.classList.add('visible'));
+             }, 50);
+
+            // The main bar animation only runs if the graphic is not already visible.
+            if (!graphicVisible) {
+                wrapper.style.animation = "slideIn 0.6s ease-out forwards";
+                graphicVisible = true;
+            }
+        }
+        
+        // --- Setup ---
+        function setupObserver() {
+            // The MutationObserver automatically runs 'adjustBarWidth' whenever the content changes.
+            const contentContainer = e('animatingWrapper');
+            const observer = new MutationObserver(adjustBarWidth);
+            const config = { childList: true, subtree: true };
+            observer.observe(contentContainer, config);
+            
+            // Run once on load to populate data and trigger the first animation.
+            runTemplateUpdate();
+        }
+
+        window.onload = setupObserver;
+
+    </script>
+</head>
+<body>
+    <!-- The main visual structure of the graphic -->
+    <div class="graphic-container" id="graphicContainer">
+        <div class="animating-wrapper" id="animatingWrapper">
+            <div class="locator-tag" id="locatorGfx"></div>
+            <div class="content-block">
+                <div class="design-edge-vert">
+                    <img src="./assets/DESIGN-EDGE_VERT.png" alt="Design Edge">
+                </div>
+                <div class="logo-box">
+                    <img src="./assets/GRADIENT_YELLOW.png" class="background-image" alt="Yellow Gradient Background">
+                    <img src="./assets/CBCSPORTS.png" class="logo-image" alt="CBC Sports Logo">
+                </div>
+                <div class="main-bar" id="mainBar">
+                    <!-- Name blocks will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden divs for SPX data fields -->
+    <div style="display:none;" id="f0"></div>
+    <div style="display:none;" id="f1"></div>
+    <div style="display:none;" id="f2"></div>
+    
+    <div style="display:none;" id="f10"></div>
+    <div style="display:none;" id="f11"></div>
+    <div style="display:none;" id="f12"></div>
+    <div style="display:none;" id="f13"></div>
+
+    <div style="display:none;" id="f20"></div>
+    <div style="display:none;" id="f21"></div>
+    <div style="display:none;" id="f22"></div>
+    <div style="display:none;" id="f23"></div>
+
+    <div style="display:none;" id="f30"></div>
+    <div style="display:none;" id="f31"></div>
+    <div style="display:none;" id="f32"></div>
+    <div style="display:none;" id="f33"></div>
+
+    <div style="display:none;" id="f40"></div>
+    <div style="display:none;" id="f41"></div>
+    <div style="display:none;" id="f42"></div>
+    <div style="display:none;" id="f43"></div>
+
+    <div style="display:none;" id="f98"></div>
+</body>
+</html>
