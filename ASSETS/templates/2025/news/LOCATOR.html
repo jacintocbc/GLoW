@@ -1,0 +1,450 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locator</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <style>
+        @font-face {
+            font-family: 'Radio-Canada';
+            src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Radio-Canada Italic';
+            src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            font-family: 'Radio-Canada', sans-serif;
+        }
+
+        #wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .container {
+            position: absolute;
+            bottom: 355px;
+            left: 180px;
+        }
+
+        #custom-container {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+        }
+
+        .title-bar {
+            width: max-content;
+            max-width: 90vw;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            background: #f3c223;
+            color: black;
+            height: 40px;
+            clip-path: inset(0 100% 0 0);
+            animation: slideIn .5s ease-in-out forwards .1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title-bar h1 {
+            font-weight: 900;
+            font-size: 24px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .divider {
+            position: relative;
+            top: -1px;
+            font-weight: 500;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        /* Animate In */
+        @keyframes slideIn {
+            0% {
+                clip-path: inset(0 100% 0 0);
+            }
+            100% {
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        /* Animate Out */
+        @keyframes slideOut {
+            0% {
+                clip-path: inset(0 0 0 0);
+            }
+            100% {
+                clip-path: inset(0 100% 0 0);
+            }
+        }
+    </style>
+    <script>
+        function runTemplateUpdate() {
+            const locatorSpan = document.getElementById('f1_gfx');
+            const customLocatorSpan = document.getElementById('f2_gfx');
+            // Color Change
+            const titleBar = document.querySelector('.title-bar');
+            let color = document.getElementById('f5').innerText;
+            if (color == 'Red') {
+                titleBar.style.background = 'rgb(161, 18, 14)';
+                titleBar.style.color = 'white';
+            } else if (color == 'White') {
+                titleBar.style.background = 'white';
+                titleBar.style.color = 'black';
+            } else {
+                titleBar.style.background = '#f3c223';
+                titleBar.style.color = 'black';
+            }
+
+            // Custom Locator
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
+            processElement('f1_gfx');
+            processElement('f2_gfx');
+            const customLocator = htmlDecode(e('f2').innerHTML);
+            if (customLocator.length > 0) {
+                locatorSpan.classList.add('hide');
+                customLocatorSpan.classList.remove('hide');
+            } else {
+                locatorSpan.classList.remove('hide');
+                customLocatorSpan.classList.add('hide');
+            }
+
+            // Get Location / Selected or Custom
+            const customLocation = document.getElementById('f2').innerHTML.trim();
+            const selectedLocation = document.getElementById('f1').innerHTML.trim();
+            const f4Value = document.getElementById('f4').innerText.trim();
+
+            // Show / Hide Time Tab
+            const timeSpan = document.getElementById('time-span');
+            let timeStatus = document.getElementById('f3').innerText;
+            if (timeStatus == "Hide") {
+                timeSpan.style.display = "none";
+            } else {
+                timeSpan.style.display = "initial";
+            }
+
+            // Mapping locations to time zones
+            const locationTimeCodeMap = {
+                "St. John’s": "NT",
+                "Saint John, New Brunswick": "AT",
+                "Charlottetown": "AT",
+                "Halifax": "AT",
+                "Montreal": "ET",
+                "Ottawa": "ET",
+                "Toronto": "ET",
+                "Iqaluit": "ET",
+                "Winnipeg": "CT",
+                "Edmonton": "MT",
+                "Calgary": "MT",
+                "Vancouver": "PT",
+                "Yellowknife": "MT",
+                "Whitehorse": "YT",
+                "Regina": "CT"
+            };
+
+            let timeCode;
+            if (customLocation.length > 0) {
+                timeCode = f4Value; // Use f4 value if custom location is populated
+            } else {
+                timeCode = locationTimeCodeMap[selectedLocation] || 'Invalid';
+            }
+
+            updateTime(timeCode);
+            // Bottom / Left Property 
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+            wrapper.style.left = `${htmlDecode(e('f98').innerText)}px`;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+            const titleBar = document.querySelector('.title-bar');
+            titleBar.style.animation = 'slideIn .5s ease-in-out forwards';
+        }
+
+        function runAnimationOUT() {
+            const titleBar = document.querySelector('.title-bar');
+            titleBar.style.clipPath = "inset(0 0 0 0)";
+            titleBar.style.animation = 'slideOut .4s ease-in-out forwards';
+        }
+
+        let timeInterval;
+
+        function updateTime(timeCode) {
+            if (timeInterval) clearInterval(timeInterval); // Clear any existing interval
+
+            displayTime(timeCode); // Display the time immediately
+
+            // Update the time every second
+            timeInterval = setInterval(() => {
+                displayTime(timeCode);
+            }, 1000);
+        }
+
+        function displayTime(timeCode) {
+            const timeElement = document.getElementById('time');
+            const timeSpan = document.getElementById('time-span');
+            const timeZones = {
+                NT: 'America/St_Johns',
+                AT: 'America/Halifax',
+                ET: 'America/New_York',
+                CT: 'America/Chicago',
+                MT: 'America/Denver',
+                YT: 'America/Denver',
+                PT: 'America/Los_Angeles'
+            };
+
+            // Map timeCode to an IANA timezone string
+            const ianaTimeZone = timeZones[timeCode];
+
+            if (!ianaTimeZone) {
+                timeSpan.style.display = 'none';
+                timeElement.textContent = '';
+                return;
+            }
+
+            // Get the current time in the specified timezone
+            const now = new Date();
+            const options = {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true,
+                timeZone: ianaTimeZone
+            };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            const formattedTime = formatter.format(now);
+
+            // Update the span with the formatted time and timezone code
+            timeElement.textContent = `${formattedTime} ${timeCode}`;
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Locator",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "6",
+            "webplayout": "6",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "7",
+            "DataFields": [
+                {
+                    "field": "f1",
+                    "ftype": "dropdown",
+                    "title": "Locations",
+                    "value": "Toronto",
+                    "items": [
+                        {
+                            "text": "St. John’s",
+                            "value": "St. John’s"
+                        },
+                        {
+                            "text": "Saint John, New Brunswick",
+                            "value": "Saint John, New Brunswick"
+                        },
+                        {
+                            "text": "Charlottetown",
+                            "value": "Charlottetown"
+                        },
+                        {
+                            "text": "Halifax",
+                            "value": "Halifax"
+                        },
+                        {
+                            "text": "Montreal",
+                            "value": "Montreal"
+                        },
+                        {
+                            "text": "Ottawa",
+                            "value": "Ottawa"
+                        },
+                        {
+                            "text": "Toronto",
+                            "value": "Toronto"
+                        },
+                        {
+                            "text": "Iqaluit",
+                            "value": "Iqaluit"
+                        },
+                        {
+                            "text": "Winnipeg",
+                            "value": "Winnipeg"
+                        },
+                        {
+                            "text": "Regina",
+                            "value": "Regina"
+                        },
+                        {
+                            "text": "Edmonton",
+                            "value": "Edmonton"
+                        },
+                        {
+                            "text": "Calgary",
+                            "value": "Calgary"
+                        },
+                        {
+                            "text": "Whitehorse",
+                            "value": "Whitehorse"
+                        },
+                        {
+                            "text": "Vancouver",
+                            "value": "Vancouver"
+                        },
+                        {
+                            "text": "Yellowknife",
+                            "value": "Yellowknife"
+                        }
+                    ]
+                },
+                {
+                    "field": "f3",
+                    "ftype": "dropdown",
+                    "title": "Show / Hide",
+                    "value": "Show Time",
+                    "items": [
+                        {
+                            "text": "Show Time",
+                            "value": "Show"
+                        },
+                        {
+                            "text": "Hide Time",
+                            "value": "Hide"
+                        }
+                    ]
+                },
+                {
+                    "field": "f5",
+                    "ftype": "dropdown",
+                    "title": "Color",
+                    "value": "Yellow",
+                    "items": [
+                        {
+                            "text": "Yellow",
+                            "value": "Yellow"
+                        },
+                        {
+                            "text": "Red",
+                            "value": "Red"
+                        },
+                        {
+                            "text": "White",
+                            "value": "White"
+                        },
+                    ]
+                },
+                {
+                    "field": "f2",
+                    "ftype": "textfield",
+                    "title": "Custom *",
+                    "value": ""
+                },
+                {
+                    "field": "f4",
+                    "ftype": "dropdown",
+                    "title": "Time Zone *",
+                    "value": "ET",
+                    "items": [
+                        {
+                            "text": "Newfoundland Time",
+                            "value": "NT"
+                        },
+                        {
+                            "text": "Atlantic Time",
+                            "value": "AT"
+                        },
+                        {
+                            "text": "Eastern Time",
+                            "value": "ET"
+                        },
+                        {
+                            "text": "Central Time",
+                            "value": "CT"
+                        },
+                        {
+                            "text": "Mountain Time",
+                            "value": "MT"
+                        },
+                        {
+                            "text": "Pacific Time",
+                            "value": "PT"
+                        }
+                    ]
+                },
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                },
+                {
+                    "field": "f98",
+                    "ftype": "number",
+                    "title": "Main X-Axis",
+                    "value": "0"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <div class="locator-box" id="custom-container">
+                <div class="title-bar">
+                    <h1 class="locator-text">
+                        <span id="f1_gfx">Toronto</span>
+                        <span id="f2_gfx" class="hide">Custom</span>
+                        <span id="time-span"><span class="divider">|</span> <span id="time">10:34 PM ET</span></span>
+                    </h1>
+                </div>
+            </div>
+    
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="opacity:0;" id="f3"></div>
+            <div style="opacity:0;" id="f4"></div>
+            <div style="opacity:0;" id="f5"></div>
+            <div style="opacity:0;" id="f97"></div>
+            <div style="opacity:0;" id="f98"></div>
+        </div>
+    </div>
+</body>
+
+</html>

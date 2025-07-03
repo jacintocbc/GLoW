@@ -1,0 +1,191 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Headline</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <style>
+        @font-face {
+            font-family: 'Radio-Canada';
+            src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Radio-Canada Italic';
+            src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            font-family: 'Radio-Canada', sans-serif;
+        }
+
+        #wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .container {
+            position: absolute;
+            bottom: 230px;
+            left: 0;
+        }
+
+        #custom-container {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+        }
+
+        .title-bar {
+            position: absolute;
+            top: 0;
+            width: 100vw;
+            background: #f3c223;
+            height: 150px;
+            opacity: 1;
+            clip-path: inset(100% 0 0 0);
+            animation: slideIn 0.5s ease-in-out forwards;
+        }
+
+        .title-bar h1 {
+            font-size: 100px;
+            font-weight: 400;
+            position: relative;
+            top: -50px;
+            left: 100px;
+            opacity: 0;
+            transform: translateY(100%);
+            animation: fadeInUp 0.4s ease-in-out forwards 0.6s;
+        }
+
+
+        @keyframes slideIn {
+            0% {
+                clip-path: inset(100% 0 0 0);
+            }
+            100% {
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0%);
+            }
+        }
+
+        @keyframes fadeOutUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0%);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+    <script>
+        function runTemplateUpdate() {
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            processElement('f1_gfx');
+            // Bottom / Left Property 
+            const wrapper = document.getElementById('custom-container');
+            wrapper.style.bottom = `${htmlDecode(e('f97').innerText)}px`;
+        }
+
+        function replaceSpacesWithNbsp(text) {
+            return text.replace(/ /g, '&nbsp;');
+        }
+
+        function processElement(id) {
+            let element = document.getElementById(id);
+            if (element) {
+                let decodedText = htmlDecode(element.innerHTML);
+                let processedText = replaceSpacesWithNbsp(decodedText);
+                element.innerHTML = processedText;
+            }
+        }
+
+        function runAnimationIN() {
+
+        }
+
+        function runAnimationOUT() {
+            const titleBar = document.querySelector('.title-bar');
+            const h1 = titleBar.querySelector('h1');
+            titleBar.style.clipPath = 'inset(0 0 0 0)';
+            h1.style.opacity = '1';
+            h1.style.animation = 'fadeOutUp 0.4s ease-in-out forwards';
+            titleBar.style.animation = 'fadeOut 0.25s ease-in-out forwards 0.5s';
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Locator",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "20",
+            "webplayout": "20",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "6",
+            "DataFields": [
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Headline",
+                    "value": "This is a Headline"
+                },
+                {
+                    "field": "f97",
+                    "ftype": "number",
+                    "title": "Main Y-Axis",
+                    "value": "0"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <div id="custom-container">
+                <div class="title-bar">
+                    <h1 id="f1_gfx">This is a Headline</h1>
+                </div>
+    
+                <div style="display:none;" id="f1"></div>
+                <div style="opacity:0;" id="f97"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
