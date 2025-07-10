@@ -4581,10 +4581,10 @@ function parseRundown(rundown) {
 
 // Populate Input with Total Out Time
 function populateRundownTime(totalOutTime) {
-    const totalOutTimeSeconds = (totalOutTime / 1000) + 61;
-    const roundedOutTimeSeconds = Math.round(totalOutTimeSeconds);
-    const rundownTimeInput = document.getElementById('rundownTotalTime');
-    rundownTimeInput.value = roundedOutTimeSeconds;
+    // const totalOutTimeSeconds = (totalOutTime / 1000) + 61;
+    // const roundedOutTimeSeconds = Math.round(totalOutTimeSeconds);
+    // const rundownTimeInput = document.getElementById('rundownTotalTime');
+    // rundownTimeInput.value = roundedOutTimeSeconds;
 }
 
 // Play Next Items in order
