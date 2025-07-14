@@ -16,6 +16,8 @@
             overflow: hidden;
             position: relative;
             font-family: 'Radio Canada', sans-serif;
+            /* background: url(./images/NN_SAMPLE.PNG);
+            background-size: cover ; */
         }
 
         #wrapper {
@@ -29,6 +31,8 @@
 
         .container {
             overflow: hidden;
+            position: fixed;
+            bottom: 100px;
         }
 
         .row {
@@ -36,7 +40,7 @@
             flex-direction: row;
             align-items: center;
             width: 100vw;
-            padding-left: 30px;
+            padding-left: 100px;
             animation: slideUp 1s ease-out forwards;
         }
 
@@ -44,16 +48,17 @@
             margin: 10px 0;
         }
 
-        .brand-bar-row {
-            background: rgb(161, 18, 14); /* Reverted to original red */
+        .middle-row {
+            background: rgb(161, 18, 14);
             color: white;
             transform: translateY(300%);
         }
 
-        .brand-bar-content {
+        .middle-container {
             display: flex;
             flex-direction: row;
             align-items: center;
+            height: 80px;
         }
 
         .square {
@@ -145,8 +150,9 @@
 <body>
     <div id="wrapper">
         <div class="container">
-            <div class="brand-bar-row row">
-                <div class="brand-bar-content">
+            <!-- Middle Row -->
+            <div class="middle-row row">
+                <div class="middle-container">
                     <h1 id="f1_gfx">Breaking News</h1>
                     <div class="square"></div>
                     <h1 id="f2_gfx">Breaking News Here</h1>
