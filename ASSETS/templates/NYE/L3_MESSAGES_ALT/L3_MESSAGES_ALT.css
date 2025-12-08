@@ -20,20 +20,13 @@ body {
 
 .container {
     position: absolute;
+    bottom: 93px;
     left: 390px;
-    width: 980px;
+    height: 118px;
+    width: 1500px;
     padding-right: 30px;
     z-index: 4;
     display: flex;
-}
-
-/* Vertical positioning variants based on line count */
-.container.three-lines {
-    bottom: 84px; /* current baseline for 3 lines */
-}
-
-.container.two-lines {
-    bottom: 100px; /* sit closer to bottom when only 2 lines */
 }
 
 .page {
@@ -54,19 +47,18 @@ h1 {
     font-size: 30px;
     color: #19c8d1;
     position: relative;
-    top: 5px;
+    top: -2px;
 }
 
 .message {
-    font-size: 30px;
+    font-size: 35px;
     color: #f7f7f7;
     position: relative;
     top: 7px;
-    line-height: 1.1;
 }
 
-.message.large {
-    font-size: 35px; /* for messages < 50 characters */
+.small-message {
+    font-size: 30px;
 }
 
 .hide {

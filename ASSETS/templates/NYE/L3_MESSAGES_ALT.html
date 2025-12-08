@@ -7,7 +7,7 @@
     <script src="js/spx_interface.js"></script>
     <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
     <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
-    <link rel="stylesheet" href="./L3_MESSAGES/L3_MESSAGES.css">
+    <link rel="stylesheet" href="./L3_MESSAGES_ALT/L3_MESSAGES_ALT.css">
     <script>
         let isLooping = true;
         function runTemplateUpdate() {
@@ -39,88 +39,55 @@
                 const transitionDuration = htmlDecode(e('f81').innerHTML);
                 const transitionDurationNumber = +transitionDuration * 1000;
 
-                // Decoder element to convert HTML entities to characters
-                const decoder = document.createElement('textarea');
-                const decodeHtml = (value) => {
-                    if (!value) return '';
-                    let prev = value;
-                    let decoded = value;
-                    let safety = 0;
-                    do {
-                        prev = decoded;
-                        decoder.innerHTML = prev;
-                        decoded = decoder.value;
-                        safety++;
-                    } while (decoded !== prev && safety < 5);
-                    return decoded;
-                };
-
-                const getFieldText = (fieldId) => {
-                    const el = document.getElementById(fieldId);
-                    if (!el) return '';
-                    const raw = el.innerHTML;
-                    return decodeHtml(raw).trim();
-                };
-
-                // Helper to set container vertical position based on line count
-                const container = document.querySelector('.container');
-                const setContainerLinesClass = (linesCount) => {
-                    container.classList.remove('two-lines', 'three-lines');
-                    if (linesCount === 2) {
-                        container.classList.add('two-lines');
-                    } else {
-                        container.classList.add('three-lines');
-                    }
-                };
-
-                // Truncate text to fit within two lines and container width
-                const truncateToFit = (el, containerEl) => {
-                    const style = getComputedStyle(el);
-                    const lineHeight = parseFloat(style.lineHeight) || 30;
-                    const maxHeight = lineHeight * 2 + 2; // small tolerance
-                    const maxWidth = containerEl.clientWidth - 30; // account for right padding
-
-                    const original = el.textContent || '';
-                    let low = 0, high = original.length, best = original.length;
-
-                    const fits = () => {
-                        // Allow wrapping; check both width and height constraints
-                        const tooTall = el.scrollHeight > maxHeight;
-                        const tooWide = el.scrollWidth > maxWidth;
-                        return !(tooTall || tooWide);
-                    };
-
-                    // If already fits, do nothing
-                    if (original.length === 0) return;
-                    if (fits()) return;
-
-                    // Binary search the cut point
-                    while (low <= high) {
-                        const mid = Math.floor((low + high) / 2);
-                        const candidate = original.slice(0, mid).trim() + '…';
-                        el.textContent = candidate;
-                        if (fits()) {
-                            best = mid;
-                            low = mid + 1;
-                        } else {
-                            high = mid - 1;
-                        }
-                    }
-
-                    const finalText = original.slice(0, best).trim() + '…';
-                    el.textContent = finalText;
-                };
-
                 const createPage = (index) => {
-                    const nameText = getFieldText(`f${index * 6 - 4}`);
-                    const titleText = getFieldText(`f${index * 6 - 3}`);
+                    const nameText = document.getElementById(`f${index * 6 - 4}`).innerText.trim();
+                    const titleText = document.getElementById(`f${index * 6 - 3}`).innerText.trim();
 
                     if (!nameText || !titleText) {
                         return null;
                     }
 
-                    // Use full titleText without splitting. Truncation applied later if needed.
-                    const fullMessage = titleText;
+                    // Split logic based on preferences
+                    let splitIndex = 0;
+                    let isSpaceSplit = false;
+
+                    // First, try to find a period or exclamation mark within the first 40 characters
+                    const firstSplit = titleText.indexOf('.', 30);
+                    const firstExclamation = titleText.indexOf('!', 30);
+                    if (firstSplit !== -1 && firstSplit <= 50) {
+                        splitIndex = firstSplit + 1; // Split after the period
+                    } else if (firstExclamation !== -1 && firstExclamation <= 50) {
+                        splitIndex = firstExclamation + 1; // Split after the exclamation mark
+                    }
+
+                    // If no period or exclamation within 40 characters, check between 40 and 55 characters
+                    if (splitIndex === 0) {
+                        const secondSplit = titleText.indexOf('.', 40);
+                        const secondExclamation = titleText.indexOf('!', 40);
+                        if (secondSplit !== -1 && secondSplit <= 55) {
+                            splitIndex = secondSplit + 1; // Split after the period
+                        } else if (secondExclamation !== -1 && secondExclamation <= 55) {
+                            splitIndex = secondExclamation + 1; // Split after the exclamation mark
+                        }
+                    }
+
+                    // If no punctuation was found, split on the last space before 55 characters
+                    if (splitIndex === 0) {
+                        const spaceBefore55 = titleText.lastIndexOf(' ', 55);
+                        if (spaceBefore55 !== -1 && spaceBefore55 > 40) {
+                            splitIndex = spaceBefore55;
+                            isSpaceSplit = true; // Flag that we split on a space
+                        } else {
+                            splitIndex = 55; // If no space found, split at 55 characters
+                        }
+                    }
+
+                    // Split the titleText into two parts
+                    const messagePart1 = titleText.slice(0, splitIndex).trim();
+                    const messagePart2 = titleText.slice(splitIndex).trim();
+
+                    // Add "..." if we split on a space
+                    const finalMessagePart1 = isSpaceSplit ? messagePart1 + '...' : messagePart1;
 
                     // Page
                     const page = document.createElement('div');
@@ -131,20 +98,29 @@
                     const headerElement = document.createElement('h1');
                     const nameSpan = document.createElement('span');
                     const messageSpan = document.createElement('span');
+                    const part2Span = document.createElement('span');
 
                     nameSpan.id = `f${index * 6 - 4}_gfx`;
                     nameSpan.className = 'name';
                     nameSpan.innerHTML = nameText;
 
                     messageSpan.id = `f${index * 6 - 3}_gfx`;
-                    // Default font-size 30px, bump to 35px if total < 50 chars
-                    const totalMessageLength = fullMessage.length;
-                    const messageClass = totalMessageLength < 50 ? 'message large' : 'message';
-                    messageSpan.className = messageClass;
-                    messageSpan.textContent = fullMessage;
+                    messageSpan.className = messagePart1.length > 40 ? 'message small-message' : 'message';
+                    messageSpan.innerHTML = finalMessagePart1;
+
+                    if (messagePart2) {
+                        part2Span.className = 'message part-2';
+                        part2Span.innerHTML = messagePart2;
+                        part2Span.style.opacity = '0';
+                    }
+
+                    if (messagePart2.length > 50) {
+                        part2Span.classList.add('small-message');
+                    }
 
                     headerElement.appendChild(nameSpan);
                     headerElement.appendChild(messageSpan);
+                    headerElement.appendChild(part2Span);
 
                     page.appendChild(headerElement);
 
@@ -165,43 +141,50 @@
 
                     const showPage = (page) => {
                         const messageSpan = page.querySelector('.message');
-                        // After insertion, apply truncation if overflowing (limit to two lines)
-                        // Temporarily append to measure
+                        const part2Span = page.querySelector('.part-2');
 
-                        // Show page
+                        // Show messagePart1 and part2
                         pagesContainer.appendChild(page);
                         page.style.display = 'flex';
                         page.classList.add('fade-in');
 
-                        // Apply truncation after in-flow render
-                        truncateToFit(messageSpan, container);
-
-                        // Set container vertical position (2 or 3 total lines inc. name)
-                        const lineHeight = parseFloat(getComputedStyle(messageSpan).lineHeight) || 30;
-                        const linesUsed = Math.round(messageSpan.scrollHeight / lineHeight);
-                        const linesCount = 1 /* name */ + Math.min(linesUsed, 2);
-                        setContainerLinesClass(linesCount);
-
-                        // Hold for duration, then fade out page
+                        // Animate `part-2` after showing `messageSpan`
                         setTimeout(() => {
-                            page.classList.remove('fade-in');
-                            page.classList.add('fade-out');
+                            // Animate messagePart2 into view
+                            if (part2Span) {
+                                part2Span.style.transition = 'opacity 0.5s';
+                                part2Span.style.opacity = '1';
+                            }
 
+                            // Now, just before fading in messagePart2, add `hide` class to messageSpan
+                            if (part2Span) messageSpan.classList.add('hide');
+
+                            // After `messagePart2` fades in, fade out `messagePart1`
                             setTimeout(() => {
-                                page.style.display = 'none';
-                                page.classList.remove('fade-out');
+                                if (part2Span) messageSpan.classList.add('fade-out'); // Add fade-out to messagePart1
 
-                                // Move to the next page or handle end of loop
-                                currentPageIndex++;
-                                if (currentPageIndex < pages.length) {
-                                    showPage(pages[currentPageIndex]);
-                                } else if (isLooping) {
-                                    currentPageIndex = 0;
-                                    showPage(pages[currentPageIndex]);
-                                } else {
-                                    runAnimationOUT();
-                                }
-                            }, 250); // Fade-out duration
+                                // Wait for `part-2` animation before fading out the page
+                                setTimeout(() => {
+                                    page.classList.remove('fade-in');
+                                    page.classList.add('fade-out');
+
+                                    setTimeout(() => {
+                                        page.style.display = 'none';
+                                        page.classList.remove('fade-out');
+
+                                        // Move to the next page or handle end of loop
+                                        currentPageIndex++;
+                                        if (currentPageIndex < pages.length) {
+                                            showPage(pages[currentPageIndex]);
+                                        } else if (isLooping) {
+                                            currentPageIndex = 0;
+                                            showPage(pages[currentPageIndex]);
+                                        } else {
+                                            runAnimationOUT();
+                                        }
+                                    }, 250); // Fade-out duration
+                                }, transitionDurationNumber - 250); // Time after `part-2` fades in
+                            }, 500); // Delay before fading out the first part (messageSpan)
                         }, transitionDurationNumber);
                     };
 
@@ -445,9 +428,9 @@
         <div id="pages">
             <div class="page">
                 <h1>
-                    <span class="name"></span>
-                    <span class="message"></span>
-                    <span class="message part-2"></span>
+                    <span class="name">Name Goes Here</span>
+                    <span class="message">Message Goes Here</span>
+                    <span class="message part-2">Longer part of message here</span>
                 </h1>
             </div>
         </div>
