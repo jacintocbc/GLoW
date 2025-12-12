@@ -1,0 +1,189 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9300</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #wrapper {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .background-box {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            animation: animateBGIn .75s ease forwards;
+        }
+
+        .background-img {
+            width: 100%;
+            object-fit: cover;
+            object-position: 0px 0px;
+        }
+
+        /* Animate In */
+        @keyframes animateBGIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Animate Out */
+        @keyframes animateBGOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+    <script>
+        function runTemplateUpdate() {
+            // Image Settings
+            const backgroundImg = document.querySelector('.background-img');
+            const backgroundImgSrc = htmlDecode(e('f81').innerText);
+            backgroundImg.src = backgroundImgSrc;
+        }
+
+        function runAnimationIN() {
+            const backgroundBox = document.querySelector('.background-box');
+            backgroundBox.style.animation = "animateBGIn .75s ease forwards";
+        }
+
+        function runAnimationOUT() {
+            const backgroundBox = document.querySelector('.background-box');
+            backgroundBox.style.animation = "animateBGOut .5s ease forwards";
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "9300",
+            "playserver": "OVERLAY",
+            "playchannel": "2",
+            "playlayer": "10",
+            "webplayout": "11",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "7",
+            "DataFields": [
+                {
+                    "field": "f81",
+                    "ftype": "filelist",
+                    "title": "Images",
+                    "assetfolder": "./9300/images",
+                    "extension": "png",
+                    "value": "./9300/images/L3PROMO1.png"
+                },
+            ]
+        };
+    </script>
+    <script>
+        function play() {
+            // console.log('play()!');
+            // runTemplateUpdate('from play')
+        }
+
+        function stop() {
+            // console.log('stop()!');
+            runAnimationOUT()
+        }
+
+        function update(data) {
+
+            // console.clear();
+
+            // console.log('update() ' + JSON.stringify(data));
+            data = JSON.parse(data);
+            for (var dataField in data) {
+                var idDataPlaceholder = document.getElementById(dataField);
+                if (idDataPlaceholder) {
+                let fieldString = data[dataField];
+                // console.log('idDataPlaceholder ' + idDataPlaceholder.id + ' = ' + data[dataField]);
+                    if ( fieldString != 'undefined' && fieldString != 'null' ) {
+                        idDataPlaceholder.innerText = fieldString
+                    } else {
+                        idDataPlaceholder.innerText = ' '; // clear defaults
+                    }
+                }
+            }
+
+            // Once DOM updated we can initPageData and run animations...
+            if (typeof runTemplateUpdate === "function") { 
+                runTemplateUpdate('after update()')
+            } else {
+                console.log('runTemplateUpdate() function missing from template. Is this intentional?')
+            }       
+        }
+
+        function next(data) {
+            // console.log('next()!');
+            runAnimationNEXT()
+        }
+
+        function htmlDecode(txt) {
+            var doc = new DOMParser().parseFromString(txt, "text/html");
+            return doc.documentElement.textContent;
+        }
+
+        function e(elementID) {
+            return document.getElementById(elementID);
+        }
+
+        window.onerror = function (msg, url, row, col, error) {
+            let err = {};
+            err.file = url;
+            err.message = msg;
+            err.line = row;
+            console.log('%c' + 'SPX Template Error Detected:', 'font-weight:bold; font-size: 1.2em; margin-top: 2em;');
+            console.table(err);
+            // spxlog('Template Error Auto Detected: file: ' + url + ', line: ' + row + ', msg; ' + msg,'WARN')
+        };
+
+        function validString(str) {
+            let S = str.toUpperCase();
+            // console.log('checking validString(' + S +');');
+            switch (S) {
+                case "UNDEFINED":
+                case "NULL":
+                case "":
+                return false  // not a valid string
+                break;
+            }
+            return true; // is a valid string
+        }
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="background-box">
+            <img src="./9300/images/L3PROMO1.png" alt="background image" class="background-img">
+        </div>
+            
+        <div style="display:none;" id="f81"></div>
+
+    </div>
+</body>
+
+</html>
