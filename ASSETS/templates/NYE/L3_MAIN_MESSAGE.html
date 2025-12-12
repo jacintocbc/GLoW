@@ -21,13 +21,15 @@
 
         function runAnimationNEXT() {
             const countdownContainer = document.querySelector('.countdown');
-            const countdownElements = document.querySelectorAll('.countdown span');
+            const mainTitleContainer = document.querySelector('.main-title');
+            const countdownElements = document.querySelectorAll('.countdown span, .main-title span');
             countdownElements.forEach((el) => {
                 el.style.animation = 'fadeOutUp 1s ease-in-out forwards';
             });
 
             setTimeout(() => {
                 countdownContainer.style.display = 'none';
+                mainTitleContainer.style.display = 'none';
                 const happyNewYearContainer = document.querySelector('.new-year');
                 happyNewYearContainer.style.display = 'inline-block';
                 const happyNewYearElements = document.querySelectorAll('.new-year span');
@@ -180,12 +182,12 @@
     <div class="container">
         <h1>
             <span class="main-title">
-                <span>C</span><span>a</span><span>n</span><span>a</span><span>d</span><span>a</span> 
-                <span>L</span><span>i</span><span>v</span><span>e</span><span>!</span>
+                <span>L</span><span>I</span><span>V</span><span>E</span><span>!</span>
               </span>
               <span class="countdown">
+                <span>C</span><span>r</span><span>o</span><span>s</span><span>s</span><span style="margin-right:-10px">-</span>
+                <span>C</span><span>a</span><span>n</span><span>a</span><span>d</span><span>a</span> 
                 <span>C</span><span>o</span><span>u</span><span>n</span><span>t</span><span>d</span><span>o</span><span>w</span><span>n</span>
-                <span>2</span><span>0</span><span>2</span><span>5</span>
               </span>
               <span class="new-year">
                 <span>Happy</span>

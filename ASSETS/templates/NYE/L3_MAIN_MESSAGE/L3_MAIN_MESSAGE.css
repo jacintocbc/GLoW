@@ -30,9 +30,9 @@ body {
 }
 
 h1 {
-    font-size: 65px;
+    font-size: 62px;
     position: relative;
-    top: 10px;
+    top: 30px;
     left: 39px;
 }
 
@@ -54,6 +54,7 @@ h1 {
 .new-year {
     color: #f7f7f7;
     display: none;
+    width: 980px;
 }
 
 .new-year span {
