@@ -3,29 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code</title>
+    <title>Quiz Timer</title>
     <script src="js/spx_interface.js"></script>
     <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
     <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
-    <link rel="stylesheet" href="./QR_CODE/QR_CODE.css">
+    <link rel="stylesheet" href="./QUIZ_TIMER/QUIZ_TIMER.css">
     <script>
         function runTemplateUpdate() {
             e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
             e('f2_gfx').innerText = htmlDecode(e('f2').innerHTML);
             processElement('f1_gfx');
             processElement('f2_gfx');
-            const text1 = htmlDecode(e('f1').innerHTML);
-            const text2 = htmlDecode(e('f2').innerHTML);
-            const text1El = document.getElementById('f1_gfx');
-            const text2El = document.getElementById('f2_gfx');
-            if (text1.length == 0) text1El.className = 'hide';
-            if (text2.length == 0) text2El.className = 'hide';
-            const container = document.querySelector('.container');
-            if (text1.length == 0 || text2.length == 0) {
-                container.className = 'container alt-height';
-            } else {
-                container.className = 'container';
-            }
         }
 
         function replaceSpacesWithNbsp(text) {
@@ -44,12 +32,33 @@
         function runAnimationIN() {
         }
 
+        window.onload = function() {
+            setTimeout(() => {
+                const timerValue = htmlDecode(e('f2').innerText);
+                const timer = document.getElementById('timer');
+                timer.innerText = timerValue;
+            }, 100);
+        }
+
+        function runAnimationNEXT() {
+            const timerValue = htmlDecode(e('f2').innerText);
+            const timer = document.getElementById('timer');
+            let count = parseInt(timerValue, 10);
+            timer.innerText = count;
+            if (window.timerInterval) clearInterval(window.timerInterval);
+            window.timerInterval = setInterval(() => {
+                count--;
+                timer.innerText = count;
+                if (count <= 0) clearInterval(window.timerInterval);
+            }, 1000);
+        }
+
         function runAnimationOUT() {
             const container = document.querySelector('.container');
-            const header = document.querySelector('.locator-text');
-            const image = document.querySelector('img');
-            header.style.animation = 'hideAnimation 0.5s ease-in-out forwards';
-            image.style.animation = 'hideAnimation 0.5s ease-in-out forwards';
+            const header = document.querySelectorAll('h1');
+            header.forEach(h => {
+                h.style.animation = 'hideAnimation 0.5s ease-in-out forwards';
+            });
             container.style.transform = 'translateX(0)';
             container.style.animation = 'animateOut 0.5s ease-in forwards 0.5s';
             setTimeout(() => {
@@ -60,26 +69,27 @@
     <script type="text/javascript">
         window.SPXGCTemplateDefinition = {
             "defversion": "1",
-            "description": "QR Code",
+            "description": "Quiz Timer",
             "playserver": "OVERLAY",
             "playchannel": "2",
             "playlayer": "16",
             "webplayout": "16",
             "out": "manual",
+            "steps": "2",
             "dataformat": "json",
             "uicolor": "0",
             "DataFields": [
                 {
                     "field": "f1",
-                    "ftype": "textfield",
-                    "title": "QR Text 1",
-                    "value": "Coming Up..."
+                    "ftype": "number",
+                    "title": "Score",
+                    "value": "0",
                 },
                 {
                     "field": "f2",
-                    "ftype": "textfield",
-                    "title": "QR Text 2",
-                    "value": "Scan Here to Join In!"
+                    "ftype": "number",
+                    "title": "Timer",
+                    "value": "60"
                 },
                 {
                     "ftype": "spacer"
@@ -92,11 +102,18 @@
 <body>
     <div class="container">
         <div class="text-box">
-            <h1 class="locator-text">
-                <span id="f1_gfx">Coming Up...</span>
-                <span id="f2_gfx">Scan Here to Join In!</span>
+            <h1 class="title">
+                <span>Score</span>
             </h1>
-            <img src="./QR_CODE/code.png" alt="QR Code" class="qr-code">
+            <h1 class="score">
+                <span id="f1_gfx">0</span>
+            </h1>
+            <h1 class="title">
+                <span>Quiz Timer</span>
+            </h1>
+            <h1 class="timer">
+                <span id="timer">60</span>
+            </h1>
         </div>
 
         <div style="display:none;"  id="f1"></div>

@@ -32,13 +32,10 @@ body {
     background: rgba(51, 51, 51, 0.9);
 }
 
-.alt-height {
-    height: 290px;
-}
-
 .text-box {
     position: relative;
-    top: 3px;
+    top: 10px;
+    left: 10px;
 }
 
 h1 {
@@ -53,14 +50,24 @@ h1 {
     margin: 0;
 }
 
-.locator-text {
-    position: relative;
-    top: 2.5px;
+.title {
+    font-size: 50px;
+    line-height: 50px;
+    margin-bottom: 10px;
 }
 
-.qr-code {
-    max-height: 250px;
-    filter: invert();
+.score {
+    font-size: 120px;
+    line-height: 110px;
+    color: #ffc212;
+    position: relative; 
+    top: -5px;
+}
+
+.timer {
+    font-size: 90px;
+    line-height: 80px;
+    color: #20bfc7;
 }
 
 .hide {
