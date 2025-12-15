@@ -58,17 +58,35 @@
             const offsetMinutes = timezones[timezoneKey];
             const countdownElement = document.getElementById('countdown');
 
-            if (offsetMinutes === undefined) {
-                countdownElement.innerHTML = '00:00';
-                console.error("Invalid timezone");
-                return;
-            }
+            // Check for custom countdown in f2
+            const f2Value = parseFloat(htmlDecode(e('f2').innerText));
+            let targetTimestamp;
+            let isCustom = false;
 
-            // Calculate target midnight time for January 1st in the specified timezone
-            const now = new Date();
-            const year = now.getFullYear() + 1; // Target year is the upcoming year
-            const targetUTC = new Date(Date.UTC(year, 0, 1, 0, 0, 0)); // Midnight UTC
-            const targetTimestamp = targetUTC.getTime() + offsetMinutes * 60 * 1000;
+            if (!isNaN(f2Value) && f2Value !== 0) {
+                isCustom = true;
+                const minutes = Math.floor(f2Value);
+                const seconds = Math.round((f2Value - minutes) * 100);
+                
+                // Calculate target time based on current time + duration
+                const currentTimestamp = new Date().getTime();
+                const localOffset = new Date().getTimezoneOffset();
+                const adjustedCurrentTimestamp = currentTimestamp - localOffset * 60 * 1000;
+                
+                targetTimestamp = adjustedCurrentTimestamp + (minutes * 60 * 1000) + (seconds * 1000);
+            } else {
+                if (offsetMinutes === undefined) {
+                    countdownElement.innerHTML = '00:00';
+                    console.error("Invalid timezone");
+                    return;
+                }
+
+                // Calculate target midnight time for January 1st in the specified timezone
+                const now = new Date();
+                const year = now.getFullYear() + 1; // Target year is the upcoming year
+                const targetUTC = new Date(Date.UTC(year, 0, 1, 0, 0, 0)); // Midnight UTC
+                targetTimestamp = targetUTC.getTime() + offsetMinutes * 60 * 1000;
+            }
 
             // Clear any existing interval before starting a new one
             if (typeof countdownInterval !== "undefined") {
@@ -86,6 +104,7 @@
                 if (timeRemaining <= 0) {
                     clearInterval(countdownInterval);
                     countdownElement.innerHTML = '00:00';
+                    runAnimationOUT();
                     return;
                 }
 
@@ -95,13 +114,13 @@
                 const mins = totalMinutesRemaining % 60;
                 const secs = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-                console.log(timezoneKey, hours, mins, secs);
+                // console.log(timezoneKey, hours, mins, secs);
 
                 let displayText;
 
-                if (timezoneKey === "Newfoundland Countdown") {
+                if (isCustom || timezoneKey === "Newfoundland Countdown") {
                     if (hours !== 0) {
-                        // Include hours for Newfoundland Countdown
+                        // Include hours for Newfoundland Countdown or Custom
                         displayText = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                     } else {
                         displayText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
@@ -111,13 +130,10 @@
                     displayText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
                 }
 
-                countdownElement.innerHTML = displayText;
-
-                // Trigger `runAnimationOUT` when the countdown displays `00:30`
-                if (hours === 0 && mins === 0 && secs === 30) {
-                    runAnimationOUT();
+                if (countdownElement.innerHTML !== displayText) {
+                    countdownElement.innerHTML = displayText;
                 }
-            }, 1000);
+            }, 20);
         }
     </script>
     <script type="text/javascript">
@@ -165,6 +181,12 @@
                     ]
                 },
                 {
+                    "field": "f2",
+                    "ftype": "number",
+                    "title": "Custom Countdown",
+                    "value": "0",
+                },
+                {
                     "ftype": "spacer"
                 }
             ]
@@ -178,6 +200,7 @@
         <h2 class="timezone" id="f1_gfx"></h2>
 
         <div style="display:none;"  id="f1"></div>
+        <div style="display:none;"  id="f2"></div>
     </div>
 </body>
 
