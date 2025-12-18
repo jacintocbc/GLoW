@@ -11,6 +11,7 @@
     <script>
         let interval;
         let timeCode = '';
+        const sequenceDuration = 5000;
 
         function runTemplateUpdate() {
             timeCode = document.getElementById('f1').innerText;
@@ -47,10 +48,53 @@
             clearInterval(interval);
         }
 
+        function runSequence() {
+            const sparks = document.querySelectorAll('.spark-1, .spark-2, .spark-3, .spark-4, .spark-5, .spark-6, .spark-7, .spark-8, .spark-9');
+            const textSpans = document.querySelectorAll('.main-title span, .countdown span');
+            
+            // Reset animations
+            sparks.forEach(s => s.classList.remove('animate'));
+            textSpans.forEach((s, index) => {
+                s.classList.remove('animate');
+                s.style.animation = ''; // Clear any inline animation styles
+                s.style.animationDelay = `${index * 0.04}s`;
+            });
+            
+            // Force reflow to restart CSS animations
+            if(sparks.length > 0) void sparks[0].offsetWidth; 
+
+            // Start Sparks in specific order: 1, 6, 2, 7, 3, 4, 5, 8, 9
+            const sparkOrder = ['.spark-1', '.spark-6', '.spark-2', '.spark-7', '.spark-3', '.spark-4', '.spark-5', '.spark-8', '.spark-9'];
+            
+            sparkOrder.forEach((selector, index) => {
+                const el = document.querySelector(selector);
+                if (el) {
+                    setTimeout(() => {
+                        el.classList.add('animate');
+                    }, index * 200);
+                }
+            });
+
+            // Start Text 0.5s after start
+            setTimeout(() => {
+                textSpans.forEach(s => s.classList.add('animate'));
+            }, 600);
+
+            // Animate out text spans at the end of the sequence
+            setTimeout(() => {
+                textSpans.forEach(s => {
+                    s.style.animation = 'fadeOutUp 1s ease-in-out forwards';
+                });
+            }, sequenceDuration - 1000);
+        }
+
         window.onload = function() {
             document.querySelectorAll('.main-title span, .countdown span').forEach((letter, index) => {
                 letter.style.animationDelay = `${index * 0.02}s`;
             });
+
+            runSequence();
+            setInterval(runSequence, sequenceDuration);
         }
 
         const locations = {
@@ -196,6 +240,180 @@
               </span>
               <span class="location"></span>
         </h1>
+
+        <div class="main-sparks">
+            <!-- Spark 1 (Quarter Yellow)-->
+            <div class="spark-1">
+                <!-- Line 1 -->
+                <div class="spark-1-yellow-wrapper">
+                    <div class="spark-1-line spark-1-pos-top"></div>
+                    <div class="spark-1-line spark-1-pos-bottom"></div>
+                    <div class="spark-1-line spark-1-pos-left"></div>
+                    <div class="spark-1-line spark-1-pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="spark-1-blue-wrapper">
+                    <div class="spark-1-line spark-1-pos-top"></div>
+                    <div class="spark-1-line spark-1-pos-bottom"></div>
+                    <div class="spark-1-line spark-1-pos-left"></div>
+                    <div class="spark-1-line spark-1-pos-right"></div>
+                </div>
+                <!-- SVG -->
+                <img src="./L3_MAIN_MESSAGE/quarter.svg" alt="quarter gem" class="spark-1-ring-svg">
+            </div>
+            <!-- Spark 2 (Half Teal) -->
+            <div class="spark-2">
+                <!-- Line 1 -->
+                <div class="spark-2-yellow-wrapper">
+                    <div class="spark-2-line spark-2-pos-top"></div>
+                    <div class="spark-2-line spark-2-pos-bottom"></div>
+                    <div class="spark-2-line spark-2-pos-left"></div>
+                    <div class="spark-2-line spark-2-pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="spark-2-blue-wrapper">
+                    <div class="spark-2-line spark-2-pos-top"></div>
+                    <div class="spark-2-line spark-2-pos-bottom"></div>
+                    <div class="spark-2-line spark-2-pos-left"></div>
+                    <div class="spark-2-line spark-2-pos-right"></div>
+                </div>
+                <!-- Half -->
+                <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 125.17 62.59" class="spark-2-ring-svg">
+                  <path fill="currentColor" d="M125.17,62.59C125.17,28.07,97.1,0,62.59,0S0,28.07,0,62.59h125.17Z"/>
+                </svg>
+            </div>
+            <!-- Spark 3 (Half White) -->
+            <div class="spark-3">
+                <!-- Line 1 -->
+                <div class="spark-3-yellow-wrapper">
+                    <div class="spark-3-line spark-3-pos-top"></div>
+                    <div class="spark-3-line spark-3-pos-bottom"></div>
+                    <div class="spark-3-line spark-3-pos-left"></div>
+                    <div class="spark-3-line spark-3-pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="spark-3-blue-wrapper">
+                    <div class="spark-3-line spark-3-pos-top"></div>
+                    <div class="spark-3-line spark-3-pos-bottom"></div>
+                    <div class="spark-3-line spark-3-pos-left"></div>
+                    <div class="spark-3-line spark-3-pos-right"></div>
+                </div>
+                <!-- Half -->
+                <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 125.17 62.59" class="spark-3-ring-svg">
+                  <path fill="currentColor" d="M125.17,62.59C125.17,28.07,97.1,0,62.59,0S0,28.07,0,62.59h125.17Z"/>
+                </svg>
+            </div>
+            <!-- Spark 4 (Yellow No Shape) -->
+            <div class="spark-4">
+                <!-- Line 1 -->
+                <div class="spark-4-yellow-wrapper">
+                    <div class="spark-4-line spark-4-pos-top"></div>
+                    <div class="spark-4-line spark-4-pos-bottom"></div>
+                    <div class="spark-4-line spark-4-pos-left"></div>
+                    <div class="spark-4-line spark-4-pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="spark-4-blue-wrapper">
+                    <div class="spark-4-line spark-4-pos-top"></div>
+                    <div class="spark-4-line spark-4-pos-bottom"></div>
+                    <div class="spark-4-line spark-4-pos-left"></div>
+                    <div class="spark-4-line spark-4-pos-right"></div>
+                </div>
+            </div>
+            <!-- Spark 5 (Red No Shape) -->
+            <div class="spark-5">
+                <!-- Line 1 -->
+                <div class="spark-5-yellow-wrapper">
+                    <div class="spark-5-line spark-5-pos-top"></div>
+                    <div class="spark-5-line spark-5-pos-bottom"></div>
+                    <div class="spark-5-line spark-5-pos-left"></div>
+                    <div class="spark-5-line spark-5-pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="spark-5-blue-wrapper">
+                    <div class="spark-5-line spark-5-pos-top"></div>
+                    <div class="spark-5-line spark-5-pos-bottom"></div>
+                    <div class="spark-5-line spark-5-pos-left"></div>
+                    <div class="spark-5-line spark-5-pos-right"></div>
+                </div>
+            </div>
+            <!-- Spark 6 (Group)-->
+            <div class="spark-6">
+                <!-- Line 1 -->
+                <div class="yellow-wrapper">
+                    <div class="line pos-top"></div>
+                    <div class="line pos-bottom"></div>
+                    <div class="line pos-left"></div>
+                    <div class="line pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="blue-wrapper">
+                    <div class="line pos-top"></div>
+                    <div class="line pos-bottom"></div>
+                    <div class="line pos-left"></div>
+                    <div class="line pos-right"></div>
+                </div>
+                <svg class="ring-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250.35 125.17">
+                <path class="part-1" d="M62.59,125.17C28.02,125.17,0,97.15,0,62.59S28.02,0,62.59,0s62.59,28.02,62.59,62.59-28.02,62.59-62.59,62.59"/>
+                <path class="part-2" d="M125.17,125.17c34.52,0,62.59-28.07,62.59-62.59S159.69,0,125.17,0v125.17Z"/>
+                <path class="part-3" d="M219.05,125.17c18.71-12.49,31.29-35.84,31.29-62.59S237.76,12.49,219.05,0v125.17Z"/>
+                <path class="part-4" d="M187.76,125.17c18.71-12.49,31.29-35.84,31.29-62.59S206.47,12.49,187.76,0v125.17Z"/>
+                </svg>
+            </div>
+            <!-- Spark 7 (Duplicate of Spark 1) -->
+            <div class="spark-7">
+                <!-- Line 1 -->
+                <div class="spark-7-yellow-wrapper">
+                    <div class="spark-7-line spark-7-pos-top"></div>
+                    <div class="spark-7-line spark-7-pos-bottom"></div>
+                    <div class="spark-7-line spark-7-pos-left"></div>
+                    <div class="spark-7-line spark-7-pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="spark-7-blue-wrapper">
+                    <div class="spark-7-line spark-7-pos-top"></div>
+                    <div class="spark-7-line spark-7-pos-bottom"></div>
+                    <div class="spark-7-line spark-7-pos-left"></div>
+                    <div class="spark-7-line spark-7-pos-right"></div>
+                </div>
+                <!-- SVG -->
+                <img src="./L3_MAIN_MESSAGE/quarter.svg" alt="quarter gem" class="spark-7-ring-svg">
+            </div>
+            <!-- Spark 8 (Duplicate of Spark 4) -->
+            <div class="spark-8">
+                <!-- Line 1 -->
+                <div class="spark-8-yellow-wrapper">
+                    <div class="spark-8-line spark-8-pos-top"></div>
+                    <div class="spark-8-line spark-8-pos-bottom"></div>
+                    <div class="spark-8-line spark-8-pos-left"></div>
+                    <div class="spark-8-line spark-8-pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="spark-8-blue-wrapper">
+                    <div class="spark-8-line spark-8-pos-top"></div>
+                    <div class="spark-8-line spark-8-pos-bottom"></div>
+                    <div class="spark-8-line spark-8-pos-left"></div>
+                    <div class="spark-8-line spark-8-pos-right"></div>
+                </div>
+            </div>
+            <!-- Spark 9 (Duplicate of Spark 5) -->
+            <div class="spark-9">
+                <!-- Line 1 -->
+                <div class="spark-9-yellow-wrapper">
+                    <div class="spark-9-line spark-9-pos-top"></div>
+                    <div class="spark-9-line spark-9-pos-bottom"></div>
+                    <div class="spark-9-line spark-9-pos-left"></div>
+                    <div class="spark-9-line spark-9-pos-right"></div>
+                </div>
+                <!-- Line 2 -->
+                <div class="spark-9-blue-wrapper">
+                    <div class="spark-9-line spark-9-pos-top"></div>
+                    <div class="spark-9-line spark-9-pos-bottom"></div>
+                    <div class="spark-9-line spark-9-pos-left"></div>
+                    <div class="spark-9-line spark-9-pos-right"></div>
+                </div>
+            </div>
+        </div>
 
         <div style="display:none;"  id="f1"></div>
     </div>

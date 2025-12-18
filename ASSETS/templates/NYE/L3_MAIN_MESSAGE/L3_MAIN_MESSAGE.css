@@ -48,6 +48,9 @@ h1 {
 .main-title span, .countdown span {
     display: inline-block;
     opacity: 0;
+}
+
+.main-title span.animate, .countdown span.animate {
     animation: fadeIn 0.3s ease forwards;
 }
 
@@ -55,6 +58,7 @@ h1 {
     color: #f7f7f7;
     display: none;
     width: 980px;
+    text-align: center;
 }
 
 .new-year span {
@@ -96,4 +100,1652 @@ h1 {
       transform: translateY(-50%);
       opacity: 0;
     }
+}
+
+/* Spark 1 -------------------------------------------------- */
+
+.spark-1 {
+    position: absolute;
+    bottom: 20px;
+    left: -25px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.5) rotate(-10deg);
+}
+
+/* =========================================
+   SPARK 1 YELLOW CROSS
+   ========================================= */
+.spark-1-yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-1-yellow-wrapper .spark-1-line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-1-yellow-wrapper .spark-1-pos-top, .spark-1-yellow-wrapper .spark-1-pos-bottom { width: 7px; }
+.spark-1-yellow-wrapper .spark-1-pos-left, .spark-1-yellow-wrapper .spark-1-pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-1-yellow-wrapper .spark-1-pos-top { bottom: 50%; left: 50%; }
+.spark-1-yellow-wrapper .spark-1-pos-bottom { top: 50%; left: 50%; }
+.spark-1-yellow-wrapper .spark-1-pos-left { right: 50%; top: 50%; }
+.spark-1-yellow-wrapper .spark-1-pos-right { left: 50%; top: 50%; }
+
+.spark-1.animate .spark-1-yellow-wrapper .spark-1-pos-top { animation-name: spark-1-y-shrink-top; }
+.spark-1.animate .spark-1-yellow-wrapper .spark-1-pos-bottom { animation-name: spark-1-y-shrink-bottom; }
+.spark-1.animate .spark-1-yellow-wrapper .spark-1-pos-left { animation-name: spark-1-y-shrink-left; }
+.spark-1.animate .spark-1-yellow-wrapper .spark-1-pos-right { animation-name: spark-1-y-shrink-right; }
+
+/* SPARK 1 YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes spark-1-y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-1-y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes spark-1-y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-1-y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 1 BLUE CROSS
+   ========================================= */
+.spark-1-blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-1-blue-wrapper .spark-1-line {
+    background-color: #20bfc7;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-1-blue-wrapper .spark-1-pos-top, .spark-1-blue-wrapper .spark-1-pos-bottom { width: 7px; }
+.spark-1-blue-wrapper .spark-1-pos-left, .spark-1-blue-wrapper .spark-1-pos-right { height: 7px; }
+
+.spark-1-blue-wrapper .spark-1-pos-top { bottom: 50%; left: 50%; }
+.spark-1-blue-wrapper .spark-1-pos-bottom { top: 50%; left: 50%; }
+.spark-1-blue-wrapper .spark-1-pos-left { right: 50%; top: 50%; }
+.spark-1-blue-wrapper .spark-1-pos-right { left: 50%; top: 50%; }
+
+.spark-1.animate .spark-1-blue-wrapper .spark-1-pos-top { animation-name: spark-1-b-shoot-top; }
+.spark-1.animate .spark-1-blue-wrapper .spark-1-pos-bottom { animation-name: spark-1-b-shoot-bottom; }
+.spark-1.animate .spark-1-blue-wrapper .spark-1-pos-left { animation-name: spark-1-b-shoot-left; }
+.spark-1.animate .spark-1-blue-wrapper .spark-1-pos-right { animation-name: spark-1-b-shoot-right; }
+
+/* SPARK 1 BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes spark-1-b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-1-b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes spark-1-b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-1-b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 1 SVG RING
+   ========================================= */
+.spark-1-ring-svg {
+    position: absolute;
+    top: -20px;
+    left: 0; right: 0; bottom: 0; margin: auto;
+    width: 60px;
+    height: 60px;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    opacity: 0;
+    pointer-events: none;
+    stroke: #20bfc7; 
+}
+
+.spark-1.animate .spark-1-ring-svg {
+    animation-name: spark-1-ring-anim;
+}
+
+@keyframes spark-1-ring-anim {
+    0%, 39.9% { 
+        transform: rotate(-80deg) scale(1.96);
+        opacity: 0; 
+    }
+    40% { 
+        opacity: 1; 
+    }
+    85% { 
+        transform: rotate(45deg) scale(1.1); 
+        opacity: 1; 
+    }
+    85.1%, 100% { 
+        opacity: 0; 
+    }
+}
+
+/* Spark 2 -------------------------------------------------- */
+.spark-2 {
+    position: absolute;
+    bottom: 50px;
+    left: 350px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.5) rotate(0deg);
+}
+
+/* =========================================
+   SPARK 2 YELLOW CROSS
+   ========================================= */
+.spark-2-yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-2-yellow-wrapper .spark-2-line {
+    background-color: #20bfc7;
+    border-radius: 999px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-2-yellow-wrapper .spark-2-pos-top, .spark-2-yellow-wrapper .spark-2-pos-bottom { width: 7px; }
+.spark-2-yellow-wrapper .spark-2-pos-left, .spark-2-yellow-wrapper .spark-2-pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-2-yellow-wrapper .spark-2-pos-top { bottom: 50%; left: 50%; }
+.spark-2-yellow-wrapper .spark-2-pos-bottom { top: 50%; left: 50%; }
+.spark-2-yellow-wrapper .spark-2-pos-left { right: 50%; top: 50%; }
+.spark-2-yellow-wrapper .spark-2-pos-right { left: 50%; top: 50%; }
+
+.spark-2.animate .spark-2-yellow-wrapper .spark-2-pos-top { animation-name: spark-2-y-shrink-top; }
+.spark-2.animate .spark-2-yellow-wrapper .spark-2-pos-bottom { animation-name: spark-2-y-shrink-bottom; }
+.spark-2.animate .spark-2-yellow-wrapper .spark-2-pos-left { animation-name: spark-2-y-shrink-left; }
+.spark-2.animate .spark-2-yellow-wrapper .spark-2-pos-right { animation-name: spark-2-y-shrink-right; }
+
+/* SPARK 2 YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes spark-2-y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-2-y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes spark-2-y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-2-y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 2 BLUE CROSS
+   ========================================= */
+.spark-2-blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-2-blue-wrapper .spark-2-line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-2-blue-wrapper .spark-2-pos-top, .spark-2-blue-wrapper .spark-2-pos-bottom { width: 7px; }
+.spark-2-blue-wrapper .spark-2-pos-left, .spark-2-blue-wrapper .spark-2-pos-right { height: 7px; }
+
+.spark-2-blue-wrapper .spark-2-pos-top { bottom: 50%; left: 50%; }
+.spark-2-blue-wrapper .spark-2-pos-bottom { top: 50%; left: 50%; }
+.spark-2-blue-wrapper .spark-2-pos-left { right: 50%; top: 50%; }
+.spark-2-blue-wrapper .spark-2-pos-right { left: 50%; top: 50%; }
+
+.spark-2.animate .spark-2-blue-wrapper .spark-2-pos-top { animation-name: spark-2-b-shoot-top; }
+.spark-2.animate .spark-2-blue-wrapper .spark-2-pos-bottom { animation-name: spark-2-b-shoot-bottom; }
+.spark-2.animate .spark-2-blue-wrapper .spark-2-pos-left { animation-name: spark-2-b-shoot-left; }
+.spark-2.animate .spark-2-blue-wrapper .spark-2-pos-right { animation-name: spark-2-b-shoot-right; }
+
+/* SPARK 2 BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes spark-2-b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-2-b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes spark-2-b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-2-b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 2 SVG RING
+   ========================================= */
+.spark-2-ring-svg {
+    position: absolute;
+    top: -20px;
+    left: 0; right: 0; bottom: 0; margin: auto;
+    width: 60px;
+    height: 60px;
+    /* animation: spark-2-ring-anim; */
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    opacity: 0;
+    pointer-events: none;
+    color: #20bfc7;
+}
+
+.spark-2.animate .spark-2-ring-svg {
+    animation-name: spark-2-ring-anim;
+}
+
+@keyframes spark-2-ring-anim {
+    0%, 39.9% { 
+        transform: rotate(-120deg) scale(4.2);
+        opacity: 0; 
+    }
+    40% { 
+        opacity: 1; 
+    }
+    85% { 
+        transform: rotate(-15deg) scale(1.8); 
+        opacity: 1; 
+    }
+    85.1%, 100% { 
+        opacity: 0; 
+    }
+}
+
+/* Spark 3 -------------------------------------------------- */
+.spark-3 {
+    position: absolute;
+    bottom: 0px;
+    left: 900px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.6) rotate(250deg);
+}
+
+/* =========================================
+   SPARK 3 YELLOW CROSS
+   ========================================= */
+.spark-3-yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-3-yellow-wrapper .spark-3-line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-3-yellow-wrapper .spark-3-pos-top, .spark-3-yellow-wrapper .spark-3-pos-bottom { width: 7px; }
+.spark-3-yellow-wrapper .spark-3-pos-left, .spark-3-yellow-wrapper .spark-3-pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-3-yellow-wrapper .spark-3-pos-top { bottom: 50%; left: 50%; }
+.spark-3-yellow-wrapper .spark-3-pos-bottom { top: 50%; left: 50%; }
+.spark-3-yellow-wrapper .spark-3-pos-left { right: 50%; top: 50%; }
+.spark-3-yellow-wrapper .spark-3-pos-right { left: 50%; top: 50%; }
+
+.spark-3.animate .spark-3-yellow-wrapper .spark-3-pos-top { animation-name: spark-3-y-shrink-top; }
+.spark-3.animate .spark-3-yellow-wrapper .spark-3-pos-bottom { animation-name: spark-3-y-shrink-bottom; }
+.spark-3.animate .spark-3-yellow-wrapper .spark-3-pos-left { animation-name: spark-3-y-shrink-left; }
+.spark-3.animate .spark-3-yellow-wrapper .spark-3-pos-right { animation-name: spark-3-y-shrink-right; }
+
+/* SPARK 3 YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes spark-3-y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-3-y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes spark-3-y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-3-y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 3 BLUE CROSS
+   ========================================= */
+.spark-3-blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-3-blue-wrapper .spark-3-line {
+    background-color: #ed1c24;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-3-blue-wrapper .spark-3-pos-top, .spark-3-blue-wrapper .spark-3-pos-bottom { width: 7px; }
+.spark-3-blue-wrapper .spark-3-pos-left, .spark-3-blue-wrapper .spark-3-pos-right { height: 7px; }
+
+.spark-3-blue-wrapper .spark-3-pos-top { bottom: 50%; left: 50%; }
+.spark-3-blue-wrapper .spark-3-pos-bottom { top: 50%; left: 50%; }
+.spark-3-blue-wrapper .spark-3-pos-left { right: 50%; top: 50%; }
+.spark-3-blue-wrapper .spark-3-pos-right { left: 50%; top: 50%; }
+
+.spark-3.animate .spark-3-blue-wrapper .spark-3-pos-top { animation-name: spark-3-b-shoot-top; }
+.spark-3.animate .spark-3-blue-wrapper .spark-3-pos-bottom { animation-name: spark-3-b-shoot-bottom; }
+.spark-3.animate .spark-3-blue-wrapper .spark-3-pos-left { animation-name: spark-3-b-shoot-left; }
+.spark-3.animate .spark-3-blue-wrapper .spark-3-pos-right { animation-name: spark-3-b-shoot-right; }
+
+/* SPARK 3 BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes spark-3-b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-3-b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes spark-3-b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-3-b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 3 SVG RING
+   ========================================= */
+.spark-3-ring-svg {
+    position: absolute;
+    top: -20px;
+    left: 0; right: 0; bottom: 0; margin: auto;
+    width: 60px;
+    height: 60px;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    opacity: 0;
+    pointer-events: none;
+    color: #ffffff;
+}
+
+.spark-3.animate .spark-3-ring-svg {
+    animation-name: spark-3-ring-anim;
+}
+
+@keyframes spark-3-ring-anim {
+    0%, 39.9% { 
+        transform: rotate(-120deg) scale(4.2);
+        opacity: 0; 
+    }
+    40% { 
+        opacity: 1; 
+    }
+    85% { 
+        transform: rotate(-15deg) scale(1.8); 
+        opacity: 1; 
+    }
+    85.1%, 100% { 
+        opacity: 0; 
+    }
+}
+
+/* Spark 4 -------------------------------------------------- */
+.spark-4 {
+    position: absolute;
+    bottom: 50px;
+    left: 165px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.5) rotate(-10deg);
+}
+
+/* =========================================
+   SPARK 4 YELLOW CROSS
+   ========================================= */
+.spark-4-yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-4-yellow-wrapper .spark-4-line {
+    background-color: #20bfc7;
+    border-radius: 999px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-4-yellow-wrapper .spark-4-pos-top, .spark-4-yellow-wrapper .spark-4-pos-bottom { width: 7px; }
+.spark-4-yellow-wrapper .spark-4-pos-left, .spark-4-yellow-wrapper .spark-4-pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-4-yellow-wrapper .spark-4-pos-top { bottom: 50%; left: 50%; }
+.spark-4-yellow-wrapper .spark-4-pos-bottom { top: 50%; left: 50%; }
+.spark-4-yellow-wrapper .spark-4-pos-left { right: 50%; top: 50%; }
+.spark-4-yellow-wrapper .spark-4-pos-right { left: 50%; top: 50%; }
+
+.spark-4.animate .spark-4-yellow-wrapper .spark-4-pos-top { animation-name: spark-4-y-shrink-top; }
+.spark-4.animate .spark-4-yellow-wrapper .spark-4-pos-bottom { animation-name: spark-4-y-shrink-bottom; }
+.spark-4.animate .spark-4-yellow-wrapper .spark-4-pos-left { animation-name: spark-4-y-shrink-left; }
+.spark-4.animate .spark-4-yellow-wrapper .spark-4-pos-right { animation-name: spark-4-y-shrink-right; }
+
+/* SPARK 4 YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes spark-4-y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-4-y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes spark-4-y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-4-y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 4 BLUE CROSS
+   ========================================= */
+.spark-4-blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-4-blue-wrapper .spark-4-line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-4-blue-wrapper .spark-4-pos-top, .spark-4-blue-wrapper .spark-4-pos-bottom { width: 7px; }
+.spark-4-blue-wrapper .spark-4-pos-left, .spark-4-blue-wrapper .spark-4-pos-right { height: 7px; }
+
+.spark-4-blue-wrapper .spark-4-pos-top { bottom: 50%; left: 50%; }
+.spark-4-blue-wrapper .spark-4-pos-bottom { top: 50%; left: 50%; }
+.spark-4-blue-wrapper .spark-4-pos-left { right: 50%; top: 50%; }
+.spark-4-blue-wrapper .spark-4-pos-right { left: 50%; top: 50%; }
+
+.spark-4.animate .spark-4-blue-wrapper .spark-4-pos-top { animation-name: spark-4-b-shoot-top; }
+.spark-4.animate .spark-4-blue-wrapper .spark-4-pos-bottom { animation-name: spark-4-b-shoot-bottom; }
+.spark-4.animate .spark-4-blue-wrapper .spark-4-pos-left { animation-name: spark-4-b-shoot-left; }
+.spark-4.animate .spark-4-blue-wrapper .spark-4-pos-right { animation-name: spark-4-b-shoot-right; }
+
+/* SPARK 4 BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes spark-4-b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-4-b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes spark-4-b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    60% { opacity: 1; }
+    80% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-4-b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    60% { opacity: 1; }
+    80% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Spark 5 -------------------------------------------------- */
+.spark-5 {
+    position: absolute;
+    bottom: -15px;
+    left: 395px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.5) rotate(10deg);
+}
+
+/* =========================================
+   SPARK 5 YELLOW CROSS
+   ========================================= */
+.spark-5-yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-5-yellow-wrapper .spark-5-line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-5-yellow-wrapper .spark-5-pos-top, .spark-5-yellow-wrapper .spark-5-pos-bottom { width: 7px; }
+.spark-5-yellow-wrapper .spark-5-pos-left, .spark-5-yellow-wrapper .spark-5-pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-5-yellow-wrapper .spark-5-pos-top { bottom: 50%; left: 50%; }
+.spark-5-yellow-wrapper .spark-5-pos-bottom { top: 50%; left: 50%; }
+.spark-5-yellow-wrapper .spark-5-pos-left { right: 50%; top: 50%; }
+.spark-5-yellow-wrapper .spark-5-pos-right { left: 50%; top: 50%; }
+
+.spark-5.animate .spark-5-yellow-wrapper .spark-5-pos-top { animation-name: spark-5-y-shrink-top; }
+.spark-5.animate .spark-5-yellow-wrapper .spark-5-pos-bottom { animation-name: spark-5-y-shrink-bottom; }
+.spark-5.animate .spark-5-yellow-wrapper .spark-5-pos-left { animation-name: spark-5-y-shrink-left; }
+.spark-5.animate .spark-5-yellow-wrapper .spark-5-pos-right { animation-name: spark-5-y-shrink-right; }
+
+/* SPARK 5 YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes spark-5-y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-5-y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes spark-5-y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-5-y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 5 BLUE CROSS
+   ========================================= */
+.spark-5-blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-5-blue-wrapper .spark-5-line {
+    background-color: #ed1c24;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-5-blue-wrapper .spark-5-pos-top, .spark-5-blue-wrapper .spark-5-pos-bottom { width: 7px; }
+.spark-5-blue-wrapper .spark-5-pos-left, .spark-5-blue-wrapper .spark-5-pos-right { height: 7px; }
+
+.spark-5-blue-wrapper .spark-5-pos-top { bottom: 50%; left: 50%; }
+.spark-5-blue-wrapper .spark-5-pos-bottom { top: 50%; left: 50%; }
+.spark-5-blue-wrapper .spark-5-pos-left { right: 50%; top: 50%; }
+.spark-5-blue-wrapper .spark-5-pos-right { left: 50%; top: 50%; }
+
+.spark-5.animate .spark-5-blue-wrapper .spark-5-pos-top { animation-name: spark-5-b-shoot-top; }
+.spark-5.animate .spark-5-blue-wrapper .spark-5-pos-bottom { animation-name: spark-5-b-shoot-bottom; }
+.spark-5.animate .spark-5-blue-wrapper .spark-5-pos-left { animation-name: spark-5-b-shoot-left; }
+.spark-5.animate .spark-5-blue-wrapper .spark-5-pos-right { animation-name: spark-5-b-shoot-right; }
+
+/* SPARK 5 BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes spark-5-b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-5-b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes spark-5-b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    60% { opacity: 1; }
+    80% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-5-b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    60% { opacity: 1; }
+    80% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Spark 6 -------------------------------------------------- */
+.spark-6 {
+    position: absolute;
+    bottom: -20px;
+    left: 165px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.5) rotate(-20deg);
+}
+
+/* =========================================
+   YELLOW CROSS (Upright +, Implodes to 16px Gap)
+   ========================================= */
+.spark-6 .yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-6 .yellow-wrapper .line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    /* UPDATED DURATION: 1s */
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-6 .yellow-wrapper .pos-top, .spark-6 .yellow-wrapper .pos-bottom { width: 7px; }
+.spark-6 .yellow-wrapper .pos-left, .spark-6 .yellow-wrapper .pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-6 .yellow-wrapper .pos-top { bottom: 50%; left: 50%; }
+.spark-6 .yellow-wrapper .pos-bottom { top: 50%; left: 50%; }
+.spark-6 .yellow-wrapper .pos-left { right: 50%; top: 50%; }
+.spark-6 .yellow-wrapper .pos-right { left: 50%; top: 50%; }
+
+.spark-6.animate .yellow-wrapper .pos-top { animation-name: y-shrink-top; }
+.spark-6.animate .yellow-wrapper .pos-bottom { animation-name: y-shrink-bottom; }
+.spark-6.animate .yellow-wrapper .pos-left { animation-name: y-shrink-left; }
+.spark-6.animate .yellow-wrapper .pos-right { animation-name: y-shrink-right; }
+
+/* YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    60% { opacity: 0; }
+    65% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    60% { opacity: 0; }
+    65% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    60% { opacity: 0; }
+    65% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    50% { opacity: 1; }
+    60% { opacity: 0; }
+    65% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   BLUE CROSS (Diagonal X, Shoots Outwards from 16px Gap)
+   ========================================= */
+.spark-6 .blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-6 .blue-wrapper .line {
+    background-color: #ed1c24;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    /* UPDATED DURATION: 1s */
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-6 .blue-wrapper .pos-top, .spark-6 .blue-wrapper .pos-bottom { width: 7px; }
+.spark-6 .blue-wrapper .pos-left, .spark-6 .blue-wrapper .pos-right { height: 7px; }
+
+.spark-6 .blue-wrapper .pos-top { bottom: 50%; left: 50%; }
+.spark-6 .blue-wrapper .pos-bottom { top: 50%; left: 50%; }
+.spark-6 .blue-wrapper .pos-left { right: 50%; top: 50%; }
+.spark-6 .blue-wrapper .pos-right { left: 50%; top: 50%; }
+
+.spark-6.animate .blue-wrapper .pos-top { animation-name: b-shoot-top; }
+.spark-6.animate .blue-wrapper .pos-bottom { animation-name: b-shoot-bottom; }
+.spark-6.animate .blue-wrapper .pos-left { animation-name: b-shoot-left; }
+.spark-6.animate .blue-wrapper .pos-right { animation-name: b-shoot-right; }
+
+/* BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SVG RING
+   ========================================= */
+/* --- PARENT: Handles Position & Motion ONLY --- */
+.spark-6 .ring-svg {
+    position: absolute;
+    top: -20px;
+    left: 0; right: 0; bottom: 0; margin: auto;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+
+    /* DURATION: Set to 3s for debugging. Change back to 1s when ready. */
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+}
+
+.spark-6.animate .ring-svg {
+    animation-name: ring-motion;
+}
+
+/* Parent only scales and rotates. It stays Opacity 1 the whole time. */
+@keyframes ring-motion {
+    0%   { transform: rotate(-60deg) scale(6); }
+    100% { transform: rotate(2deg) scale(2.8); }
+}
+
+/* --- CHILDREN: Handle Colors & Visibility --- */
+.spark-6 .part-1 { fill: #ed1c24; }
+.spark-6 .part-2 { fill: #ffffff; }
+.spark-6 .part-4 { fill: #20bfc7; }
+.spark-6 .part-3 { fill: #ffffff; }
+
+.spark-6 .ring-svg path {
+    /* Inherit the 3s duration from the parent automatically */
+    animation-duration: inherit; 
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* Apply specific animations */
+.spark-6.animate .part-1 { animation-name: show-1; }
+.spark-6.animate .part-2 { animation-name: show-2; }
+.spark-6.animate .part-3 { animation-name: show-3; }
+.spark-6.animate .part-4 { animation-name: show-4; }
+
+/* --- KEYFRAMES: Control the Stagger --- */
+
+/* Logic: 
+   0% - 30%: Hidden
+   30% - 40%: Staggered Entry
+   40% - 80%: All Visible
+   85% - 100%: Fade Out
+*/
+
+@keyframes show-1 {
+    0%, 30%   { opacity: 0; }
+    32%, 80%  { opacity: 1; } /* Enters first */
+    90%, 100% { opacity: 0; }
+}
+
+@keyframes show-2 {
+    0%, 34%   { opacity: 0; }
+    36%, 80%  { opacity: 1; } /* Enters second */
+    90%, 100% { opacity: 0; }
+}
+
+@keyframes show-3 {
+    0%, 38%   { opacity: 0; }
+    40%, 80%  { opacity: 1; } /* Enters third */
+    90%, 100% { opacity: 0; }
+}
+
+@keyframes show-4 {
+    0%, 42%   { opacity: 0; }
+    44%, 80%  { opacity: 1; } /* Enters fourth */
+    90%, 100% { opacity: 0; }
+}
+
+/* Spark 7 -------------------------------------------------- */
+
+.spark-7 {
+    position: absolute;
+    bottom: -10px;
+    left: 580px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.5) rotate(20deg);
+}
+
+/* =========================================
+   SPARK 7 YELLOW CROSS
+   ========================================= */
+.spark-7-yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-7-yellow-wrapper .spark-7-line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-7-yellow-wrapper .spark-7-pos-top, .spark-7-yellow-wrapper .spark-7-pos-bottom { width: 7px; }
+.spark-7-yellow-wrapper .spark-7-pos-left, .spark-7-yellow-wrapper .spark-7-pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-7-yellow-wrapper .spark-7-pos-top { bottom: 50%; left: 50%; }
+.spark-7-yellow-wrapper .spark-7-pos-bottom { top: 50%; left: 50%; }
+.spark-7-yellow-wrapper .spark-7-pos-left { right: 50%; top: 50%; }
+.spark-7-yellow-wrapper .spark-7-pos-right { left: 50%; top: 50%; }
+
+.spark-7.animate .spark-7-yellow-wrapper .spark-7-pos-top { animation-name: spark-7-y-shrink-top; }
+.spark-7.animate .spark-7-yellow-wrapper .spark-7-pos-bottom { animation-name: spark-7-y-shrink-bottom; }
+.spark-7.animate .spark-7-yellow-wrapper .spark-7-pos-left { animation-name: spark-7-y-shrink-left; }
+.spark-7.animate .spark-7-yellow-wrapper .spark-7-pos-right { animation-name: spark-7-y-shrink-right; }
+
+/* SPARK 7 YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes spark-7-y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-7-y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes spark-7-y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-7-y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 7 BLUE CROSS
+   ========================================= */
+.spark-7-blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-7-blue-wrapper .spark-7-line {
+    background-color: #20bfc7;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-7-blue-wrapper .spark-7-pos-top, .spark-7-blue-wrapper .spark-7-pos-bottom { width: 7px; }
+.spark-7-blue-wrapper .spark-7-pos-left, .spark-7-blue-wrapper .spark-7-pos-right { height: 7px; }
+
+.spark-7-blue-wrapper .spark-7-pos-top { bottom: 50%; left: 50%; }
+.spark-7-blue-wrapper .spark-7-pos-bottom { top: 50%; left: 50%; }
+.spark-7-blue-wrapper .spark-7-pos-left { right: 50%; top: 50%; }
+.spark-7-blue-wrapper .spark-7-pos-right { left: 50%; top: 50%; }
+
+.spark-7.animate .spark-7-blue-wrapper .spark-7-pos-top { animation-name: spark-7-b-shoot-top; }
+.spark-7.animate .spark-7-blue-wrapper .spark-7-pos-bottom { animation-name: spark-7-b-shoot-bottom; }
+.spark-7.animate .spark-7-blue-wrapper .spark-7-pos-left { animation-name: spark-7-b-shoot-left; }
+.spark-7.animate .spark-7-blue-wrapper .spark-7-pos-right { animation-name: spark-7-b-shoot-right; }
+
+/* SPARK 7 BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes spark-7-b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-7-b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    50% { opacity: 1; }
+    70% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes spark-7-b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-7-b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    70% { opacity: 1; }
+    90% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 7 SVG RING
+   ========================================= */
+.spark-7-ring-svg {
+    position: absolute;
+    top: -20px;
+    left: 0; right: 0; bottom: 0; margin: auto;
+    width: 60px;
+    height: 60px;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    opacity: 0;
+    pointer-events: none;
+    stroke: #20bfc7; 
+}
+
+.spark-7.animate .spark-7-ring-svg {
+    animation-name: spark-7-ring-anim;
+}
+
+@keyframes spark-7-ring-anim {
+    0%, 39.9% { 
+        transform: rotate(-80deg) scale(1.96);
+        opacity: 0; 
+    }
+    40% { 
+        opacity: 1; 
+    }
+    85% { 
+        transform: rotate(45deg) scale(1.1); 
+        opacity: 1; 
+    }
+    85.1%, 100% { 
+        opacity: 0; 
+    }
+}
+
+/* Spark 8 -------------------------------------------------- */
+
+.spark-8 {
+    position: absolute;
+    bottom: -20px;
+    left: 770px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.5) rotate(0deg);
+}
+
+/* =========================================
+   SPARK 8 YELLOW CROSS
+   ========================================= */
+.spark-8-yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-8-yellow-wrapper .spark-8-line {
+    background-color: #20bfc7;
+    border-radius: 999px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-8-yellow-wrapper .spark-8-pos-top, .spark-8-yellow-wrapper .spark-8-pos-bottom { width: 7px; }
+.spark-8-yellow-wrapper .spark-8-pos-left, .spark-8-yellow-wrapper .spark-8-pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-8-yellow-wrapper .spark-8-pos-top { bottom: 50%; left: 50%; }
+.spark-8-yellow-wrapper .spark-8-pos-bottom { top: 50%; left: 50%; }
+.spark-8-yellow-wrapper .spark-8-pos-left { right: 50%; top: 50%; }
+.spark-8-yellow-wrapper .spark-8-pos-right { left: 50%; top: 50%; }
+
+.spark-8.animate .spark-8-yellow-wrapper .spark-8-pos-top { animation-name: spark-8-y-shrink-top; }
+.spark-8.animate .spark-8-yellow-wrapper .spark-8-pos-bottom { animation-name: spark-8-y-shrink-bottom; }
+.spark-8.animate .spark-8-yellow-wrapper .spark-8-pos-left { animation-name: spark-8-y-shrink-left; }
+.spark-8.animate .spark-8-yellow-wrapper .spark-8-pos-right { animation-name: spark-8-y-shrink-right; }
+
+/* SPARK 8 YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes spark-8-y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-8-y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes spark-8-y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-8-y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 8 BLUE CROSS
+   ========================================= */
+.spark-8-blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-8-blue-wrapper .spark-8-line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-8-blue-wrapper .spark-8-pos-top, .spark-8-blue-wrapper .spark-8-pos-bottom { width: 7px; }
+.spark-8-blue-wrapper .spark-8-pos-left, .spark-8-blue-wrapper .spark-8-pos-right { height: 7px; }
+
+.spark-8-blue-wrapper .spark-8-pos-top { bottom: 50%; left: 50%; }
+.spark-8-blue-wrapper .spark-8-pos-bottom { top: 50%; left: 50%; }
+.spark-8-blue-wrapper .spark-8-pos-left { right: 50%; top: 50%; }
+.spark-8-blue-wrapper .spark-8-pos-right { left: 50%; top: 50%; }
+
+.spark-8.animate .spark-8-blue-wrapper .spark-8-pos-top { animation-name: spark-8-b-shoot-top; }
+.spark-8.animate .spark-8-blue-wrapper .spark-8-pos-bottom { animation-name: spark-8-b-shoot-bottom; }
+.spark-8.animate .spark-8-blue-wrapper .spark-8-pos-left { animation-name: spark-8-b-shoot-left; }
+.spark-8.animate .spark-8-blue-wrapper .spark-8-pos-right { animation-name: spark-8-b-shoot-right; }
+
+/* SPARK 8 BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes spark-8-b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-8-b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes spark-8-b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    60% { opacity: 1; }
+    80% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-8-b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    60% { opacity: 1; }
+    80% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Spark 9 -------------------------------------------------- */
+.spark-9 {
+    position: absolute;
+    bottom: 60px;
+    left: 950px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.5) rotate(10deg);
+}
+
+/* =========================================
+   SPARK 9 YELLOW CROSS
+   ========================================= */
+.spark-9-yellow-wrapper {
+    position: absolute;
+    width: 100px; 
+    height: 100px;
+    transform: rotate(0deg); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-9-yellow-wrapper .spark-9-line {
+    background-color: #ffc212;
+    border-radius: 999px;
+    position: absolute;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-9-yellow-wrapper .spark-9-pos-top, .spark-9-yellow-wrapper .spark-9-pos-bottom { width: 7px; }
+.spark-9-yellow-wrapper .spark-9-pos-left, .spark-9-yellow-wrapper .spark-9-pos-right { height: 7px; }
+
+/* ANCHORING */
+.spark-9-yellow-wrapper .spark-9-pos-top { bottom: 50%; left: 50%; }
+.spark-9-yellow-wrapper .spark-9-pos-bottom { top: 50%; left: 50%; }
+.spark-9-yellow-wrapper .spark-9-pos-left { right: 50%; top: 50%; }
+.spark-9-yellow-wrapper .spark-9-pos-right { left: 50%; top: 50%; }
+
+.spark-9.animate .spark-9-yellow-wrapper .spark-9-pos-top { animation-name: spark-9-y-shrink-top; }
+.spark-9.animate .spark-9-yellow-wrapper .spark-9-pos-bottom { animation-name: spark-9-y-shrink-bottom; }
+.spark-9.animate .spark-9-yellow-wrapper .spark-9-pos-left { animation-name: spark-9-y-shrink-left; }
+.spark-9.animate .spark-9-yellow-wrapper .spark-9-pos-right { animation-name: spark-9-y-shrink-right; }
+
+/* SPARK 9 YELLOW ANIMATION */
+
+/* Horizontal */
+@keyframes spark-9-y-shrink-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-9-y-shrink-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical */
+@keyframes spark-9-y-shrink-top {
+    0% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-9-y-shrink-bottom {
+    0% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { height: 0px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+/* =========================================
+   SPARK 9 BLUE CROSS
+   ========================================= */
+.spark-9-blue-wrapper {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spark-9-blue-wrapper .spark-9-line {
+    background-color: #ed1c24;
+    border-radius: 999px;
+    position: absolute;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.spark-9-blue-wrapper .spark-9-pos-top, .spark-9-blue-wrapper .spark-9-pos-bottom { width: 7px; }
+.spark-9-blue-wrapper .spark-9-pos-left, .spark-9-blue-wrapper .spark-9-pos-right { height: 7px; }
+
+.spark-9-blue-wrapper .spark-9-pos-top { bottom: 50%; left: 50%; }
+.spark-9-blue-wrapper .spark-9-pos-bottom { top: 50%; left: 50%; }
+.spark-9-blue-wrapper .spark-9-pos-left { right: 50%; top: 50%; }
+.spark-9-blue-wrapper .spark-9-pos-right { left: 50%; top: 50%; }
+
+.spark-9.animate .spark-9-blue-wrapper .spark-9-pos-top { animation-name: spark-9-b-shoot-top; }
+.spark-9.animate .spark-9-blue-wrapper .spark-9-pos-bottom { animation-name: spark-9-b-shoot-bottom; }
+.spark-9.animate .spark-9-blue-wrapper .spark-9-pos-left { animation-name: spark-9-b-shoot-left; }
+.spark-9.animate .spark-9-blue-wrapper .spark-9-pos-right { animation-name: spark-9-b-shoot-right; }
+
+/* SPARK 9 BLUE ANIMATION */
+
+/* Horizontal (Starts 0%) */
+@keyframes spark-9-b-shoot-right {
+    0% { width: 60px; transform: translateY(-50%) translateX(8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-9-b-shoot-left {
+    0% { width: 60px; transform: translateY(-50%) translateX(-8px); opacity: 1; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    75% { width: 0px; transform: translateY(-50%) translateX(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+/* Vertical (Staggered: Starts ~20%, Ends ~95%) */
+@keyframes spark-9-b-shoot-top {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(-8px); opacity: 0; }
+    21% { opacity: 1; }
+    60% { opacity: 1; }
+    80% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(-98px); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes spark-9-b-shoot-bottom {
+    0%, 20% { height: 60px; transform: translateX(-50%) translateY(8px); opacity: 0; }
+    21% { opacity: 1; }
+    60% { opacity: 1; }
+    80% { opacity: 0; }
+    95% { height: 0px; transform: translateX(-50%) translateY(98px); opacity: 0; }
+    100% { opacity: 0; }
 }
