@@ -101,9 +101,7 @@
 
                 const timeRemaining = targetTimestamp - adjustedCurrentTimestamp;
 
-                if (timeRemaining <= 0) {
-                    clearInterval(countdownInterval);
-                    countdownElement.innerHTML = '00:00';
+                if (timeRemaining <= 10000) {
                     runAnimationOUT();
                     return;
                 }
