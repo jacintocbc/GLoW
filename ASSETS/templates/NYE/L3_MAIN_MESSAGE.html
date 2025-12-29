@@ -10,17 +10,24 @@
     <link rel="stylesheet" href="./L3_MAIN_MESSAGE/L3_MAIN_MESSAGE.css">
     <script>
         let interval;
+        let sequenceInterval;
         let timeCode = '';
-        const sequenceDuration = 5000;
+        let sequenceDuration = 300000;
 
         function runTemplateUpdate() {
             timeCode = document.getElementById('f1').innerText;
+            sequenceDuration = 300000;
+            clearInterval(sequenceInterval);
         }
 
         function runAnimationIN() {
         }
 
         function runAnimationNEXT() {
+            clearInterval(sequenceInterval);
+            sequenceDuration = 5000;
+            runSequence();
+            sequenceInterval = setInterval(runSequence, sequenceDuration);
             const countdownContainer = document.querySelector('.countdown');
             const mainTitleContainer = document.querySelector('.main-title');
             const countdownElements = document.querySelectorAll('.countdown span, .main-title span');
@@ -43,6 +50,7 @@
         }
 
         function runAnimationOUT() {
+            clearInterval(sequenceInterval);
             const container = document.querySelector('.container');
             container.style.animation = 'fadeOutUp 1s ease-in-out forwards';
             clearInterval(interval);
@@ -94,7 +102,7 @@
             });
 
             runSequence();
-            setInterval(runSequence, sequenceDuration);
+            sequenceInterval = setInterval(runSequence, sequenceDuration);
         }
 
         const locations = {
