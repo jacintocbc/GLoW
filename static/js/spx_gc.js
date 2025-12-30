@@ -56,7 +56,7 @@ socket.on('SPXMessage2Client', function (data) {
             if (notification) { // controller view
                 if (data.count && data.count > 1) {
                     console.log(data.count + ' SPX Controllers detected by the server. Displaying notification.');
-                    notification.style.display = 'flex';
+                    notification.style.display = 'none';
                 } else {
                     notification.style.display = 'none';
                 }
