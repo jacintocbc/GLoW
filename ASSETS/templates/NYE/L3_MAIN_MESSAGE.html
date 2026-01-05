@@ -18,6 +18,7 @@
             timeCode = document.getElementById('f1').innerText;
             sequenceDuration = 300000;
             clearInterval(sequenceInterval);
+            sequenceInterval = setInterval(runSequence, sequenceDuration);
         }
 
         function runAnimationIN() {
