@@ -1437,7 +1437,7 @@ iframe {
 
 .preview-title {
     position: absolute;
-    top: 6px;
+    bottom: 6px;
     right: 10px;
     z-index: 9;
     font-size: 18px;
