@@ -30,12 +30,12 @@
         }
 
         function updateTime() {
-            const parisTimeElement = document.getElementById('paris-time');
+            const italyTimeElement = document.getElementById('italy-time');
             const torontoTimeElement = document.getElementById('toronto-time');
-            const parisContainer = document.getElementById('paris-container');
+            const italyContainer = document.getElementById('italy-container');
 
-            const parisTime = new Intl.DateTimeFormat('en-US', {
-                timeZone: 'Europe/Paris',
+            const italyTime = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Europe/Rome',
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
@@ -50,7 +50,7 @@
                 hour12: false
             }).format(new Date());
 
-            parisTimeElement.innerHTML = parisTime;
+            italyTimeElement.innerHTML = italyTime;
             torontoTimeElement.innerHTML = torontoTime;
         }
     </script>
@@ -68,7 +68,7 @@
             "DataFields": [
                 {
                     "ftype" : "instruction",
-                    "value" : "This graphic has no inputs, it animates in and out and shows the Timezone difference between Paris and Toronto"
+                    "value" : "This graphic has no inputs, it animates in and out and shows the Timezone difference between Italy and Toronto"
                 },
                 {
                     "ftype": "spacer"
@@ -83,9 +83,9 @@
         <div class="container">
             <!-- Timezone Page -->
             <div class="page title-page fade-in">
-                <div class="location flex-row" id="paris-container">
-                    <h1 class="v-align">🇫🇷 Paris</h1>
-                    <h1 class="time v-align" id="paris-time">18:12:34</h1>
+                <div class="location flex-row" id="italy-container">
+                    <h1 class="v-align">🇮🇹 Italy</h1>
+                    <h1 class="time v-align" id="italy-time">18:12:34</h1>
                 </div>
                 <div class="rings v-align">
                     <img src="./TIMEZONES/rings.png" alt="Olympic Rings">
