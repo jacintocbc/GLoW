@@ -5,260 +5,289 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medal Standings Board</title>
     <style>
-      @font-face {
-          font-family: 'Radio-Canada';
-          src: url('img/fonts/RadioCanada-Variable.ttf') format('truetype');
-      }
+        @font-face {
+            font-family: 'Radio-Canada';
+            src: url('img/fonts/RadioCanada-Variable.ttf') format('truetype');
+        }
 
-      @font-face {
-          font-family: 'Radio-Canada Italic';
-          src: url('img/fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
-      }
+        @font-face {
+            font-family: 'Radio-Canada Italic';
+            src: url('img/fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+        }
 
-      body {
-          padding: 0;
-          margin: 0;
-          overflow: hidden;
-          position: relative;
-          font-family: 'Radio-Canada', sans-serif;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-      }
+        @font-face {
+            font-family: 'Radio-Canada Big';
+            src: url('img/fonts/RadioCanadaBig-VariableFont.ttf') format('truetype');
+        }
 
-      #wrapper {
-          height: 1080px;
-          width: 1920px;
-      }
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            font-family: 'Radio-Canada', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #333333;
+        }
 
-      .container {
-          height: 960px;
-          width: 1800px;
-          overflow: hidden;
-          margin: 60px;
-          position: relative;
-      }
+        #background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }  
 
-      .v-align {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-      }
+        #wrapper {
+            height: 1080px;
+            width: 1920px;
+        }
 
-      h1,
-      h2 {
-          margin: 0;
-      }
+        .container {
+            height: 960px;
+            width: 1920px;
+            overflow: hidden;
+            position: relative;
+        }
 
-      /* Keyframe animations */
-      @keyframes inAnimation {
-          0% {
-              transform: translateY(100%);
-          }
+        .v-align {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-          100% {
-              transform: translateY(0);
-          }
-      }
+        h1,
+        h2 {
+            margin: 0;
+        }
 
-      @keyframes outAnimation {
-          0% {
-              transform: translateY(0);
-          }
+        /* Keyframe animations */
+        @keyframes inAnimation {
+            0% {
+                transform: translateY(100%);
+            }
 
-          100% {
-              transform: translateY(-100%);
-          }
-      }
+            100% {
+                transform: translateY(0);
+            }
+        }
 
-      /* Animation classes */
-      .fade-in {
-          animation: inAnimation 1.5s forwards;
-      }
+        @keyframes outAnimation {
+            0% {
+                transform: translateY(0);
+            }
 
-      .fade-out {
-          animation: outAnimation 1.5s forwards;
-      }
+            100% {
+                transform: translateY(-100%);
+            }
+        }
 
-      /* Header */
-      .header {
-          width: 100%;
-          position: absolute;
-          top: 0;
-      }
+        /* Animation classes */
+        .fade-in {
+            animation: inAnimation 1.5s forwards;
+        }
 
-      .gradient {
-          height: 180px;
-          width: 100%;
-          background: white;
-          position: absolute;
-          top: 0;
-          left: 0;
-          background: linear-gradient(to right, white 5%, #fcf6e8 15%, #eed69a 30%, #e5be5f 68%, #daa521 90%);
-      }
+        .fade-out {
+            animation: outAnimation 1.5s forwards;
+        }
 
-      .paris-logo {
-          height: 182px;
-          position: relative;
-          left: 23px;
-          top: -2px;
-      }
+        /* Header */
+        .header {
+            width: 100%;
+            position: absolute;
+            top: 0;
+        }
 
-      .header-text {
-          position: absolute;
-          left: 220px;
-          top: 15px;
-      }
+        .gradient {
+            height: 245px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgb(35,88,166); /* Fallback for old browsers */
+            background: linear-gradient(
+                90deg, 
+                #215ab4 0%,    /* Deep Blue Start */
+                #3263bc 75%,   /* Mid-point to keep the left side bluer */
+                #9b82e1 100%   /* Lavender/Purple End */
+            );
+        }
 
-      .header-text h1 {
-          font-size: 87.5px;
-          text-transform: uppercase;
-          font-weight: 600;
-          letter-spacing: -4.5px;
-          position: relative;
-          left: 2px;
-          color: #252525;
-      }
+        .olympics-logo {
+            height: 135px;
+            position: relative;
+            left: 164px;
+            top: 93px;
+        }
 
-      .header-text h2 {
-          font-size: 41px;
-          text-transform: uppercase;
-          font-weight: 400;
-          position: relative;
-          top: -14px;
-          left: 5px;
-          letter-spacing: -0.5px;
-      }
+        .header-text {
+            position: absolute;
+            left: 307px;
+            top: 80px;
+            color: white;
 
-      /* Table */
-      .table-container {
-          height: 780px;
-          margin-top: 180px;
-          position: relative;
-      }
+        }
 
-      .dynamic-rows {
-        overflow: hidden;
-      }
+        .header-text h1 {
+            font-size: 87.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: -4.5px;
+            position: relative;
+            left: 2px;
+            font-family: 'Radio-Canada Big', sans-serif;
+        }
 
-      .row {
-          height: 65px;
-          background: #f0f0f0;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-      }
+        .header-text h2 {
+            font-size: 41px;
+            text-transform: uppercase;
+            font-weight: 400;
+            position: relative;
+            top: -14px;
+            left: 4px;
+            letter-spacing: -0.5px;
+        }
 
-      .alt {
-          background: #e4e4e4;
-      }
+        /* Table */
+        .table-container {
+            height: 780px;
+            margin-top: 245px;
+            position: relative;
+        }
 
-      .spacer {
-          background: white;
-          opacity: 0.5;
-          position: relative;
-      }
+        .dynamic-rows {
+            overflow: hidden;
+        }
 
-      .row-spacer-alt {
-        height: 5px;
-        background: white;
-        opacity: 0.5;
-      }
+        .row {
+            height: 65px;
+            background: #f0f0f0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding-left: 57px;
+            padding-right: 60px;
+        }
 
-      .medal-icons {
-          position: absolute;
-          right: -2px;
-          top: -2.5px;
-          width: 545px;
-      }
+        .alt {
+            background: #e4e4e4;
+        }
 
-      .medal-icons img {
-          height: 70px;
-      }
+        .spacer {
+            background: white;
+            opacity: 0.5;
+            position: relative;
+        }
 
-      .m-right {
-          margin-right: 60px;
-      }
+        .row-spacer-alt {
+            height: 1px;
+            background: white;
+            opacity: 0.5;
+        }
 
-      /* Row */
-      .row h2 {
-          font-size: 41px;
-          font-weight: 400;
-          text-transform: uppercase;
-          margin-top: 7.5px;
-      }
+        .medal-icons {
+            position: absolute;
+            right: 51px;
+            top: 4.5px;
+            width: 545px;
+        }
 
-      .country {
-          display: flex;
-      }
+        .medal-icons img {
+            height: 55px;
+        }
 
-      .rank {
-          width: 110px;
-          display: flex;
-          justify-content: center;
-      }
+        .m-right {
+            margin-right: 75px;
+        }
 
-      .flag {
-          height: 65px;
-          width: 113.5px;
-          box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
-      }
+        /* Row */
+        .row h2 {
+            font-size: 41px;
+            font-weight: 400;
+            text-transform: uppercase;
+            margin-top: 7.5px;
+        }
 
-      .flag img {
-          height: 65px;
-      }
+        .country {
+            display: flex;
+        }
 
-      .name {
-          margin-left: 30px;
-      }
+        .rank {
+            width: 110px;
+            display: flex;
+            justify-content: center;
+        }
 
-      .medal-numbers {
-          display: flex;
-          width: 553px;
-          justify-content: space-around;
-          position: relative;
-          left: -20px;
-      }
+        .flag {
+            height: 65px;
+            width: 113.5px;
+            box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+        }
 
-      .medal-number {
-          width: 133px;
-          text-align: center;
-      }
+        .flag img {
+            height: 65px;
+        }
 
-      .number-2 {
-          position: relative;
-          left: 2px;
-      }
+        .name {
+            margin-left: 30px;
+        }
 
-      .number-3 {
-          position: relative;
-          left: 4px;
-      }
+        .medal-numbers {
+            display: flex;
+            width: 553px;
+            justify-content: space-around;
+            position: relative;
+            left: -20px;
+        }
 
-      .number-4 {
-          position: relative;
-          left: 8px;
-      }
+        .medal-number {
+            width: 133px;
+            text-align: center;
+        }
 
-      .total-number {
-          width: 160px;
-          text-align: center;
-      }
+        .number-2 {
+            position: relative;
+            left: 2px;
+        }
 
-      .total-number h2 {
-          font-weight: 600;
-          font-size: 45px;
-          margin-top: 5px;
-      }
+        .number-3 {
+            position: relative;
+            left: 4px;
+        }
+
+        .number-4 {
+            position: relative;
+            left: 8px;
+        }
+
+        .total-number {
+            width: 160px;
+            text-align: center;
+        }
+
+        .total-number h2 {
+            font-weight: 600;
+            font-size: 45px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
+    <!-- Background Video -->
+    <video autoplay muted loop id="background-video">
+        <source src="img/images/loop-bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <!-- Wrapper -->
     <div id="wrapper">
         <div class="container">
             <!-- Header -->
             <div class="header">
                 <div class="gradient">
-                    <img src="/img/images/PARIS.png" alt="Paris Logo" class="paris-logo">
+                    <img src="img/images/milano-cortina.png" alt="Milano Cortina Logo" class="olympics-logo">
                     <span class="header-text">
                         <h1>Medal Standings</h1>
                         <h2 id="f1_gfx">Day 1</h2>
@@ -270,10 +299,10 @@
                 <div class="row spacer">
                 </div>
                 <div class="medal-icons">
-                    <img src="/img/images/G.png" alt="Gold Medal" class="gold m-right">
-                    <img src="/img/images/S.png" alt="Silver Medal" class="silver m-right">
-                    <img src="/img/images/B.png" alt="Bronze Medal" class="bronze m-right">
-                    <img src="/img/images/TOTAL.png" alt="Overlapping Medals" class="total">
+                    <img src="img/images/G.png" alt="Gold Medal" class="gold m-right">
+                    <img src="img/images/S.png" alt="Silver Medal" class="silver m-right">
+                    <img src="img/images/B.png" alt="Bronze Medal" class="bronze m-right">
+                    <img src="img/images/TOTAL.png" alt="Overlapping Medals" class="total">
                 </div>
                 <div class="dynamic-rows"></div>
                 <div class="row-spacer-alt"></div>
@@ -516,7 +545,7 @@
             return countryMap.get(code) || 'Unknown country code';
         };
 
-        const socket = new WebSocket('ws://10.151.122.21:8080');
+        const socket = new WebSocket('ws://10.142.11.74:8081');
 
         socket.addEventListener('open', function (event) {
             console.log('Connected to the WebSocket server');
