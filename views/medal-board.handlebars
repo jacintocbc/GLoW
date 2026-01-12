@@ -277,10 +277,10 @@
 </head>
 <body>
     <!-- Background Video -->
-    <video autoplay muted loop id="background-video">
+    {{!-- <video autoplay muted loop id="background-video">
         <source src="img/images/loop-bg.mp4" type="video/mp4">
         Your browser does not support the video tag.
-    </video>
+    </video> --}}
     <!-- Wrapper -->
     <div id="wrapper">
         <div class="container">
@@ -545,7 +545,7 @@
             return countryMap.get(code) || 'Unknown country code';
         };
 
-        const socket = new WebSocket('ws://10.142.11.74:8081');
+        const socket = new WebSocket('ws://10.142.12.95:8081');
 
         socket.addEventListener('open', function (event) {
             console.log('Connected to the WebSocket server');
