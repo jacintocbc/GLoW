@@ -541,10 +541,10 @@
         // Function to get country name by code
         const countryMap = csvToMap(csvData);
         const getCountryName = (code) => {
-            return countryMap.get(code) || 'Unknown country code';
+            return countryMap.get(code) || '';
         };
 
-        const socket = new WebSocket('ws://10.142.12.95:8081');
+        const socket = new WebSocket('ws://10.142.15.92:8081');
 
         socket.addEventListener('open', function (event) {
             console.log('Connected to the WebSocket server');
@@ -570,6 +570,12 @@
             // Process each entry in the data array
             data.data.forEach((entry, index) => {
                 const rowClass = index % 2 === 0 ? 'row' : 'row alt';
+
+                if (entry.countryCode === 'XXX') {
+                    dynamicRows.innerHTML += `<div class="${rowClass}"></div>`;
+                    return;
+                }
+
                 const countryName = getCountryName(entry.countryCode);
                 const rowHTML = `
                     <div class="${rowClass}">
