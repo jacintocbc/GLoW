@@ -1,2 +1,3 @@
 @echo off
-npm run startprod
+call npm run startprod
+call pm2 monit
