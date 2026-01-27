@@ -220,14 +220,19 @@
             justify-content: center;
         }
 
+        .rank h2 {
+            font-weight: 350;
+        }
+
         .flag {
-            height: 65px;
+            height: 60px;
             width: 113.5px;
-            box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+            margin-top: 2.75px;
+            /* box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3); */
         }
 
         .flag img {
-            height: 65px;
+            height: 60px;
         }
 
         .name {
@@ -268,7 +273,7 @@
         }
 
         .total-number h2 {
-            font-weight: 600;
+            font-weight: 500;
             font-size: 45px;
             margin-top: 5px;
         }
@@ -544,7 +549,7 @@
             return countryMap.get(code) || '';
         };
 
-        const socket = new WebSocket('ws://10.142.15.92:8081');
+        const socket = new WebSocket('ws://10.142.14.53:8081');
 
         socket.addEventListener('open', function (event) {
             console.log('Connected to the WebSocket server');
