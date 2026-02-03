@@ -28,8 +28,8 @@ body {
 }
 
 .container {
-    max-width: 1440px;
-    width: 1440px;
+    max-width: 1120px;
+    width: 1120px;
     height: 160px;
     overflow: hidden;
 }
@@ -57,8 +57,8 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    width: 1440px;
+    align-items: left;
+    width: 1120px;
 }
 
 .title-page {
@@ -106,16 +106,17 @@ h1 {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 1440px;
+    width: 1120px;
 }
 
 .country {
     display: flex;
-    padding: 7.5px 15px;
+    padding: 3.5px 10px;
 }
 
 .rank {
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .flag {
@@ -130,7 +131,7 @@ h1 {
 }
 
 .name {
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 /* Medals */
@@ -151,8 +152,8 @@ h1 {
     font-size: 40px;
     font-weight: bold;
     color: white;
-    margin-left: 50px;
-    margin-right: 10px;
+    margin-left: 20px;
+    margin-right: 5px;
 }
 
 .gold {
@@ -271,5 +272,5 @@ h1 {
 .total-count {
     position: absolute;
     top: 5.5px;
-    left: 145px;
+    left: 115px;
 }

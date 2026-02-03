@@ -27,10 +27,11 @@ body {
 }
 
 .container {
-    max-width: 1440px;
-    width: 1440px;
+    max-width: 1120px;
+    width: 1120px;
     height: 160px;
     overflow: hidden;
+    margin-left: 10px;
 }
 
 .page {
@@ -70,7 +71,7 @@ h2 {
 
 .time {
     font-weight: 400;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 .day-ahead {
@@ -81,13 +82,13 @@ h2 {
 }
 
 .m-left {
-    margin-left: 100px;
+    margin-left: 50px;
 }
 
 .rings {
     height: 160px;
     position: relative;
-    left: 50px;
+    left: 20px;
 }
 
 .rings img {
