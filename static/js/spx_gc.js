@@ -176,6 +176,12 @@ socket.on('SPXMessage2Controller', function (data) {
             break;
 
         case 'ItemPlayID':
+            // Logic for Intro Sequence Trigger (00001)
+            if (data.itemID === '00001') {
+                playIntroAndLoop(data.itemID);
+                break;
+            }
+
             el = getElementByEpoch(data.itemID);
             if (el) {
                 // console.log('ItemPlayID: Element found', data.itemID, el);
@@ -4531,16 +4537,20 @@ function parseRundown(rundown) {
                 outTimeString = '60000';
             }
             const outTime = +outTimeString;
-            outTimeArray.push(outTime);
+            // Store object with duration and ID
+            outTimeArray.push({
+                duration: outTime,
+                id: template.itemID
+            });
         }
     });
 
-    const totalOutTime = outTimeArray.reduce((sum, outTime) => sum + outTime, 0);
+    const totalOutTime = outTimeArray.reduce((sum, item) => sum + item.duration, 0);
     populateRundownTime(totalOutTime);
     console.log(totalOutTime, outTimeArray);
 
-    // Start the recursive playback
-    playNextItemSequentially(outTimeArray, 0, totalOutTime);
+    // Start the playback sequence
+    startPlaybackSequence(outTimeArray, totalOutTime);
 }
 
 // Populate Input with Total Out Time
@@ -4551,43 +4561,101 @@ function populateRundownTime(totalOutTime) {
     rundownTimeInput.value = roundedOutTimeSeconds;
 }
 
-// Play Next Items in order
-function playNextItemSequentially(outTimeArray, index, totalOutTime) {
-    if (index === 0) {
-        focusFirstControl();
-        const timeoutIdStart = setTimeout(() => {
-            playFocused();
-        }, 100);
-        timeouts.push(timeoutIdStart);
+// Start Playback Sequence
+function startPlaybackSequence(outTimeArray, totalOutTime) {
+    focusFirstControl();
+    
+    let startIndex = 0;
+    // Check if First item needs skipping
+    if (outTimeArray.length > 0 && outTimeArray[0].id === '00001') {
+        startIndex = 1;
     }
 
-    if (index <= outTimeArray.length) {
-        const timeoutId = setTimeout(() => {
-            playNextItemControl();
-            playNextItemSequentially(outTimeArray, index + 1, totalOutTime);
-        }, outTimeArray[index]);
-        timeouts.push(timeoutId);
-    } else {
-        clearAllTimeouts();
-        // Restart the sequence immediately
-        stopFocused();
-        const timeoutId = setTimeout(() => {
-            playNextItemSequentially(outTimeArray, 0, totalOutTime);
-        }, 1700);
-        timeouts.push(timeoutId);
+    const timeoutIdStart = setTimeout(() => {
+         if (startIndex === 1) {
+             // Skip 0 logic
+             focusNextControl();
+             setTimeout(() => {
+                 playFocused();
+             }, 500);
+         } else {
+             playFocused();
+         }
+         
+         // Start the loop timer matching the item playing
+         if (startIndex < outTimeArray.length) {
+             playNextItemSequentially(outTimeArray, startIndex, totalOutTime);
+         } else {
+             // List was empty or only had skipped item
+             // Restart recursion to check again or loop
+             const timeoutIdRestart = setTimeout(() => {
+                startPlaybackSequence(outTimeArray, totalOutTime);
+             }, 1000);
+             timeouts.push(timeoutIdRestart);
+         }
+
+    }, 100);
+    timeouts.push(timeoutIdStart);
+}
+
+// Play Next Items in order
+function playNextItemSequentially(outTimeArray, index, totalOutTime) {
+    if (index >= outTimeArray.length) {
+        return;
     }
+
+    const currentDuration = outTimeArray[index].duration;
+    
+    // Calculate Next Target
+    let nextIndex = index + 1;
+    let skipNext = false;
+    
+    if (nextIndex < outTimeArray.length && outTimeArray[nextIndex].id === '00001') {
+        skipNext = true;
+        nextIndex++; 
+    }
+    
+    const timeoutId = setTimeout(() => {
+        // Check for Loop Restart
+        if (nextIndex >= outTimeArray.length) {
+            clearAllTimeouts();
+            stopFocused();
+            // Restart
+            const timeoutIdRestart = setTimeout(() => {
+                startPlaybackSequence(outTimeArray, totalOutTime);
+            }, 1700);
+            timeouts.push(timeoutIdRestart);
+        } else {
+            // Transition to Next
+            playNextItemControl(skipNext);
+            playNextItemSequentially(outTimeArray, nextIndex, totalOutTime);
+        }
+    }, currentDuration);
+    timeouts.push(timeoutId);
+
     console.log(timeouts);
 }
 
-function playNextItemControl() {
+function playNextItemControl(skip = false) {
     stopFocused();
     let timeoutIdAlt;
     const timeoutId = setTimeout(() => {
         focusNextControl();
-        timeoutIdAlt = setTimeout(() => {
-            playFocused();
-        }, 100);
-        timeouts.push(timeoutIdAlt);
+        if (skip) {
+            // Skip logic: focus the skipped item, wait briefly, then focus next one to play
+            setTimeout(() => {
+                focusNextControl();
+                timeoutIdAlt = setTimeout(() => {
+                    playFocused();
+                }, 100);
+                timeouts.push(timeoutIdAlt);
+            }, 800);
+        } else {
+            timeoutIdAlt = setTimeout(() => {
+                playFocused();
+            }, 100);
+            timeouts.push(timeoutIdAlt);
+        }
     }, 1700);
     timeouts.push(timeoutId);
 }
@@ -4597,6 +4665,45 @@ function clearAllTimeouts() {
     timeouts.forEach(clearTimeout);
     timeouts = [];
 }
+
+// Custom Intro and Loop Sequence
+function playIntroAndLoop(itemID) {
+    clearAllTimeouts(); // Ensure no conflicts with existing loops
+    
+    // Attempt to stop anything currently playing just in case
+    stopFocused();
+
+    const el = getElementByEpoch(itemID);
+    if (el) {
+        console.log('Starting Intro Sequence with ID:', itemID);
+        
+        // Focus the item so UI reflects state
+        focusRow(el);
+        
+        // 1. Play the Intro item immediately
+        playItem(el, 'play');
+        
+        // 2. Wait 30 seconds (30000 ms), then stop and loop
+        const timeoutId = setTimeout(() => {
+             console.log('Intro finished (30s). Stopping item ' + itemID);
+             
+             // Stop the intro item
+             playItem(el, 'stop');
+
+             // 3. Start Play All 
+             const loopStartId = setTimeout(() => {
+                console.log('Starting Play All control now.');
+                playAllControl();
+             }, 1000);
+             timeouts.push(loopStartId);
+
+        }, 30000);
+        timeouts.push(timeoutId);
+    } else {
+        console.warn('Intro Item ID ' + itemID + ' not found in rundown.');
+    }
+}
+
 // Play All
 function playAllControl() {
     getRundownPlayAll();
