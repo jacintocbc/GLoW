@@ -176,12 +176,6 @@ socket.on('SPXMessage2Controller', function (data) {
             break;
 
         case 'ItemPlayID':
-            // Logic for Intro Sequence Trigger (00001)
-            if (data.itemID === '00001') {
-                playIntroAndLoop(data.itemID);
-                break;
-            }
-
             el = getElementByEpoch(data.itemID);
             if (el) {
                 // console.log('ItemPlayID: Element found', data.itemID, el);
@@ -4577,7 +4571,7 @@ function startPlaybackSequence(outTimeArray, totalOutTime) {
              focusNextControl();
              setTimeout(() => {
                  playFocused();
-             }, 500);
+             }, 200);
          } else {
              playFocused();
          }
@@ -4665,45 +4659,6 @@ function clearAllTimeouts() {
     timeouts.forEach(clearTimeout);
     timeouts = [];
 }
-
-// Custom Intro and Loop Sequence
-function playIntroAndLoop(itemID) {
-    clearAllTimeouts(); // Ensure no conflicts with existing loops
-    
-    // Attempt to stop anything currently playing just in case
-    stopFocused();
-
-    const el = getElementByEpoch(itemID);
-    if (el) {
-        console.log('Starting Intro Sequence with ID:', itemID);
-        
-        // Focus the item so UI reflects state
-        focusRow(el);
-        
-        // 1. Play the Intro item immediately
-        playItem(el, 'play');
-        
-        // 2. Wait 30 seconds (30000 ms), then stop and loop
-        const timeoutId = setTimeout(() => {
-             console.log('Intro finished (30s). Stopping item ' + itemID);
-             
-             // Stop the intro item
-             playItem(el, 'stop');
-
-             // 3. Start Play All 
-             const loopStartId = setTimeout(() => {
-                console.log('Starting Play All control now.');
-                playAllControl();
-             }, 1000);
-             timeouts.push(loopStartId);
-
-        }, 30000);
-        timeouts.push(timeoutId);
-    } else {
-        console.warn('Intro Item ID ' + itemID + ' not found in rundown.');
-    }
-}
-
 // Play All
 function playAllControl() {
     getRundownPlayAll();
