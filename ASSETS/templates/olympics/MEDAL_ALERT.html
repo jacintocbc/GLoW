@@ -1,0 +1,196 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medal Alert</title>
+    <script src="js/spx_interface.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/spx_fonts.css" />
+    <link rel="stylesheet" type="text/css" id="DynamicTheme" href="themes/default.css" />
+    <link rel="stylesheet" href="./MEDAL_ALERT/MEDAL_ALERT.css">
+    <script>
+        // Store timeouts to allow clearing/resetting
+        var transitionTimeout;
+        var titleOutTimeout;
+        var loopTimeout;
+        var loopOutTimeout;
+
+        function runTemplateUpdate() {
+            // Update Name
+            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            
+            // Update Medal
+            const medalType = htmlDecode(e('f2').innerText).toLowerCase();
+            const medalIcon = document.getElementById('medal_gfx');
+            const medalLetter = document.getElementById('medal_letter');
+            
+            // Remove all specific classes then add back base + current
+            medalIcon.className = "medal-icon";
+            // Simple check
+            if (medalType.includes('gold')) {
+                medalIcon.classList.add('gold');
+                medalLetter.textContent = 'G';
+            } else if (medalType.includes('silver')) {
+                medalIcon.classList.add('silver');
+                medalLetter.textContent = 'S';
+            } else if (medalType.includes('bronze')) {
+                medalIcon.classList.add('bronze');
+                medalLetter.textContent = 'B';
+            } 
+        }
+
+        function runAnimationIN() {
+            // ensure visuals are updated before animating
+            runTemplateUpdate();
+
+            const titlePage = document.getElementById('title-page');
+            const resultPage = document.getElementById('result-page');
+            const durationVal = htmlDecode(e('f81').innerText);
+            const transitionDuration = (durationVal ? durationVal : 3) * 1000;
+            const isLooping = htmlDecode(e('f68').innerText) == "1";
+
+            // Clear any pending timeouts from previous runs
+            clearTimeout(transitionTimeout);
+            clearTimeout(titleOutTimeout);
+            clearTimeout(loopTimeout);
+            clearTimeout(loopOutTimeout);
+
+            // Reset Initial State
+            titlePage.style.display = 'flex';
+            titlePage.classList.remove('fade-out');
+            titlePage.classList.add('fade-in');
+
+            resultPage.style.display = 'none';
+            resultPage.classList.remove('fade-in');
+            resultPage.classList.remove('fade-out');
+
+            // Sequence
+            transitionTimeout = setTimeout(() => {
+                // Fade out Title
+                titlePage.classList.remove('fade-in');
+                titlePage.classList.add('fade-out');
+
+                titleOutTimeout = setTimeout(() => {
+                    titlePage.style.display = 'none';
+                    // Fade in Result
+                    resultPage.style.display = 'flex';
+                    resultPage.classList.add('fade-in');
+
+                    // Loop Logic
+                    if (isLooping) {
+                        loopTimeout = setTimeout(() => {
+                            // Fade out Result
+                            resultPage.classList.remove('fade-in');
+                            resultPage.classList.add('fade-out');
+                            
+                            loopOutTimeout = setTimeout(() => {
+                                // Loop back to start (re-run In)
+                                runAnimationIN();
+                            }, 500);
+                        }, transitionDuration); // Show result for same duration as flag
+                    }
+
+                }, 500); // 500ms for fade out animation
+            }, transitionDuration);
+        }
+
+        function runAnimationOUT() {
+            const resultPage = document.getElementById('result-page');
+            const titlePage = document.getElementById('title-page');
+
+            // Clear timeouts so we don't transition while fading out
+            clearTimeout(transitionTimeout);
+            clearTimeout(titleOutTimeout);
+            clearTimeout(loopTimeout);
+            clearTimeout(loopOutTimeout);
+
+            // If result page is visible, fade it out
+            if (resultPage.style.display !== 'none') {
+                 resultPage.classList.remove('fade-in');
+                 resultPage.classList.add('fade-out');
+            } else {
+                 // If title page is still visible (early out), fade it out
+                 titlePage.classList.remove('fade-in');
+                 titlePage.classList.add('fade-out');
+            }
+        }
+
+        window.onload = function () {
+            // Automatically start when loaded, matching original template behavior
+            setTimeout(runAnimationIN, 10);
+        }
+    </script>
+    <script type="text/javascript">
+        window.SPXGCTemplateDefinition = {
+            "defversion": "1",
+            "description": "Medal Alert",
+            "playserver": "OVERLAY",
+            "playchannel": "1",
+            "playlayer": "10",
+            "webplayout": "10",
+            "out": "manual",
+            "dataformat": "json",
+            "uicolor": "1",
+            "DataFields": [
+                {
+                    "field": "f81",
+                    "ftype": "textfield",
+                    "title": "Duration (s)",
+                    "value": "5"
+                },
+                {
+                    "field": "f68",
+                    "ftype": "checkbox",
+                    "title": "Loop Graphic",
+                    "value": "1"
+                },
+                {
+                    "field": "f1",
+                    "ftype": "textfield",
+                    "title": "Winner Name",
+                    "value": "Athlete Name"
+                },
+                {
+                    "field": "f2",
+                    "ftype": "dropdown",
+                    "title": "Medal",
+                    "items": [
+                        { "text": "Gold", "value": "gold" },
+                        { "text": "Silver", "value": "silver" },
+                        { "text": "Bronze", "value": "bronze" }
+                    ],
+                    "value": "gold"
+                }
+            ]
+        };
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <!-- Title Page: Animated Flag (CSS) -->
+            <div id="title-page" class="page title-page">
+                <div class="flag-container"></div>
+                <!-- Text Overlay -->
+                <div class="medal-alert-title">MEDAL ALERT</div>
+            </div>
+
+            <!-- Result Page: Medal + Name -->
+            <div id="result-page" class="page result-page">
+                <div id="medal_gfx" class="medal-icon gold">
+                    <span id="medal_letter">G</span>
+                </div>
+                <h1 id="f1_gfx" class="winner-name">Athlete Name</h1>
+            </div>
+
+            <div style="display:none;" id="f1"></div>
+            <div style="display:none;" id="f2"></div>
+            <div style="display:none;" id="f81"></div>
+            <div style="opacity:0;" id="f67"></div>
+            <div style="opacity:0;" id="f68"></div>
+        </div>
+    </div>
+</body>
+
+</html>
