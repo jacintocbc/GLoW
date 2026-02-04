@@ -31,7 +31,7 @@ body {
     width: 1120px;
     height: 160px;
     overflow: hidden;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 .page {
@@ -82,7 +82,7 @@ h2 {
 }
 
 .m-left {
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 .rings {
