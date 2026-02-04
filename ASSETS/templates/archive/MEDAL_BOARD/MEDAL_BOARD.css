@@ -1,0 +1,230 @@
+@font-face {
+    font-family: 'Radio-Canada';
+    src: url('../fonts/RadioCanada-Variable.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Radio-Canada Italic';
+    src: url('../fonts/RadioCanada-Italic-Variable.ttf') format('opentype');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Radio-Canada', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#wrapper {
+    height: 1080px;
+    width: 1920px;
+}
+
+.container {
+    height: 960px;
+    width: 1800px;
+    overflow: hidden;
+    margin: 60px;
+    position: relative;
+}
+
+.v-align {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1,
+h2 {
+    margin: 0;
+}
+
+/* Keyframe animations */
+@keyframes inAnimation {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes outAnimation {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+/* Animation classes */
+.fade-in {
+    animation: inAnimation 1.5s forwards;
+}
+
+.fade-out {
+    animation: outAnimation 1.5s forwards;
+}
+
+/* Header */
+.header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.gradient {
+    height: 180px;
+    width: 100%;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, white 5%, #fcf6e8 15%, #eed69a 30%, #e5be5f 68%, #daa521 90%);
+}
+
+.paris-logo {
+    height: 182px;
+    position: relative;
+    left: 23px;
+    top: -2px;
+}
+
+.header-text {
+    position: absolute;
+    left: 220px;
+    top: 15px;
+}
+
+.header-text h1 {
+    font-size: 87.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: -4.5px;
+    position: relative;
+    left: 2px;
+    color: #252525;
+}
+
+.header-text h2 {
+    font-size: 41px;
+    text-transform: uppercase;
+    font-weight: 400;
+    position: relative;
+    top: -14px;
+    left: 5px;
+    letter-spacing: -0.5px;
+}
+
+/* Table */
+.table-container {
+    height: 780px;
+    margin-top: 180px;
+    position: relative;
+}
+
+.row {
+    height: 65px;
+    background: #f0f0f0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.alt {
+    background: #e4e4e4;
+}
+
+.spacer {
+    background: white;
+    opacity: 0.33;
+    position: relative;
+}
+
+.medal-icons {
+    position: absolute;
+    right: -2px;
+    top: -2.5px;
+    width: 545px;
+}
+
+.medal-icons img {
+    height: 70px;
+}
+
+.m-right {
+    margin-right: 60px;
+}
+
+/* Row */
+.row h2 {
+    font-size: 41px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-top: 7.5px;
+}
+
+.country {
+    display: flex;
+}
+
+.rank {
+    width: 110px;
+    display: flex;
+    justify-content: center;
+}
+
+.flag img {
+    height: 65px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+.name {
+    margin-left: 30px;
+}
+
+.medal-numbers {
+    display: flex;
+    width: 553px;
+    justify-content: space-around;
+    position: relative;
+    left: -20px;
+}
+
+.medal-number {
+    width: 133px;
+    text-align: center;
+}
+
+.number-2 {
+    position: relative;
+    left: 2px;
+}
+
+.number-3 {
+    position: relative;
+    left: 3px;
+}
+
+.number-4 {
+    position: relative;
+    left: 7px;
+}
+
+.total-number {
+    width: 160px;
+    text-align: center;
+}
+
+.total-number h2 {
+    font-weight: 600;
+    font-size: 45px;
+    margin-top: 5px;
+}
