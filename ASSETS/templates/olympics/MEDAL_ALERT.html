@@ -17,7 +17,18 @@
 
         function runTemplateUpdate() {
             // Update Name
-            e('f1_gfx').innerText = htmlDecode(e('f1').innerHTML);
+            const nameText = htmlDecode(e('f1').innerHTML);
+            const nameEl = e('f1_gfx');
+            nameEl.innerText = nameText;
+
+            // Adjust font size for long names
+            if (nameText.length > 30) {
+                nameEl.style.fontSize = '40px';
+            } else if (nameText.length > 20) {
+                nameEl.style.fontSize = '50px';
+            } else {
+                nameEl.style.fontSize = '';  // reset to CSS default
+            }
             
             // Update Medal
             const medalType = htmlDecode(e('f2').innerText).toLowerCase();
@@ -128,7 +139,7 @@
             "playchannel": "1",
             "playlayer": "20",
             "webplayout": "20",
-            "out": "manual",
+            "out": "30000",
             "dataformat": "json",
             "uicolor": "1",
             "DataFields": [
