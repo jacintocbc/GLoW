@@ -317,11 +317,26 @@ async function triggerDirectPlayout(name, medalType, command) {
             timeout: 10000,
         });
         log('info', `Playout ${command} response: ${response.status} - ${name} (${medalType})`);
+
+        // Trigger external button press on play
+        if (command === 'play') {
+            await triggerExternalPress();
+        }
+
         return true;
     } catch (err) {
         const status = err.response ? err.response.status : 'N/A';
         log('error', `Playout ${command} failed [${status}]: ${err.message}`);
         return false;
+    }
+}
+
+async function triggerExternalPress() {
+    try {
+        await axios.post('http://10.141.0.90:8000/api/location/9/3/2/press', {}, { timeout: 5000 });
+        log('info', 'External trigger sent.');
+    } catch (err) {
+        log('warn', `External trigger failed: ${err.message}`);
     }
 }
 

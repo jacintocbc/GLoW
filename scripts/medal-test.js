@@ -345,6 +345,10 @@ async function main() {
         const status = await triggerPlayout(data.name, data.medal, 'play');
         console.log(`  Playout triggered (HTTP ${status})`);
 
+        // Trigger external button press
+        await triggerExternalPress();
+
+
         const outMs = parseInt(CONFIG.outDuration, 10);
         console.log(`  Graphic will auto-stop in ${outMs / 1000}s, then Play All resumes.`);
         console.log('  Waiting...');
@@ -361,6 +365,15 @@ async function main() {
         console.error('  Make sure the GLoW server is running on ' + CONFIG.glowBaseUrl);
         console.error('');
         process.exit(1);
+    }
+}
+
+async function triggerExternalPress() {
+    try {
+        await axios.post('http://10.141.0.90:8000/api/location/9/3/2/press', {}, { timeout: 5000 });
+        console.log('  External trigger sent.');
+    } catch (err) {
+        console.error(`  External trigger failed: ${err.message}`);
     }
 }
 
