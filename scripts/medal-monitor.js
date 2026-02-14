@@ -373,38 +373,32 @@ async function resumePlayAll() {
  * After each play's auto-out, resumes the Play All rundown loop.
  * Returns a promise that resolves after the last play's auto-out has elapsed.
  */
-function scheduleMedalPlayout(name, medalType, eventName) {
-    return new Promise((resolve) => {
-        const intervalMs = CONFIG.playIntervalMinutes * 60 * 1000;
-        const outMs = parseInt(CONFIG.outDuration, 10);
-        let playsDone = 0;
+async function scheduleMedalPlayout(name, medalType, eventName) {
+    const intervalMs = CONFIG.playIntervalMinutes * 60 * 1000;
+    const outMs = parseInt(CONFIG.outDuration, 10);
 
-        async function doPlay() {
-            playsDone++;
-            log('info', `Playing medal alert ${playsDone}/${CONFIG.playCount}: ${name} - ${medalType} (${eventName})`);
+    for (let play = 1; play <= CONFIG.playCount; play++) {
+        log('info', `Playing medal alert ${play}/${CONFIG.playCount}: ${name} - ${medalType} (${eventName})`);
 
-            // Send play command
-            await triggerDirectPlayout(name, medalType, 'play');
+        // Send play command
+        await triggerDirectPlayout(name, medalType, 'play');
 
-            // After auto-out finishes, resume Play All
-            setTimeout(async () => {
-                log('info', 'Medal alert auto-out complete, resuming Play All...');
-                await resumePlayAll();
-            }, outMs + 1000);
+        // Wait for auto-out to finish, then resume Play All
+        await delay(outMs + 1000);
+        log('info', 'Medal alert auto-out complete, resuming Play All...');
+        await resumePlayAll();
 
-            if (playsDone < CONFIG.playCount) {
-                // Schedule next play
-                log('info', `Next play in ${CONFIG.playIntervalMinutes} minutes...`);
-                setTimeout(doPlay, intervalMs);
-            } else {
-                // All plays done; wait for the last auto-out + resume, then resolve
-                log('info', `All ${CONFIG.playCount} plays completed for: ${name} - ${medalType}`);
-                setTimeout(resolve, outMs + 2000);
+        if (play < CONFIG.playCount) {
+            // Wait for next play interval (subtract the time already waited)
+            const remainingWait = intervalMs - (outMs + 1000);
+            if (remainingWait > 0) {
+                log('info', `Next play in ~${Math.round(remainingWait / 60000)} minutes...`);
+                await delay(remainingWait);
             }
         }
+    }
 
-        doPlay();
-    });
+    log('info', `All ${CONFIG.playCount} plays completed for: ${name} - ${medalType}`);
 }
 
 function delay(ms) {
