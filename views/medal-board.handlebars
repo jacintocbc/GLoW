@@ -116,10 +116,10 @@
         }
 
         .olympics-logo {
-            height: 135px;
+            height: 155px;
             position: relative;
-            left: 164px;
-            top: 93px;
+            left: 143px;
+            top: 82px;
         }
 
         .header-text {
@@ -291,7 +291,7 @@
             <!-- Header -->
             <div class="header">
                 <div class="gradient">
-                    <img src="img/images/milano-cortina.png" alt="Milano Cortina Logo" class="olympics-logo">
+                    <img src="img/images/para-logo.png" alt="Milano Cortina Logo" class="olympics-logo">
                     <span class="header-text">
                         <h1>Medal Standings</h1>
                         <h2 id="f1_gfx">Day 1</h2>
@@ -549,7 +549,7 @@
             return countryMap.get(code) || '';
         };
 
-        const socket = new WebSocket('ws://10.142.14.53:8081');
+        const socket = new WebSocket('ws://localhost:8081');
 
         socket.addEventListener('open', function (event) {
             console.log('Connected to the WebSocket server');
