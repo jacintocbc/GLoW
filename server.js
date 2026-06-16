@@ -1046,40 +1046,62 @@ function notifyMultipleControllers() {
   }, 100); // small delay
 }
 
-// Maestro Data Logic  --------------------------------------------------------- //
-const wss = new WebSocket.Server({ port: 8081 });
-
-// Middleware to parse JSON bodies
+// Maestro / ETV Graphics WebSocket Hub  -------------------------------------- //
 app.use(bodyParser.json());
 
-// Endpoint to receive data from the desktop app
-app.post('/update', (req, res) => {
-  const data = req.body;
-  console.log('Received data:', data);
-
-  // Broadcast the data to all connected WebSocket clients
-  wss.clients.forEach(client => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(data));
+function broadcastToServer(wssServer, text, excludeWs) {
+  wssServer.clients.forEach(client => {
+    if (client !== excludeWs && client.readyState === WebSocket.OPEN) {
+      client.send(text);
     }
   });
+}
 
-  res.status(200).send('Data received');
-});
+function broadcastGraphicsMessage(text, excludeWs) {
+  broadcastToServer(wss, text, excludeWs);
+  broadcastToServer(wssLegacy, text, excludeWs);
+}
 
-app.listen(altPort, () => {
+function setupGraphicsWebSocketHub(wssServer, label) {
+  wssServer.on('connection', ws => {
+    console.log(`Graphics WebSocket client connected (${label})`);
+
+    ws.on('message', raw => {
+      const text = raw.toString();
+      try {
+        JSON.parse(text);
+      } catch {
+        console.warn(`Ignoring non-JSON WebSocket message (${label})`);
+        return;
+      }
+      broadcastGraphicsMessage(text, ws);
+    });
+
+    ws.on('close', () => {
+      console.log(`Graphics WebSocket client disconnected (${label})`);
+    });
+  });
+}
+
+const httpServer = app.listen(altPort, () => {
   console.log(`HTTP server is running on http://localhost:${altPort}`);
 });
 
-wss.on('connection', ws => {
-  console.log('Client connected');
+const wss = new WebSocket.Server({ server: httpServer });
+const wssLegacy = new WebSocket.Server({ port: 8081 });
 
-  ws.on('close', () => {
-    console.log('Client disconnected');
-  });
+setupGraphicsWebSocketHub(wss, '3000');
+setupGraphicsWebSocketHub(wssLegacy, '8081');
+
+// Deprecated — ETV and browsers should use ws://localhost:3000 directly
+app.post('/update', (req, res) => {
+  console.warn('POST /update is deprecated; use WebSocket ws://localhost:3000 instead.');
+  broadcastGraphicsMessage(JSON.stringify(req.body));
+  res.status(200).send('Data received');
 });
 
-console.log('WebSocket server is running on ws://localhost:8081');
+console.log('WebSocket hub is running on ws://localhost:' + altPort);
+console.log('Legacy WebSocket relay is running on ws://localhost:8081');
 
 // iNews Related Logic ------------------------------------------------------------- //
 // const accessTokenUrl = 'https://as.cbcrc.ca/connect/token';

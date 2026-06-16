@@ -63,6 +63,10 @@ router.get('/voteShare', spxAuth.CheckLogin, function (req, res) {
   res.render('vote-share', { layout: false });
 }); // get /voteShare end
 
+router.get('/electionSeats', spxAuth.CheckLogin, function (req, res) {
+  res.render('election-seats', { layout: false });
+}); // get /electionSeats end
+
 router.get('/admin', spxAuth.CheckLogin, function (req, res) {
   res.render('view-admin', { layout: false });
 }); // get /admin end

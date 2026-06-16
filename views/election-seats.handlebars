@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Election Seats</title>
+  <style>
+    @font-face {
+      font-family: 'Radio-Canada';
+      src: url('img/fonts/RadioCanada-Variable.ttf') format('truetype');
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Radio-Canada', sans-serif;
+      background: black;
+    }
+
+    .graphic {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform: translateY(100%);
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .graphic.active {
+      transform: translateY(0);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      color: black;
+      padding: 10px 20px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .bar-row {
+      display: flex;
+      width: 100%;
+      height: 101px;
+      background: #333;
+    }
+
+    .party-segment {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      overflow: hidden;
+      padding: 6px 10px;
+      box-sizing: border-box;
+      background: #6D777E;
+    }
+
+    .party-segment .code {
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .party-segment .total {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .flip-wrap {
+      display: inline-block;
+      height: 1em;
+      overflow: hidden;
+      line-height: 1;
+      vertical-align: bottom;
+    }
+
+    .flip-track {
+      display: flex;
+      flex-direction: column;
+      transform: translateY(0);
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .flip-track.flip-animate {
+      transform: translateY(-1em);
+    }
+
+    .flip-num {
+      height: 1em;
+      line-height: 1;
+      display: block;
+    }
+
+    .party-CAQ { background: #00AEA6; }
+    .party-LIB { background: #B02229; }
+    .party-QS  { background: #F58220; }
+    .party-PQ  { background: #5B8FC7; }
+    .party-CON { background: #1C4F80; }
+    .party-GRN { background: #3D9B35; }
+    .party-BQ  { background: #4fa0d8; }
+    .party-NDP { background: #F58220; }
+    .party-PC  { background: #1C4F80; }
+    .party-OTH { background: #6D777E; }
+
+    .footer {
+      background: #1a1a1a;
+      color: white;
+      padding: 12px 20px;
+      font-size: 22px;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+  <div class="graphic" id="graphic">
+    <div class="header">
+      <span id="majority-text">63 Seats needed for Majority</span>
+      <span id="reporting-text">0/125 Reporting</span>
+    </div>
+    <div class="bar-row" id="bar-row"></div>
+    <div class="footer" id="headline">
+      Liberals are projected to win majority government
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_HEADLINE = 'Liberals are projected to win majority government';
+    const graphic = document.getElementById('graphic');
+    const barRow = document.getElementById('bar-row');
+    const majorityText = document.getElementById('majority-text');
+    const reportingText = document.getElementById('reporting-text');
+    const headlineEl = document.getElementById('headline');
+
+    const socket = new WebSocket('ws://localhost:3000');
+
+    socket.addEventListener('open', () => {
+      console.log('Connected to graphics WebSocket hub');
+    });
+
+    socket.addEventListener('message', (event) => {
+      let data;
+      try {
+        data = JSON.parse(event.data);
+      } catch {
+        return;
+      }
+
+      if (data.type !== 'mini-seats') return;
+
+      if (data.action === 'off') {
+        hideGraphic();
+        return;
+      }
+
+      if (data.action === 'update') {
+        updateGraphic(data);
+      }
+    });
+
+    window.addEventListener('resize', scaleSegmentFonts);
+
+    function showGraphic() {
+      graphic.classList.add('active');
+    }
+
+    function hideGraphic() {
+      graphic.classList.remove('active');
+    }
+
+    function updateGraphic(data) {
+      const summary = data.summary || {};
+      const parties = data.parties || [];
+      if (parties.length === 0) return;
+
+      const totalRidings = summary.totalRidings || 1;
+      const majority = summary.majority || 0;
+      const activeRidings = summary.totalActiveRidings ?? 0;
+
+      majorityText.textContent = `${majority} Seats needed for Majority`;
+      reportingText.textContent = `${activeRidings}/${totalRidings} Reporting`;
+      headlineEl.textContent = resolveHeadline(data.payload);
+
+      renderBar(parties);
+
+      if (!graphic.classList.contains('active')) {
+        showGraphic();
+      }
+    }
+
+    function resolveHeadline(payload) {
+      if (!payload) return DEFAULT_HEADLINE;
+      if (typeof payload === 'string') return payload;
+      return payload.headline || payload.Headline || DEFAULT_HEADLINE;
+    }
+
+    function createSegment(party) {
+      const code = partyClass(party.code);
+      const seg = document.createElement('div');
+      seg.className = `party-segment party-${code}`;
+      seg.dataset.code = code;
+
+      const codeEl = document.createElement('span');
+      codeEl.className = 'code';
+      codeEl.textContent = party.code;
+
+      const totalEl = document.createElement('span');
+      totalEl.className = 'total';
+      const total = party.total ?? 0;
+      totalEl.textContent = total;
+      totalEl.dataset.value = String(total);
+
+      seg.appendChild(codeEl);
+      seg.appendChild(totalEl);
+      return seg;
+    }
+
+    function animateTotal(totalEl, newTotal) {
+      const newStr = String(newTotal);
+      const oldStr = totalEl.dataset.value ?? newStr;
+
+      if (oldStr === newStr) return;
+
+      const wrap = document.createElement('span');
+      wrap.className = 'flip-wrap';
+
+      const track = document.createElement('span');
+      track.className = 'flip-track';
+
+      const outNum = document.createElement('span');
+      outNum.className = 'flip-num';
+      outNum.textContent = oldStr;
+
+      const inNum = document.createElement('span');
+      inNum.className = 'flip-num';
+      inNum.textContent = newStr;
+
+      track.appendChild(outNum);
+      track.appendChild(inNum);
+      wrap.appendChild(track);
+      totalEl.innerHTML = '';
+      totalEl.appendChild(wrap);
+      totalEl.dataset.value = newStr;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          track.classList.add('flip-animate');
+        });
+      });
+
+      track.addEventListener('transitionend', () => {
+        totalEl.textContent = newStr;
+        totalEl.dataset.value = newStr;
+      }, { once: true });
+    }
+
+    function renderBar(parties) {
+      const incomingCodes = new Set(parties.map(p => partyClass(p.code)));
+
+      barRow.querySelectorAll('.party-segment').forEach(seg => {
+        if (!incomingCodes.has(seg.dataset.code)) {
+          seg.remove();
+        }
+      });
+
+      parties.forEach((party, index) => {
+        const code = partyClass(party.code);
+        const total = party.total ?? 0;
+        let seg = barRow.querySelector(`[data-code="${code}"]`);
+
+        if (!seg) {
+          seg = createSegment(party);
+        } else {
+          const totalEl = seg.querySelector('.total');
+          animateTotal(totalEl, total);
+        }
+
+        const currentAtIndex = barRow.children[index];
+        if (currentAtIndex !== seg) {
+          barRow.insertBefore(seg, currentAtIndex || null);
+        }
+      });
+
+      scaleSegmentFonts();
+    }
+
+    function scaleSegmentFonts() {
+      const segments = barRow.querySelectorAll('.party-segment');
+      segments.forEach(seg => {
+        const w = seg.clientWidth;
+        const h = seg.clientHeight;
+        const padding = 16;
+        const size = Math.min((w - padding) * 0.28, h * 0.42, 80);
+        seg.style.fontSize = `${Math.max(size, 12)}px`;
+      });
+    }
+
+    function partyClass(code) {
+      return (code || 'OTH').toUpperCase().replace(/[^A-Z0-9]/g, '') || 'OTH';
+    }
+  </script>
+</body>
+</html>
