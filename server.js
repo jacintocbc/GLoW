@@ -1062,9 +1062,16 @@ function broadcastGraphicsMessage(text, excludeWs) {
   broadcastToServer(wssLegacy, text, excludeWs);
 }
 
+let lastVoteShareMessage = null;
+
 function setupGraphicsWebSocketHub(wssServer, label) {
   wssServer.on('connection', ws => {
     console.log(`Graphics WebSocket client connected (${label})`);
+
+    // Newly loaded graphics shouldn't wait up to a full poll cycle for data
+    if (lastVoteShareMessage) {
+      ws.send(lastVoteShareMessage);
+    }
 
     ws.on('message', raw => {
       const text = raw.toString();
@@ -1102,6 +1109,89 @@ app.post('/update', (req, res) => {
 
 console.log('WebSocket hub is running on ws://localhost:' + altPort);
 console.log('Legacy WebSocket relay is running on ws://localhost:8081');
+
+// GES Spectrum Vote Share Feed ------------------------------------------------ //
+const GES_CREDENTIALS_FILE = path.join(__dirname, 'ges-credentials.json');
+const GES_REGION_ID = 15571;
+const GES_POLL_INTERVAL_MS = 30 * 1000;
+const GES_TOKEN_REFRESH_MARGIN_MS = 60 * 1000;
+const GES_REQUEST_TIMEOUT_MS = 15 * 1000;
+
+let gesToken = null;
+let gesTokenExpiry = 0;
+
+async function getGesToken(creds, forceRefresh) {
+  if (!forceRefresh && gesToken && Date.now() < gesTokenExpiry - GES_TOKEN_REFRESH_MARGIN_MS) {
+    return gesToken;
+  }
+
+  const body = new URLSearchParams({
+    grant_type: 'client_credentials',
+    client_id: creds.ClientId,
+    client_secret: creds.ClientSecret,
+  });
+  if (creds.Resource) {
+    body.append('resource', creds.Resource);
+  } else if (creds.Scope) {
+    body.append('scope', creds.Scope);
+  }
+
+  const res = await axios.post(creds.AccessTokenUrl, body.toString(), {
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    timeout: GES_REQUEST_TIMEOUT_MS,
+  });
+  gesToken = res.data.access_token;
+  gesTokenExpiry = Date.now() + Number(res.data.expires_in) * 1000;
+  console.log('GES token refreshed, expires ' + new Date(gesTokenExpiry).toISOString());
+  return gesToken;
+}
+
+async function fetchPartyStandings(creds, isRetry = false) {
+  const token = await getGesToken(creds, isRetry);
+  try {
+    const res = await axios.get(`${creds.ApiUrl}/Regions/${GES_REGION_ID}/PartyStandings`, {
+      headers: { Authorization: `Bearer ${token}` },
+      timeout: GES_REQUEST_TIMEOUT_MS,
+    });
+    return res.data;
+  } catch (err) {
+    if (!isRetry && err.response && err.response.status === 401) {
+      return fetchPartyStandings(creds, true);
+    }
+    throw err;
+  }
+}
+
+async function pollVoteShare(creds) {
+  try {
+    const data = await fetchPartyStandings(creds);
+    lastVoteShareMessage = JSON.stringify({
+      type: 'vote-share',
+      timestamp: new Date().toISOString(),
+      parties: (data.parties || []).map(p => ({
+        code: p.englishCode,
+        percentage: p.totalVotesPercentage,
+      })),
+    });
+    broadcastGraphicsMessage(lastVoteShareMessage);
+  } catch (err) {
+    const reason = err.response ? `HTTP ${err.response.status}` : err.message;
+    console.error('GES vote share poll failed: ' + reason);
+  }
+}
+
+function startVoteSharePoller() {
+  if (!fs.existsSync(GES_CREDENTIALS_FILE)) {
+    console.log('ges-credentials.json not found; GES vote share polling disabled.');
+    return;
+  }
+  const creds = JSON.parse(fs.readFileSync(GES_CREDENTIALS_FILE, 'utf-8'));
+  pollVoteShare(creds);
+  setInterval(() => pollVoteShare(creds), GES_POLL_INTERVAL_MS);
+  console.log(`GES vote share polling region ${GES_REGION_ID} every ${GES_POLL_INTERVAL_MS / 1000}s`);
+}
+
+startVoteSharePoller();
 
 // iNews Related Logic ------------------------------------------------------------- //
 // const accessTokenUrl = 'https://as.cbcrc.ca/connect/token';

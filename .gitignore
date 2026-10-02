@@ -16,6 +16,7 @@ viz/
 SmartPX_log*.txt
 .env
 env.txt
+ges-credentials.json
 .log
 devnotes.txt
 DATAROOT_*
